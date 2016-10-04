@@ -1,0 +1,163 @@
+\documentclass[10pt,draftclsnofoot,onecolumn]{IEEEtran}
+\usepackage{graphicx}
+\graphicspath{ {} }
+\begin{document}
+\pagenumbering{gobble}
+\title{Writing Assignment 4: Windows, FreeBSD, and Linux Memory Management}
+\author{Tristan Hari}
+\maketitle
+\begin{abstract}
+In this paper we are being asked to cover the different ways that Windows, Linux,
+and FreeBSD handles Memory Management. I will cover their similarities,
+differences, and discuss why these exist. I will cover paging, cacheing, and the
+various ways that the operating systems make transformations between virutal
+memory and physical memory. As one would come to expect, Windows varies greatly
+from the other two in how it handles memory, however FreeBSD and Linux operate
+on almost the exact same principles.
+\end{abstract}
+\IEEEpeerreviewmaketitle
+
+\newpage
+\pagenumbering{arabic}
+
+\section{Intro}
+In this paper we are being asked to cover the different ways that Windows, Linux,
+and FreeBSD handles Memory Management. I will cover their similarities,
+differences, and discuss why these exist. I will cover paging, cacheing, and the
+various ways that the operating systems make transformations between virutal
+memory and physical memory. As one would come to expect, Windows varies greatly
+from the other two in how it handles memory, however FreeBSD and Linux operate
+on almost the exact same principles.
+
+\newpage
+
+
+\section{Windows Implementation}
+
+When it comes to memory management, windows has various different implementations
+compared to Linux's, however, they Windows methods still operate to achieve
+almost the same exact purpose. A good example is that the primary method in
+Windows for MM is the usage of virtual memory. In Windows, each process on a 32
+bit system gets its own virtual address space that enables addressing up to 4
+gigabytes of memory. In 64 bit Windows, each process gets a virtual address space
+of up to 8 TERAbytes. As one would almost expect, each thread of a process can
+access the entire processes virtual address space, however, threads cannot access
+memory that belongs to another process. This is the simple method of keeping
+processes from corrupting eachother during runtime. Windows has several ways of
+protecting its processes form corrupting each other aside from simply not allowing
+them to do so, as this is not always a limitation you want to have on a process.
+A common one is copy on write protection, which is an implementation that allows
+multiple processes' virtual memory to share a physical page until one of the
+processes actualyl writes to the page. This gives it the optimization of a lazy
+evaluation, because it does not perform any additional operations until it is
+necessary for the system to do so. Looking at thetwo diagrams below, you can
+see an example of this. Originally both process 1 and 2 have their virtual
+memory mapped to the same physical pages.
+
+
+
+And then you can see as you can see, as Page 2 attempts to actually modify Page
+B, all the contents of B are copied to a new page D, and the page table is updated
+to prevent and funny business between the two processes.
+
+
+
+\newpage
+\section{FreeBSD Implementation}
+
+In many of my papers I've discussed how Linux and FreeBSD are extremely similar
+in how they operate most of the time, due their familial lineage. However this
+case is to the extreme. I spent several days attempting to find a single
+difference in how the two do memory management, and alas I could not for the life
+of me. So with that being said, I will simply discuss the details of what I found
+for the linux kernel, as they are entirely same but the Linux documentation
+contains a lot more information of the same topic. I think this is purposefully
+so that one isn't led to believe that the BSD docs will yield anything different.
+
+Similarly to windows, memory management is primarily done using virtual memory.
+Additionally, like windows, each thread is given its own virtual memory space
+to operate within, that without special interactions set up, cannot access other
+processes virtual memory. The hardwares own virtual memory functions keep memory
+in use from being overwritten for virtual use. The Linux system provides several
+additional functionalities to help manage memory better. The functionalities the
+documentation covers are as follows:
+
+Large Address Spaces: The kernel will make the virtual memory appear much larger
+than the actual physical space that is available.
+
+Individual virtual Memory for Each process: This is covered above, but still worth
+mentioning here.
+
+Memory Mapping: This is the ability to map files into a process address space.
+In memory mapping, the contents of a files are linked directly into the virtual
+memory of the regarded process.
+
+Fair Allocation of Space: The system will attempt to fairly allocate available
+physical among all running processes.
+
+Shared Virtual Space Functionality: The system provides methods that allow
+processes to share virtual memory in a safe manner, should that be something you
+wish to include. Memory can also be shared using Inter Process Communication
+methods through the kernel API for it.
+
+When the processor is running a program, it reads the next instructions from
+memory and decodes it. When it is decoding, it may need to fetch or store the
+contents of a memory location. The processor will then proceed to executes the
+instruction and move onto the next one. This method keeps the processor constantly
+either accessing memory to fetch the next instruction, or to fetch and store
+data. When it comes to using virtual memory for processes, these addresses are
+not physical addresses, they are virtual addresses mapped to physical addresses.
+The system is able to convert these addresses back and forth using the information
+held within page tables. The figure below shows the virtual address spaces of
+two processes, process X and  Y, as well as each of their page tables. These page
+tables map each processes virtual memory into physical addresses in memory. This
+shows that process X's virtual memory page number 0 is mapped directly to memory
+in physical memory page number 1 and etc. This diagram shows how these virutal
+spaces are created separately using same space physical memory.
+
+The linux system also has some various methods of caching available for use to
+enchance performance and allow some more advanced memory management techniques.
+
+The main ones covered in the document are as follows:
+
+Buffer Cache: This cache contains data that is used by block device drivers. The
+buffers are of fixed sizes and contain blocks of information that are either
+being read or written to. The block devices as a matter of fact are only accessed
+using the buffer cache. If data can be found in the buffer cache, then the block
+device does not need to be accessed for a read, and thusly increases performance
+of the system.
+
+Page Cache: The page cache is primarily used to speed up accessing images and
+data on a disk. It caches the logical contents of a file one page at a time and
+is accessed with the file and offset within the file. When a page is read into
+memory from the disk, they are cached in the page cache.
+
+Swap Cache: Only modified AKA dirty files are kept in the swap cache. While
+these pages are not madified after being written to the swap cache, then next
+time the page is swapped there is no need to write it to the swap cache as the
+page is already contained within. In this case, the page will be discarded. This
+saves the system a lot of costly swapping operations in a time where swapping is
+being used heavily.
+
+
+
+\newpage
+\section{Summary}
+
+In conclusion, when it comes to comparing Windows and Linux, there are many
+differences as one would imagine. And in a repeating pattern among the other
+topics we've covered in this class, while all three of these kernels differ in
+the specifics of how they accomplish memory management, they all use the same
+pieces to ensure that proper management occurs. For example, all the Operating
+Systems use: Process unique virtual memory, access methods to share virtual
+memory, and caching methods. Its fairly difficult to discern if any particular
+kernel has an advantage over the other, however one thing that is certain is that
+in regards to FreeBSD and Linux, I could not find a single difference. They
+appear to operate almost exactly the same in terms of memory management, and
+thusly they clearly have no advantage over eachother. As far as windows goes, it
+uses more of an object oriented style for its memory manager, so foregoing the
+overhead of learning the system and additional resources required, it is most
+likely easier to understand at the end of the day. In general, there was a lot to
+learn here about the way kernels handle memory management it honestly it is
+much more complex than I originally imagined.
+\end{document}

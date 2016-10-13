@@ -1,10 +1,11 @@
 \documentclass[10pt,draftclsnofoot,onecolumn]{IEEEtran}
 \newcommand{\namesigdate}[2][5cm]{%
-  \begin{tabular}{@{}p{#1}@{}}
-    #2 \\[2\normalbaselineskip] \hrule \\[0pt]
-    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
-    {\small \textit{Date}}
-  \end{tabular}
+\begin{minipage}{#1}
+    #2 \vspace{1.0cm}\hrule\smallskip
+    \small \textit{Signature}
+    \vspace{1.0cm}\hrule\smallskip
+    \small \textit{Date}
+\end{minipage}
 }
 \usepackage{graphicx}
 \graphicspath{ {} }

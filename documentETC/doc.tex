@@ -1,4 +1,11 @@
 \documentclass[10pt,draftclsnofoot,onecolumn]{IEEEtran}
+\newcommand{\namesigdate}[2][5cm]{%
+  \begin{tabular}{@{}p{#1}@{}}
+    #2 \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
+    {\small \textit{Date}}
+  \end{tabular}
+}
 \usepackage{graphicx}
 \graphicspath{ {} }
 \begin{document}
@@ -74,14 +81,6 @@ already been discussed:
 \end{itemize}
 
 \newpage
-
-\newcommand{\namesigdate}[2][5cm]{%
-  \begin{tabular}{@{}p{#1}@{}}
-    #2 \\[2\normalbaselineskip] \hrule \\[0pt]
-    {\small \textit{Signature}} \\[2\normalbaselineskip] \hrule \\[0pt]
-    {\small \textit{Date}}
-  \end{tabular}
-}
 
 \noindent \namesigdate{Name1} \hfill \namesigdate[3cm]{Name2}
 

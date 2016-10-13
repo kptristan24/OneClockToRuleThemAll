@@ -12,23 +12,54 @@ formats have provided a solid mix between function and fashion, but there are
 many other possible ways of visually representing the concept of time. One
 creative idea worth exploring is timekeeping through words and letters. The
 basis of our capstone project is to investigate making such a clock with a
-microcontroller, real time clock module, and a set of LED’s. Combined with
-research and development, these components will facilitate the creation of such
-a timepiece. 
+microcontroller, real time clock module, and a set of LED’s. We will combine
+this physical base with a software library of our creation to power a word clock.
 \end{abstract}
 \IEEEpeerreviewmaketitle
 
 \newpage
 \pagenumbering{arabic}
 
-\section{Intro}
-In this paper we are being asked to cover the different ways that Windows, Linux,
-and FreeBSD handles Memory Management. I will cover their similarities,
-differences, and discuss why these exist. I will cover paging, cacheing, and the
-various ways that the operating systems make transformations between virutal
-memory and physical memory. As one would come to expect, Windows varies greatly
-from the other two in how it handles memory, however FreeBSD and Linux operate
-on almost the exact same principles.
+\title{Problem Statement}
+\section{Problem Background}
+Timekeeping isn’t an advanced concept at a fundamental level. Since the first
+caveman noticed that he or she had to shade their eyes from the sun differently
+at various “times” of the day, humans have studied time. Throughout history
+humans have created many different physical representations, each more
+ostentatious than the last, for keeping time. Classic examples of the lengths
+cultures have gone to track time include Stonehenge and Big Ben. While such
+methods of timekeeping aren’t always necessary, we still seek even more
+interesting ways of telling time. One such example of this is the word clock. A
+word clock has a face made out of grid of letters such that there are enough
+letters to create words for spelling out any given time of day. While clocks
+following this idea already exist, most are very rare, look chintzy, or are
+prohibitively expensive for most people.
+
+\section{Problem Solution}
+We would like to address this problem by creating a similar product using
+cheaper off the shelf parts some of our own custom software. The current idea
+will be to use a Mikrobus controller with a Keyestudios clock module to provide
+for the basic hardware components, as well as several LED strips to backlight
+the letters. For the casing/shell we will investigate the feasibility of 3d
+printing or woodworking. In addition to the hardware, we will develope a
+software library to run on the microcontroller that supports the various modes
+of displaying time as well as to provide any additional functionality we have
+time to develop.
+
+\section{Metrics for Completion}
+In order to demonstrate completion for this project, we will meet the following requirements:
+\begin(itemize)
+  \item Establish a working connection between a real time clock module and a
+  microcontroller for the purpose of controlling a custom clock face.
+  \item Given a valid layout of letters in a visual format (i.e. an arrangement
+  with enough letters to spell all the necessary combinations of words for
+  timekeeping) the software to drive a word clock via our hardware module
+  described above.
+  \item Support an alternate output mode for displaying the time in binary coded
+  decimal (BCD) mode.
+  \item Take at least one source of input to facilitate letting the user set the
+  time on the clock.
+
 
 \newpage
 

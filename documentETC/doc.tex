@@ -32,20 +32,21 @@ this physical base with a software library of our creation to power a word clock
 \title{Problem Statement}
 \section{Problem Background}
 Timekeeping isn\textquotesingle t an advanced concept at a fundamental level. Since the first
-caveman noticed that he or she had to shade their eyes from the sun differently
+cavepeople noticed that they had to shade their eyes from the sun differently
 at various ``times'' of the day, humans have studied time. Throughout history
-humans have created many different physical representations, each more
+humans have created many different methods for tracking time. , each more
 ostentatious than the last, for keeping time. Classic examples of the lengths
 cultures have gone to track time include Stonehenge and Big Ben. While such
-methods of timekeeping aren\textquotesingle t always necessary, we still seek even more
+methods of timekeeping aren\textquotesingle t necessary, we still seek even more
 interesting ways of telling time. One such example of this is the word clock. A
-word clock has a face made out of grid of letters such that there are enough
-letters to create words for spelling out any given time of day. While clocks
-following this idea already exist, most are overly complicated, look chintzy, or are
-prohibitively expensive for most people.
+word clock has a face made out of a grid of letters. This grid is layed out such that
+there are enough letters to create all words required for spelling out any given time
+of day. While clocks following this idea already exist, most are overly complicated,
+look chintzy, or are prohibitively expensive.
 
 \section{Problem Solution}
-We would like to address this problem by creating a similar product using
+We would like to address the problem of this type of time keeping solution not
+being readily avaliable by creating a similar product using
 off the shelf parts and our own custom software. The current concept for
 implementation is to use a microcontroller, real time clock (RTC), and LED strips
 with individually programmable lights to power the face of the clock. For the
@@ -58,12 +59,10 @@ we have time to develop.
 \section{Metrics for Completion}
 In order to demonstrate completion of this project, we will meet the following requirements:
 \begin{itemize}
-  \item Establish a working connection between a real time clock module and a
+  \item Establish a connection between a real time clock module and a
   microcontroller for the purpose of controlling a custom clock face.
-  \item Given a valid layout of letters in a visual format (i.e. an arrangement
-  with enough letters to spell all the necessary combinations of words for
-  timekeeping) the software to drive a word clock via our hardware module
-  described above.
+  \item Design a grid of letters such that there are enough of each letter for displaying
+  all of the words necessary for spelling out any time of day.
   \item Support for an alternate output mode for displaying the time in binary coded
   decimal (BCD) mode.
   \item Take at least one source of input to facilitate letting the user set the

@@ -1,0 +1,151 @@
+\documentclass[10pt,draftclsnofoot,onecolumn]{IEEEtran}
+\newcommand{\namesigdate}[2][7cm]{%
+\begin{minipage}{#1}
+    #2 \vspace{1.0cm}\hrule\smallskip
+    \small \textit{Signature}
+    \vspace{1.0cm}\hrule\smallskip
+    \small \textit{Date}
+\end{minipage}
+}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\graphicspath{ {} }
+\begin{document}
+\pagenumbering{gobble}
+\title{One Clock To Rule Them All}
+\author{Tristan Hari, Tasman Thenell, and Scott Metzsch}
+\maketitle
+\begin{abstract}
+Historically, the wristwatch has had one of two faces, analog or digital. These
+formats have provided a solid mix between function and fashion, but there are
+many other possible ways of visually representing the concept of time. One
+creative idea worth exploring is timekeeping through words and letters. The
+basis of our capstone project is to investigate making such a clock with a
+microcontroller, real time clock module, and a set of LED’s. We will combine
+this physical base with a software library of our creation to power a word clock.
+\end{abstract}
+\IEEEpeerreviewmaketitle
+
+\newpage
+\pagenumbering{arabic}
+
+\title{Intro}
+\section{Purpose}
+Historically, the clock face has had one of two display modes, analog or digital.
+These formats have provided a solid mix between function and fashion, but there are many 
+other possible ways of visually representing the concept of time. One creative idea worth
+exploring is timekeeping through words and letters. Although some examples of this already 
+exist in the high end fashion market, such as QWLock or others, they are well outside the 
+price range of an average consumer. The purpose of our project is to provide a similar 
+product with much cheaper production.
+
+\section{Scope}
+The name of our product is tentatively “One Clock To Rule Them All”, or “The One Clock.” 
+The One Clock’s function will be, simply, to tell time. However the functionality of it is 
+defined as being able to creatively tell time through a grid of apparently random letters. 
+Time will be displayed in forms such as “It is half past twelve” or “it is one fifty.” The 
+user will be able to set the starting time using a button component on the clock. Something 
+that may be assumed as a regular clock function that our clock will not do, is that this clock
+ is not centered around being an alarm/scheduler device. We do not intend to have any sound 
+ components and thusly any alarm system will be mostly moot. 
+
+\section{Definitions}
+\begin{itemize}
+  \item Time - The abstract concept that our machine is keeping track of and displaying to the user
+  \item Real Time Clock - A real time clock module is the hardware component that tracks the passage
+  of time regardless of the state of the rest of the system.
+  \item RTC - Acronym for Real Time Clock module.
+  \item Microcontroller - The brains of the clock. This module interfaces between the hardware 
+  components, the RTC, LEDs and buttons, and processes the logic for all clock functionality. 
+  This includes tasks like updating the display and processing user input from the buttons.
+  \item Programmable LED - A Light Emitting Diode that has variable levels of brightness and 
+  color output. Each module is individually programmable in terms of brightness and color.
+  \item LED - Acronym for Light Emitting Diode. Within this project, the term LED will always 
+  be used to refer to a programmable light emitting diode.   
+  \item Display - The LED lit letters of the clock face in a grid arrangement are collectively 
+  called the display. This term will be used to refer to the visual 
+  \item Software Library - The set of control software running on the microcontroller which drives all display output. 
+  \item User Interface - A set of buttons by which the user controls and interacts with the clock.
+  \item BCD - Acronym for Binary Coded Decimal.
+  \item Binary Coded Decimal - A method for encoding decimal numbers and information via binary. 
+  \item USB - Acronym for Universal Serial Bus.
+  \item Universal Serial Bus - A communications medium by which the device is programmed and  powered.
+\end{itemize}
+
+\section{Overview}
+The following sections of this requirements document describe product specifications as follows. 
+Section 2 explains the purpose, function, and form of the product in broad terms on a less 
+technical level. Building on that foundation, Section 3 breaks the functional requirements 
+describe in Section 2 into technical requirements and specifications.
+	Both of the following sections are intended for conveying the entire functional 
+scope of the Word Clock project but at different levels. Section 2 provides an overview of the 
+project while Section 3 pertains to exact requirements which requires a more technical working 
+knowledge of hardware and software design.
+
+\newpage
+\title{Overall Description}
+\section{Product Perspective}
+Product perspective -The clock we are making will be completely self contained with a battery 
+or wall plug being used to power the clock. There will be a microcontroller that is used to 
+control the LEDs on the display and interface with the RTC in order to provide accurate 
+timekeeping capabilities.
+
+On the side of the clock there will be 4 buttons that will be used to set the time on the 
+clock and change features. Each button provides a specific function depending on the software 
+context. An example of this system when a basic menu is being manipulated would have two 
+buttons providing up and down scrolling, one button to select an option or submenu, and the 
+last button serving as a back or exit button.
+
+The microcontroller will be the central piece of hardware in our clock and have the software 
+for running it embedded into it. The RTC will be connected to the board through 6 ports and 
+will be used to check the time periodically to verify that the time is still correct. The LEDs 
+will also be connected to the board and the microcontroller will send data to the LEDs that 
+tell them which LEDs to light up. Lastly the 4 buttons will be connected to the 
+microcontroller to set time and access additional features added to the clock. 
+
+\section{Product Functions}
+The main function of the clock will be to tell time through words displayed on the face of the 
+clock. Examples of the output format include “it is a quarter past twelve”, “it is a quarter to
+five.”
+
+Additional functionality includes the possibility of adding extra features to the clock such as 
+color changes to tell the time of day, differences in brightness, and other features whose 
+development is purely contingent on time constraints.
+
+\section{User Characteristics}
+\begin{itemize}
+  \item A normal user is expected to be able to read, tell time and use a manual.
+  \item Developers are expected to have the skills of a user as well as knowing the 
+  capabilities of the hardware interfaces and the microcontroller in addition to any skills 
+  necessary for software development.
+\end{itemize}
+
+\section{Constraints}
+The project needs to be meet a small set of physical and architectural constraints. These 
+constraints center around the units ability to act like a traditional clock in a reasonable 
+amount of space.
+\begin{itemize}
+	\item The product must be accurate over the course of the year.
+	\item The system needs to be compact enough to fit in a normal wall clock. 
+	\item Power shall be supplied via a conventional micro USB feed.
+\end{itemize}
+
+\newpage
+\title{Specific Requirements}
+\section{Breakdown}
+The system shall tell time within an accuracy of .432 seconds per day. The system will allow 
+the user to set the time within five minutes of the exact desired time. The user will use the 
+buttons on the clock to change time effectively. The clock shall be able to retain it’s time 
+state even if it is without external power for sometime. The system shall display time in a 
+standard twelve hour format using words. The output of the time will be understood by the user 
+in a reasonable manner. The amount of supported users is only limited by the scope of said 
+users vision or the visibility of the device to the users line of sight. Direct operation is 
+not required to view the time. The product will operate as desired within the temperature 
+range of -40 to 85 degrees fahrenheit. 
+
+\newpage
+
+\noindent \namesigdate{Victor Hsu} \hfill \namesigdate{Tristan Hari} \par
+\vspace{2cm}
+\noindent \namesigdate{Tasman Thenell} \hfill \namesigdate{Scott Metzsch}
+\end{document}

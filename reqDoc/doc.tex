@@ -42,8 +42,8 @@ itself is a very simple device and fairly straightforward, however we will discu
 
 \pagenumbering{arabic}
 
-\title{Intro}
-\section{Purpose}
+\section{Intro}
+\subsection{Purpose}
 Historically, the clock face has had one of two display modes, analog or digital.
 These formats have provided a solid mix between function and fashion, but there are many
 other possible ways of visually representing the concept of time. One creative idea worth
@@ -52,7 +52,7 @@ exist in the high end fashion market, such as QWLock or others, they are well ou
 price range of an average consumer. The purpose of our project is to provide a similar
 product with much cheaper production.
 
-\section{Scope}
+\subsection{Scope}
 The name of our product is tentatively “One Clock To Rule Them All”, or “The One Clock.”
 The One Clock’s function will be, simply, to tell time. However the functionality of it is
 defined as being able to creatively tell time through a grid of apparently random letters.
@@ -62,30 +62,28 @@ that may be assumed as a regular clock function that our clock will not do, is t
  is not centered around being an alarm/scheduler device. We do not intend to have any sound
  components and thusly any alarm system will be mostly moot.
 
-\section{Definitions}
-\begin{itemize}
-  \item Time - The abstract concept that our machine is keeping track of and displaying to the user
-  \item Real Time Clock - A real time clock module is the hardware component that tracks the passage
-  of time regardless of the state of the rest of the system.
-  \item RTC - Acronym for Real Time Clock module.
-  \item Microcontroller - The brains of the clock. This module interfaces between the hardware
-  components, the RTC, LEDs and buttons, and processes the logic for all clock functionality.
-  This includes tasks like updating the display and processing user input from the buttons.
-  \item Programmable LED - A Light Emitting Diode that has variable levels of brightness and
-  color output. Each module is individually programmable in terms of brightness and color.
-  \item LED - Acronym for Light Emitting Diode. Within this project, the term LED will always
-  be used to refer to a programmable light emitting diode.
-  \item Display - The LED lit letters of the clock face in a grid arrangement are collectively
-  called the display. This term will be used to refer to the visual
-  \item Software Library - The set of control software running on the microcontroller which drives all display output.
-  \item User Interface - A set of buttons by which the user controls and interacts with the clock.
-  \item BCD - Acronym for Binary Coded Decimal.
-  \item Binary Coded Decimal - A method for encoding decimal numbers and information via binary.
-  \item USB - Acronym for Universal Serial Bus.
-  \item Universal Serial Bus - A communications medium by which the device is programmed and  powered.
-\end{itemize}
+\subsection{Definitions}
+\subsubsection {Time} The abstract concept that our machine is keeping track of and displaying to the user
+\subsubsection {Real Time Clock} A real time clock module is the hardware component that tracks the passage
+of time regardless of the state of the rest of the system.
+\subsubsection {RTC} Acronym for Real Time Clock module.
+\subsubsection {Microcontroller} The brains of the clock. This module interfaces between the hardware
+components, the RTC, LEDs and buttons, and processes the logic for all clock functionality.
+This includes tasks like updating the display and processing user input from the buttons.
+\subsubsection {Programmable LED} A Light Emitting Diode that has variable levels of brightness and
+color output. Each module is individually programmable in terms of brightness and color.
+\subsubsection {LED} Acronym for Light Emitting Diode. Within this project, the term LED will always
+be used to refer to a programmable light emitting diode.
+\subsubsection {Display} The LED lit letters of the clock face in a grid arrangement are collectively
+called the display. This term will be used to refer to the visual
+\subsubsection {Software Library} The set of control software running on the microcontroller which drives all display output.
+\subsubsection {User Interface} A set of buttons by which the user controls and interacts with the clock.
+\subsubsection {BCD} Acronym for Binary Coded Decimal.
+\subsubsection {Binary Coded Decimal} A method for encoding decimal numbers and information via binary.
+\subsubsection {USB} Acronym for Universal Serial Bus.
+\subsubsection {Universal Serial Bus} A communications medium by which the device is programmed and  powered.
 
-\section{Overview}
+\subsection{Overview}
 The following sections of this requirements document describe product specifications as follows.
 Section 2 explains the purpose, function, and form of the product in broad terms on a less
 technical level. Building on that foundation, Section 3 breaks the functional requirements
@@ -96,7 +94,7 @@ project while Section 3 pertains to exact requirements which requires a more tec
 knowledge of hardware and software design.
 
 \newpage
-\title{Overall Description}
+\section{Overall Description}
 \subsection{Product Perspective}
 Product perspective -The clock we are making will be completely self contained with a battery
 or wall plug being used to power the clock. There will be a microcontroller that is used to

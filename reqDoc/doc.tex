@@ -1,4 +1,5 @@
-\documentclass[10pt,draftclsnofoot,onecolumn]{IEEEtran}
+%\documentclass[10pt,draftclsnofoot,onecolumn]{IEEEtran}
+\documentclass[10pt,letterpaper,onecolumn]{article}
 \newcommand{\namesigdate}[2][7cm]{%
 \begin{minipage}{#1}
     #2 \vspace{1.0cm}\hrule\smallskip
@@ -7,42 +8,104 @@
     \small \textit{Date}
 \end{minipage}
 }
+%\newcommand{\subparagraph}{} necessary for using ieeetran
+
+\usepackage{enumerate}
+\usepackage[shortlabels]{./enumitem}
 \usepackage{graphicx}
 \usepackage{textcomp}
+\usepackage{titlesec}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{datetime}
+\newdate{date}{11}{05}{2016}
+\date{\displaydate{date}}
+
 \graphicspath{ {} }
 
+\setcounter{secnumdepth}{5}
 \renewcommand\thesection{\arabic{section}}
+\renewcommand\thesubsection{\arabic{section}.\arabic{subsection}}
+\renewcommand\thesubsubsection{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}
+\renewcommand\theparagraph{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}.\arabic{paragraph}}
+\setlength\voffset{-1in}
+\setlength\hoffset{-1in}
+\setlength\topmargin{0.5in}
+\setlength\oddsidemargin{1in}
+\setlength\evensidemargin{1in}
+\setlength\textheight{8.278in}
+\setlength\textwidth{6.5in}
+\setlength\footskip{0.561in}
+\setlength\headheight{0.5in}
+\setlength\headsep{0.461in}
 
-\makeatletter
-\renewcommand\section{\@startsection {section}{1}{\z@}%
-                                   {-3.5ex \@plus -1ex \@minus -.2ex}%
-                                   {2.3ex \@plus.2ex}%
-                                   {\normalfont\LARGE\bfseries}}% from \Large
-\makeatother
+\renewcommand{\sfdefault}{phv}
+
+\titleformat*{\section}{\Large\bfseries\sffamily}
+\titleformat*{\subsection}{\large\bfseries\sffamily}
+\titleformat*{\subsubsection}{\large\bfseries\sffamily}
+
+\setlength{\skip\footins}{0.0469in}
+\renewcommand\footnoterule{\vspace*{-0.0071in}\setlength\leftskip{0pt}\setlength\rightskip{0pt plus 1fil}\noindent\textcolor{black}{\rule{0.25\columnwidth}{0.0071in}}\vspace*{0.0398in}}
+
 
 
 \begin{document}
-\pagenumbering{gobble}
-\title{One Clock To Rule Them All Requirements Doc}
-\author{Tristan Hari, Tasman Thenell, and Scott Metzsch}
-\maketitle
-\begin{abstract}
-This will be our requirements document for our senior capstone project, "One Clock To Rule Them All."
-In the sections below we will give a better understanding of the overall idea of the project, as
-well as a more specific break down of what exactly will be done, how the product will perform,
-and what one could come to expect from a user experience of using the end product. We will also
-cover detailed technical information and ranges of operation for the device. Overall the clock in
-itself is a very simple device and fairly straightforward, however we will discuss the details here.
-\end{abstract}
-\IEEEpeerreviewmaketitle
 
+\begin{titlepage}
+    \begin{flushleft}
+        \vspace*{1cm}
+        \begin{Huge}
+          \sffamily {\textbf{OneClockToRuleThemAll Requirements and Specifications}}
+        \end{Huge}
+        \vspace{4 cm}
+
+        Sponsor \\
+
+        \begin{large}
+          \sffamily { \textbf{Dr. Victor Hsu}} \\
+          \sffamily { \textbf{Oregon State University}} \\
+          \sffamily { \textbf{Department of Biochemistry and Biophysics}} \\
+        \end{large}
+
+        \vspace{1.5cm}
+
+        Authors\\
+        \begin{large}
+          \sffamily { \textbf{Tasman Thenell}} \\
+          \sffamily { \textbf{Tristan Hari}} \\
+          \sffamily { \textbf{Scott Metzsch}} \\
+        \end{large}
+        \vspace{.5cm}
+        Submission Date \\
+        \begin{large}
+          \sffamily { \textbf{\protect\displaydate{date}}} \\
+        \end{large}
+        \vspace{2 cm}
+        \begin{sffamily}
+        \textbf{Abstract: }
+        This document outlines the requirements and specifications for our senior capstone project, "One Clock To Rule Them All."
+        In the sections below we will give a better understanding of the overall idea of the project, as
+        well as a more specific break down of what exactly will be done, how the product will perform,
+        and what one could come to expect from a user experience of using the end product. We will also
+        cover detailed technical information and ranges of operation for the device. Overall the clock in
+        itself is a very simple device and fairly straightforward, however we will discuss the details here.
+
+        \end{sffamily}
+        \vfill
+
+    \end{flushleft}
+\end{titlepage}
+
+\pagenumbering{roman}
 \newpage
 \tableofcontents
 \newpage
 
 \pagenumbering{arabic}
 
-\section{Intro}
+\section{Introduction}
 \subsection{Purpose}
 Historically, the clock face has had one of two display modes, analog or digital.
 These formats have provided a solid mix between function and fashion, but there are many
@@ -63,25 +126,27 @@ that may be assumed as a regular clock function that our clock will not do, is t
  components and thusly any alarm system will be mostly moot.
 
 \subsection{Definitions}
-\subsubsection {Time} The abstract concept that our machine is keeping track of and displaying to the user
-\subsubsection {Real Time Clock} A real time clock module is the hardware component that tracks the passage
-of time regardless of the state of the rest of the system.
-\subsubsection {RTC} Acronym for Real Time Clock module.
-\subsubsection {Microcontroller} The brains of the clock. This module interfaces between the hardware
-components, the RTC, LEDs and buttons, and processes the logic for all clock functionality.
-This includes tasks like updating the display and processing user input from the buttons.
-\subsubsection {Programmable LED} A Light Emitting Diode that has variable levels of brightness and
-color output. Each module is individually programmable in terms of brightness and color.
-\subsubsection {LED} Acronym for Light Emitting Diode. Within this project, the term LED will always
-be used to refer to a programmable light emitting diode.
-\subsubsection {Display} The LED lit letters of the clock face in a grid arrangement are collectively
-called the display. This term will be used to refer to the visual
-\subsubsection {Software Library} The set of control software running on the microcontroller which drives all display output.
-\subsubsection {User Interface} A set of buttons by which the user controls and interacts with the clock.
-\subsubsection {BCD} Acronym for Binary Coded Decimal.
-\subsubsection {Binary Coded Decimal} A method for encoding decimal numbers and information via binary.
-\subsubsection {USB} Acronym for Universal Serial Bus.
-\subsubsection {Universal Serial Bus} A communications medium by which the device is programmed and  powered.
+\begin{enumerate}[a)]
+  \item Time - The abstract concept that our machine is keeping track of and displaying to the user
+  \item Real Time Clock - A real time clock module is the hardware component that tracks the passage
+  of time regardless of the state of the rest of the system.
+  \item RTC - Acronym for Real Time Clock module.
+  \item Microcontroller - The brains of the clock. This module interfaces between the hardware
+  components, the RTC, LEDs and buttons, and processes the logic for all clock functionality.
+  This includes tasks like updating the display and processing user input from the buttons.
+  \item Programmable LED - A Light Emitting Diode that has variable levels of brightness and
+  color output. Each module is individually programmable in terms of brightness and color.
+  \item LED - Acronym for Light Emitting Diode. Within this project, the term LED will always
+  be used to refer to a programmable light emitting diode.
+  \item Display - The LED lit letters of the clock face in a grid arrangement are collectively
+  called the display. This term will be used to refer to the visual
+  \item Software Library - The set of control software running on the microcontroller which drives all display output.
+  \item User Interface - A set of buttons by which the user controls and interacts with the clock.
+  \item BCD - Acronym for Binary Coded Decimal.
+  \item Binary Coded Decimal - A method for encoding decimal numbers and information via binary.
+  \item USB - Acronym for Universal Serial Bus.
+  \item Universal Serial Bus - A communications medium by which the device is programmed and  powered.
+\end{enumerate}
 
 \subsection{Overview}
 The following sections of this requirements document describe product specifications as follows.
@@ -93,10 +158,9 @@ scope of the Word Clock project but at different levels. Section 2 provides an o
 project while Section 3 pertains to exact requirements which requires a more technical working
 knowledge of hardware and software design.
 
-\newpage
 \section{Overall Description}
 \subsection{Product Perspective}
-Product perspective -The clock we are making will be completely self contained with a battery
+The clock we are making will be completely self contained with a battery
 or wall plug being used to power the clock. There will be a microcontroller that is used to
 control the LEDs on the display and interface with the RTC in order to provide accurate
 timekeeping capabilities.
@@ -115,44 +179,101 @@ tell them which LEDs to light up. Lastly the 4 buttons will be connected to the
 microcontroller to set time and access additional features added to the clock.
 
 \subsection{Product Functions}
-The main function of the clock will be to tell time through words displayed on the face of the
+Expected functionality related to standard clock features is known at this time
+but other possible features have yet to be determined. A vague reference to these
+future items is listed as the last function but no requirements for this item
+is included in section 3.
+\begin{enumerate}[a)]
+  \item The main function of the clock will be to tell time through words displayed on the face of the
 clock. Examples of the output format include “it is a quarter past twelve”, “it is a quarter to
 five.”
-
-Additional functionality includes the possibility of adding extra features to the clock such as
+  \item The clock shall provide a way for the user to set and edit alarms. While
+  making an audible alarm isn't planned, user programmible alarms indicated by
+  the display flashing are expected functionality.
+  \item Additional functionality includes the possibility of adding extra features to the clock such as
 color changes to tell the time of day, differences in brightness, and other features whose
 development is purely contingent on time constraints.
+\end{enumerate}
 
 \subsection{User Characteristics}
-\begin{itemize}
+Users of this product are expected to fall into two categories. While that might
+seem to over generalize things, users break down cleanly into two categories.
+The first is normal users who are just using this product as a clock. The second
+type of user is the poweruser who might want to tinker with the software and
+hardware of the clock in order to understand or expand upon it.
+\begin{enumerate}[a)]
   \item A normal user is expected to be able to read, tell time and use a manual.
   \item Developers are expected to have the skills of a user as well as knowing the
-  capabilities of the hardware interfaces and the microcontroller in addition to any skills
-  necessary for software development.
-\end{itemize}
+capabilities of the hardware interfaces and the microcontroller in addition to
+any skills necessary for software development.
+\end{enumerate}
 
 \subsection{Constraints}
 The project needs to be meet a small set of physical and architectural constraints. These
 constraints center around the units ability to act like a traditional clock in a reasonable
 amount of space.
-\begin{itemize}
-	\item The product must be accurate over the course of the year.
-	\item The system needs to be compact enough to fit in a normal wall clock.
-	\item Power shall be supplied via a conventional micro USB feed.
-\end{itemize}
+\begin{enumerate}[a)]
+  \item The product must be accurate over the course of the year.
+  \item The system needs to be compact enough to fit in a normal wall clock.
+  \item Power shall be supplied via a conventional micro USB feed.
+\end{enumerate}
 
-\newpage
-\title{Specific Requirements}
-\subsection{Breakdown}
-The system shall tell time within an accuracy of .432 seconds per day. The system will allow
-the user to set the time within five minutes of the exact desired time. The user will use the
-buttons on the clock to change time effectively. The clock shall be able to retain it’s time
-state even if it is without external power for sometime. The system shall display time in a
-standard twelve hour format using words. The output of the time will be understood by the user
-in a reasonable manner. The amount of supported users is only limited by the scope of said
-users vision or the visibility of the device to the users line of sight. Direct operation is
-not required to view the time. The product will operate as desired within the temperature
-range of -40 to 85 degrees fahrenheit.
+\section{Specific Requirements}
+\subsection{External Interface}
+A set of 4 buttons provide the only interface to the software. These buttons
+allow access to interacting with any available software menus. This is the only
+point of contact between the user and the software.
+
+\subsection{Functions}
+The following items break down the general concepts of acting like a clock into individual
+conponents of functionality. Together these functions are the software side of
+how this product will be able to act like a clock.
+\begin{enumerate}[a)]
+  \item The system shall offer the user the ability to set the time via a
+  physical interface.
+  \item
+  The system shall allow for setting, modification, and viewing of alarms.
+  \item
+  The system shall provide a visual indicator of an alarm going off but will not
+  provide any auditory notification.
+  \item
+  The system shall recover from any series of inputs via the four button
+  interface. Any input from other sources is considered unsupported and may result
+  in undefined behavior.
+  \item
+  The system shall provide a menu option for switching output mode into BCD as
+  well as a method for returning from BCD to the normal word output mode.
+  \item
+  The system shall update the time displayed every minute but the time in words
+  shall be updated only every five minutes.
+  \item
+  The system shall provide a visual indicator for single minute increments of
+  time.
+\end{enumerate}
+
+\subsection{Performance Requirements}
+\begin{enumerate}[a)]
+  \item The clock shall update the time being displayed within a second of the
+  time in minutes changing.
+  \item The clock shall not lose more than .432 seconds of accuracy per day.
+  \item The system shall maintain this accuracy regardless of the presence of
+  power for at least nine years, the lifespan of the RTC internal battery.
+\end{enumerate}
+
+\subsection{Physical Requirements}
+
+\begin{enumerate}[a)]
+  \item The system components, not including the clock housing, shall weigh no
+  more than 5 pounds.
+  \item The display shall be legible at a range of up to 10 feet for users with
+  typical visual acuity, roughly equivalent to a 20/20 rating.
+  \item The clock shall operate with the accuracy described in section 3.3.2 and
+  3.3.3 within the temperature range of 0 degrees to 85 degrees fahrenheit.
+  \item The grid of letters used to display the time will be no smaller than 10
+  by 10 and no larger than 25 by 25 letters.
+  \item The system shall be powered by a micro USB port.
+  \item The system shall have four tactile buttons.
+\end{enumerate}
 
 \newpage
 

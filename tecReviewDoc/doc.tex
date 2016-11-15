@@ -20,6 +20,21 @@
 
 \newpage
 \section{Hardware}
+\subsection{Micro Controller}
+The technology we are using for our micro controller is the MPBLABXpress Evaluation board.
+The reason why this will be our sole selection is simply that it is what was chosen for us to use by our client.
+That being said it is an excellent choice.
+There are many projects that have been created using this micro controller, from things like other clocks, to home monitoring systems.
+It has many pins for usage and runs very efficiently with power. The creators also provide a cloud based IDE \cite{cloudIDE} that is very easy to use and load new programs onto the board with, which is a feature exclusive to the board we are using.
+A few of the competing products on the market right now is the Adafruit trinket \cite{trinket} mini micro controller, and the infamous raspberry pi \cite{pi}.
+The Adafruit device is excellent as it is very small and can do all of your favorite 5v logic programs.
+The only issue faced with this device in the light of our project is that it does not have enough power throughout capabilities to properly control the LED array that we will be using.
+Also it would require some sort of board to be placed on, and that would lead to additional hardware needing to be bought, and potentially increasing the size past where we would have liked it.
+The raspberry pi is also an excellent product. There and thousandds of project examples that are out there for the pi as is.
+The only reason we decided not to proceed with the raspberry pi is mainly that is more than what we need.
+The raspberry pi is an entire tiny computer that can run linux flavors and do many things.
+But with that in mind, they are much more expensive as are the parts to expand the capabilities.
+
 \subsection{RTC}
 We are working to create a clock that will tell time with words instead of hands or numbers.
 To keep track of the time we will be using a real time clock module that is powered by a battery to keep track of the time so that even if the clock loses power time will still be kept track of.
@@ -125,6 +140,22 @@ For the case of the clock we will be either choosing wood or acrylic for the bod
 In both scenarios we will use a cheaper material for prototyping of the clock and then choose a more premium material for the final product.
 ABS or PLA will be used for mounting hardware and any other small parts that we need to create our clock.
 
+\subsection{Letter Grid Layout}
+When looking at the grid layout there are infinite possibilities to pursue for what could be considered “optimal” or the best for our design.
+That being said we will be comparing a few existing layouts for their potential of different displays.
+The first one being the most popular, and one of the basis ideas for our project, the QWLock \cite{QWLock}.
+The way their layout is, is to have each row with cascading potential priority in sentence structure to tell the time correctly.
+So they have created in layers the exact words needed to spell out the correct time in the correct order.
+Also They have whole words connected, not leaving spaces between letters.
+This was a design decision to make the end product more legible but less apparently random and scattered looking while unlit.
+A second grid design was one we found on an Adafruit tutorial page \cite{smallgrid} that was centered around a micro layout.
+This one was only 8x8 layout, using the absolute minimum words and letters possible to communicate the time.
+This was a creative design, however it loses the ability to tell time in five minute intervals, which would inherently break one of our requirements, so we will not proceed with a letter grid like this one, and will require more space than 8x8.
+Another layout design was by Mike Gualtieri \cite(mikegrid), who listed out some instructions about how to do a layout with any words of your choosing, and how to organize them in a good hierarchical fashion.
+This is likely to be the method we will use to proceed, as following Mike’s “layout” algorithm is not only open source and free to apply, but allows us the freedom of word choice and layout.
+The only constricting piece to this method is that it doesn’t strictly adhere by any means to letter by letter layout, or by ending in a square grid.
+To achieve that may require some additional work on the method.
+
 \subsection{Light Emitting Diodes}
 
 One of the crucial parts of the clock is providing an interesting and legible clock face.
@@ -220,70 +251,22 @@ If faced with the choice of using only off the shelf existing hardware, the libr
 Since the project focus is software design, the best course forward would be to take advantage of the useful bits of existing code under open licences and expand it with a more flexible framework.
 The core concept missing from all the software libraries that were reviewed is any ease in plugging additional features or display modes into the library.
 To meet this goal and to facilitate various stretch goals, the best software choice is a new implementation based on the existing Elektronika implementation.
-=======
-To create the case of our clock we have many tools, but the main 3 we are looking at using are a 3d printer, laser cutter, and CNC.
-Each tool has its strengths and weakness that will impact our decision on what to use for all the different parts that will go into our clock.
 
-The first tool we can use for our project is a 3d printer.
-Most modern 3d printers use either ABS (Acrylonitrile Butadiene Styrene) or PLA (Polylactic Acid) which are both thermoplastics.
-3d printers create objects by melting down this plastic and applying layer after layer to form the walls and internal lattice of the object.
-In the settings of the 3d printers you are able to change the thickness of the walls and pattern that the machine prints for the hollow inside the object.
-Both the wall thickness and internal pattern determine the strength, weight, and robustness of the object as well as increasing of decreasing the time it takes to print the object. Each 3d printer also has a limitation that comes from the size of the printing area.
-We imagined our clock to be around 12 inches by 12 inches and most 3d printers would not be able to print pieces that large and if they were able to it would take a very long time to print.
-3d printing can be used in our project for any parts we may need that are not easily found at a hardware store or are not flat objects.
-We envision possibly using the 3d printer to help create mounting point for the micro controller, guides for LED strips, or other small parts we find cannot find at hardware stores.
-
-The second tool we are able to use for our project is a laser cutter.
-Many laser cutters use a laser beam and focus the beam to create a focus point that can melt, burn, or vaporize the material at the focus point.
-The process is similar to using a magnifying glass to focus the sun onto burn objects.
-Laser cutters are good for cutting acrylic, wood, and if powerful enough can cut metals.
-Consumer laser cutters like the ones we have access to are usually limited to cutting plastics and woods.
-Since laser cutters cut using heat and concentrated beams there is a great deal of heat generated during the process and this needs to be accounted for when choosing materials and thicknesses of materials.
-Thicker materials or harder woods need to be cut at slower speeds and thus cause the material to heat up more and can leave burn marks and can warp the material you are cutting.
-There is some marking techniques and cooling tools that help to reduce the amount of heat and burning that can affect the cut of a material.
-We envision using a laser cutter if we want to make the housing of our clock acrylic or out of a softer or thiner pieces of wood.
-
-The last tool that we have access to is a CNC (Computer Numerical Control) router.
-CNCs use specific types of drill bits to cut materials out and create 2d or 3d shapes.
-CNCs are very similar to laser cutters in their cutting process but CNCs have the benefit of generating less heat to make to remove material.
-Similar to the laser cutter the cut speed depends on the hardness of the material and the speed and depth of the cut need to be adjusted accordingly.
-If your material is a soft wood like pine, you will be able to have each pass of the CNC be faster and/or deeper compared to if you are a harder wood like maple or oak.
-We envision using the CNC router to create the face and back of the clock.
-It will be a good tool to cut out each letter on the face of the clock and for removing material from the back to isolate the light from each letter.
-
-Each tool that we have access to can be used in our project and each has strengths and weaknesses over the other tools.
-We will use either the laser cutter or CNC for most of the large pieces of the clock since they are faster than the 3d printer, and the 3d printer will be perfect for small pieces or mounting hardware of electronic components.
-
-\subsection{Materials}
-For our project we have 3 possibly types of materials to use for the case of our clock, acrylic, wood, and ABS/PLA.
-Each material will have strengths and specific uses in our project.
-
-One possible materials we can use in our clock is acrylic.
-Acrylic is a plastic that you can purchase in sheets or different colors, varying thickness, and physical characteristics.
-Proposed uses of acrylic are the face of the clock and case of the clock.
-Side panels and the face of the clock would be easy to cut with either the laser cutter or the CNC.
-We could also choose an acrylic that is opaque and this will help to isolate light from the LEDs from bleeding into other letters on the clock.
-If we wanted to show off our cable management and electronics that go into our clock, transparent acrylic can be a great choice.
-Acrylic can also come in mirrored sheets that can create unique ways to display the words on the face of the clock.
-The one concern with using acrylic is that mounting objects to it could be a little difficult.
-Mounting parts and components to an acrylic clock case would have to be done with glues since drilling and screwing into acrylic has a tendency to crack or split the material if done improperly.
-Acrylic is also versatile in that we would be able to cut it with either the laser cutter of using the CNC if we find the correct bit and are careful not to crack the sheet.
-
-Wood is another material that we have thought about using to create the case of the clock.
-There are many options and choices of woods that we can choose for this project.
-Cheaper or softer woods are a good choice for prototyping stage of the project since they are easier to cut and decrease the price of each prototype version. Hardwoods are a good choice for the final product because of their durability and aesthetic appeal.
-The downside is that the cut time of hardwoods will be greater and the price can be more expensive compared to softer woods.
-Woods will be easier to mount components into since we are able to drill into the woods with more confidence that the material will not split or crack.
-Depending on the hardness of the wood we will be able to use either the laser cutter or the CNC to cut out the case of the clock.
-
-ABS and PLA are popular thermoplastics used in filament 3d printers and can be used to print out small parts needed for our clock.
-These plastics are heated up by the 3d printer, extruded, and then cool back to a solid state.
-ABS filament is better when strength, flexibility, and higher temperature resistance are important to the object, while PLA has higher printing speeds, thinner layers, and sharper printed corners.
-We intend to print small parts and mounting hardware for our clock so either ABS or PLA would meet the requirements we need of the part.
-
-For the case of the clock we will be either choosing wood or acrylic for the body and face of the clock.
-In both scenarios we will use a cheaper material for prototyping of the clock and then choose a more premium material for the final product.
-ABS or PLA will be used for mounting hardware and any other small parts that we need to create our clock.
+\subsection{Testing}
+The world of engineering testing and development has many routes to take, but the end goal is to achieve testing that finds most bugs in the product before it reaches the user.
+Culminating the accumulated knowledge from the past testing experiences of people in our group, as well as reviewing testing standard online we have a fairly decided test flow.
+The method of our development cycle will be done via agile.
+We have a zen board extension for our github that allows us to create user stories and epics as tickets, and further increase our ability to efficiently create unit tests and produce a quality product.
+The other two large development processes are waterfall and spiral.
+Waterfall involves a strict step by step project breakdown with very strict requirements from start to finish.
+This does not match our capstone project very well, as the product itself is very open ended in design by nature.
+Upon first meeting with the client he provided us with a general concept of what he would like the end product to be, and in turn asked us to design the details.
+Without strict project requirements, waterfall style development simply will not function as intended \cite{testing}.
+A lot of development cycles use the spiral method, which has been found to be very effective when dealing with projects that involve the customers input for iterations of the design, as ours does.
+However, the reason we decided to go with agile over spiral is that spiral lends itself more to larger groups and teams, with a larger product to be developed.
+We, as a small team of only three don’t need all of the checks and balances that spiral development would have us do, and it would truly slow us down in the long run.
+Agile lends itself especially well with our project because we interact with the customer often, have mandatory weekly updates that function as secondary scrums, and have quickly changing requirements and tests.
+All this in mind we will be proceeding with the agile style.
 
 \newpage
 \bibliographystyle{ieeetr}

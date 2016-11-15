@@ -1,59 +1,32 @@
-LATEX	= latex -shell-escape
-BIBTEX	= bibtex
-DVIPS	= dvips
-DVIPDF  = dvipdft
-XDVI	= xdvi -gamma 4
-GH		= gv
+filename=doc
 
+pdf: ps
+	ps2pdf ${filename}.ps
 
-EXAMPLES = $(wildcard *.c)
-SRC	:= $(shell egrep -l '^[^%]*\\begin\{document\}' *.tex)
-TRG	= $(SRC:%.tex=%.dvi)
-PSF	= $(SRC:%.tex=%.ps)
-PDF	= $(SRC:%.tex=%.pdf)
+pdf-print: ps
+	ps2pdf -dColorConversionStrategy=/LeaveColorUnchanged -dPDFSETTINGS=/printer ${filename}.ps
 
+text: html
+	html2text -width 100 -style pretty ${filename}/${filename}.html | sed -n '/./,$$p' | head -n-2 >${filename}.txt
 
-all: latex pdf
+html:
+	@#latex2html -split +0 -info "" -no_navigation ${filename}
+	htlatex ${filename}
 
+ps:	dvi
+	dvips -t letter ${filename}.dvi
 
-pdf: $(PDF)
+dvi:
+	latex ${filename}
+	bibtex ${filename}||true
+	latex ${filename}
+	latex ${filename}
 
-ps: $(PSF)
+read:
+	evince ${filename}.pdf &
 
-$(TRG): %.dvi: %.tex $(EXAMPLES)
-	#one way of including source code is to use pygments
-	pygmentize -f latex -o __${EXAMPLES}.tex ${EXAMPLES}
-	#requires that you \include{pygments.tex} in your preamble
-
-	$(LATEX) $<
-	$(BIBTEX) $(<:%.tex=%)
-	$(LATEX) $<
-	$(LATEX) $<
-	#remove the pygmentized output to avoid cluttering up the directory
-	#rm __${SRC}.tex
-
-
-$(PSF):%.ps: %.dvi
-	$(DVIPS) -R -Poutline -t letter $< -o $@
-
-$(PDF): %.pdf: %.ps
-	ps2pdf $<
-
-show: $(TRG)
-	@for i in $(TRG) ; do $(XDVI) $$i & done
-
-showps: $(PSF)
-	@for i in $(PSF) ; do $(GH) $$i & done
-
-
-
-
-latex:
-	latex *.tex
-
-
+aread:
+	acroread ${filename}.pdf
 
 clean:
-	rm -f *.pdf *.ps *.dvi *.out *.log *.aux *.bbl *.blg *.pyg
-
-.PHONY: all show clean ps pdf showps
+	rm -f ${filename}.{ps,pdf,log,aux,out,dvi,bbl,blg}

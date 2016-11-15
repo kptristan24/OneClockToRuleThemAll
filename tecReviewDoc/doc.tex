@@ -19,7 +19,6 @@
 \maketitle
 
 \newpage
-\section{Hardware}
 \subsection{RTC}
 We are working to create a clock that will tell time with words instead of hands or numbers.
 To keep track of the time we will be using a real time clock module that is powered by a battery to keep track of the time so that even if the clock loses power time will still be kept track of.
@@ -53,14 +52,7 @@ For our project Victor made a great choice for the RTC.
 The KeyesStudio RTC is accurate, easy to connect to the board, and the cheapest of the 3 boards coming in at \$6.80 on KeyesStudio’s store page.
 With the KeyesStudio RTC winning in all 3 categories that have importance to our project, (connectivity, accuracy, and price), it is the correct RTC to choose for our project.
 
-\newpage
-\section{Case}
-Materials and Fabrication of Case
-
-The housing of the clock will also be an important part of our project since we don’t want LEDs to bleed light into other letters on the display and we need to have easy access to wire up the board and add control buttons to the side of the clock.
-For materials we will be looking into using different types of wood or acrylic and vinyl stickers to create the face of the clock.
-
-\subsection{Fabrication}
+\subsection{Fabrication Tools}
 To create the case of our clock we have many tools, but the main 3 we are looking at using are a 3d printer, laser cutter, and CNC.
 Each tool has its strengths and weakness that will impact our decision on what to use for all the different parts that will go into our clock.
 
@@ -220,70 +212,6 @@ If faced with the choice of using only off the shelf existing hardware, the libr
 Since the project focus is software design, the best course forward would be to take advantage of the useful bits of existing code under open licences and expand it with a more flexible framework.
 The core concept missing from all the software libraries that were reviewed is any ease in plugging additional features or display modes into the library.
 To meet this goal and to facilitate various stretch goals, the best software choice is a new implementation based on the existing Elektronika implementation.
-=======
-To create the case of our clock we have many tools, but the main 3 we are looking at using are a 3d printer, laser cutter, and CNC.
-Each tool has its strengths and weakness that will impact our decision on what to use for all the different parts that will go into our clock.
-
-The first tool we can use for our project is a 3d printer.
-Most modern 3d printers use either ABS (Acrylonitrile Butadiene Styrene) or PLA (Polylactic Acid) which are both thermoplastics.
-3d printers create objects by melting down this plastic and applying layer after layer to form the walls and internal lattice of the object.
-In the settings of the 3d printers you are able to change the thickness of the walls and pattern that the machine prints for the hollow inside the object.
-Both the wall thickness and internal pattern determine the strength, weight, and robustness of the object as well as increasing of decreasing the time it takes to print the object. Each 3d printer also has a limitation that comes from the size of the printing area.
-We imagined our clock to be around 12 inches by 12 inches and most 3d printers would not be able to print pieces that large and if they were able to it would take a very long time to print.
-3d printing can be used in our project for any parts we may need that are not easily found at a hardware store or are not flat objects.
-We envision possibly using the 3d printer to help create mounting point for the micro controller, guides for LED strips, or other small parts we find cannot find at hardware stores.
-
-The second tool we are able to use for our project is a laser cutter.
-Many laser cutters use a laser beam and focus the beam to create a focus point that can melt, burn, or vaporize the material at the focus point.
-The process is similar to using a magnifying glass to focus the sun onto burn objects.
-Laser cutters are good for cutting acrylic, wood, and if powerful enough can cut metals.
-Consumer laser cutters like the ones we have access to are usually limited to cutting plastics and woods.
-Since laser cutters cut using heat and concentrated beams there is a great deal of heat generated during the process and this needs to be accounted for when choosing materials and thicknesses of materials.
-Thicker materials or harder woods need to be cut at slower speeds and thus cause the material to heat up more and can leave burn marks and can warp the material you are cutting.
-There is some marking techniques and cooling tools that help to reduce the amount of heat and burning that can affect the cut of a material.
-We envision using a laser cutter if we want to make the housing of our clock acrylic or out of a softer or thiner pieces of wood.
-
-The last tool that we have access to is a CNC (Computer Numerical Control) router.
-CNCs use specific types of drill bits to cut materials out and create 2d or 3d shapes.
-CNCs are very similar to laser cutters in their cutting process but CNCs have the benefit of generating less heat to make to remove material.
-Similar to the laser cutter the cut speed depends on the hardness of the material and the speed and depth of the cut need to be adjusted accordingly.
-If your material is a soft wood like pine, you will be able to have each pass of the CNC be faster and/or deeper compared to if you are a harder wood like maple or oak.
-We envision using the CNC router to create the face and back of the clock.
-It will be a good tool to cut out each letter on the face of the clock and for removing material from the back to isolate the light from each letter.
-
-Each tool that we have access to can be used in our project and each has strengths and weaknesses over the other tools.
-We will use either the laser cutter or CNC for most of the large pieces of the clock since they are faster than the 3d printer, and the 3d printer will be perfect for small pieces or mounting hardware of electronic components.
-
-\subsection{Materials}
-For our project we have 3 possibly types of materials to use for the case of our clock, acrylic, wood, and ABS/PLA.
-Each material will have strengths and specific uses in our project.
-
-One possible materials we can use in our clock is acrylic.
-Acrylic is a plastic that you can purchase in sheets or different colors, varying thickness, and physical characteristics.
-Proposed uses of acrylic are the face of the clock and case of the clock.
-Side panels and the face of the clock would be easy to cut with either the laser cutter or the CNC.
-We could also choose an acrylic that is opaque and this will help to isolate light from the LEDs from bleeding into other letters on the clock.
-If we wanted to show off our cable management and electronics that go into our clock, transparent acrylic can be a great choice.
-Acrylic can also come in mirrored sheets that can create unique ways to display the words on the face of the clock.
-The one concern with using acrylic is that mounting objects to it could be a little difficult.
-Mounting parts and components to an acrylic clock case would have to be done with glues since drilling and screwing into acrylic has a tendency to crack or split the material if done improperly.
-Acrylic is also versatile in that we would be able to cut it with either the laser cutter of using the CNC if we find the correct bit and are careful not to crack the sheet.
-
-Wood is another material that we have thought about using to create the case of the clock.
-There are many options and choices of woods that we can choose for this project.
-Cheaper or softer woods are a good choice for prototyping stage of the project since they are easier to cut and decrease the price of each prototype version. Hardwoods are a good choice for the final product because of their durability and aesthetic appeal.
-The downside is that the cut time of hardwoods will be greater and the price can be more expensive compared to softer woods.
-Woods will be easier to mount components into since we are able to drill into the woods with more confidence that the material will not split or crack.
-Depending on the hardness of the wood we will be able to use either the laser cutter or the CNC to cut out the case of the clock.
-
-ABS and PLA are popular thermoplastics used in filament 3d printers and can be used to print out small parts needed for our clock.
-These plastics are heated up by the 3d printer, extruded, and then cool back to a solid state.
-ABS filament is better when strength, flexibility, and higher temperature resistance are important to the object, while PLA has higher printing speeds, thinner layers, and sharper printed corners.
-We intend to print small parts and mounting hardware for our clock so either ABS or PLA would meet the requirements we need of the part.
-
-For the case of the clock we will be either choosing wood or acrylic for the body and face of the clock.
-In both scenarios we will use a cheaper material for prototyping of the clock and then choose a more premium material for the final product.
-ABS or PLA will be used for mounting hardware and any other small parts that we need to create our clock.
 
 \newpage
 \bibliographystyle{ieeetr}

@@ -21,12 +21,34 @@
 The purpose of this document is to provide for a critical analysis on the available technologies that can be used on our project.
 Some of our technologies have already been decided for us, however they are still subject to critical review and comparison.
 Everything will be compared in sets of three, comparing our current selection with two competing choices.
-We will review the technical details of why our preffered techonology is chosen, and what benefits and disadvantages come along with it.
-In the end this assignment was able to help the group solidfy and reconsider some of the choices we had in mind.
+We will review the technical details of why our preferred technology is chosen, and what benefits and disadvantages come along with it.
+In the end this assignment was able to help the group solidify and reconsider some of the choices we had in mind.
 Moving forward we can be a lot more confident in what we have to chosen to use to accomplish the task.
 \end{abstract}
 
 \newpage
+
+For this review each of us were responsible for writing about 3 different sections.
+Here are the assigned sections for each individual.
+
+Tristan Hari
+\begin{itemize}
+	\item Micro Controller
+	\item Letter Grid Layout
+	\item Testing
+\end{itemize}
+Tasman Thenell
+\begin{itemize}
+	\item Light Emitting Diodes
+	\item Power Source
+	\item Existing Software Libraries
+\end{itemize}
+Scott Metzsch
+\begin{itemize}
+	\item RTC
+	\item Fabrication Tools
+	\item Materials
+\end{itemize}
 
 \subsection{Micro Controller}
 The technology we are using for our micro controller is the MPBLABXpress Evaluation board.
@@ -38,9 +60,9 @@ A few of the competing products on the market right now is the Adafruit trinket 
 The Adafruit device is excellent as it is very small and can do all of your favorite 5v logic programs.
 The only issue faced with this device in the light of our project is that it does not have enough power throughout capabilities to properly control the LED array that we will be using.
 Also it would require some sort of board to be placed on, and that would lead to additional hardware needing to be bought, and potentially increasing the size past where we would have liked it.
-The raspberry pi is also an excellent product. There and thousandds of project examples that are out there for the pi as is.
+The raspberry pi is also an excellent product. There and thousands of project examples that are out there for the pi as is.
 The only reason we decided not to proceed with the raspberry pi is mainly that is more than what we need.
-The raspberry pi is an entire tiny computer that can run linux flavors and do many things.
+The raspberry pi is an entire tiny computer that can run Linux flavors and do many things.
 But with that in mind, they are much more expensive as are the parts to expand the capabilities.
 
 \subsection{RTC}
@@ -48,7 +70,7 @@ We are working to create a clock that will tell time with words instead of hands
 To keep track of the time we will be using a real time clock module that is powered by a battery to keep track of the time so that even if the clock loses power time will still be kept track of.
 We will be using the RTC module to know when to update the face of the clock to show a new time.
 
-For our project Victor has supplied us with 3 Keyestudio DS3231 Clock Modules.
+For our project Victor has supplied us with 3 KeyeStudio DS3231 Clock Modules.
 The RTC is powered by a small battery that will keep track of time even if the main power source is turned off or disconnected.
 The main benefit of this clock is that is has an integrated temperature-compensating crystal oscillator and that there are pins we can attach wires to instead of having to solder each wire to the board.
 In RTCs time is kept by using a small quartz crystal that has a resonance of a precise frequency.
@@ -57,10 +79,10 @@ In our RTC there is an adjustment made that will allow us to get more accurate t
 Between 0 degrees Celsius and 40 degrees Celsius the clock is accurate to 2ppm \cite{ksRTC}, or in other words it will have two errors every 1 million seconds.
 With this accuracy we will only lose around 0.1728 seconds per day or 63.072 per year.
 
-An alternative to the Keyestudio RTC is the SparkFun Real Time Clock Module.
-Compared to the Keyesstudio RTC the SparkFun RTC has two main weaknesses, the first is that the clock is not have any crystal temperature correction and does not have pins to connect wires into.
+An alternative to the KeyeStudio RTC is the SparkFun Real Time Clock Module.
+Compared to the KeyeStudio RTC the SparkFun RTC has two main weaknesses, the first is that the clock is not have any crystal temperature correction and does not have pins to connect wires into.
 Not having crystal temperature correction has main issues when you have your clock changing temperatures with the weather and seasons.
-The SparkFun RTC has an advertised accuracy of 20ppm which is 10 times the errors that you have in the Keyestudio RTC.
+The SparkFun RTC has an advertised accuracy of 20ppm which is 10 times the errors that you have in the KeyeStudio RTC.
 A 20ppm error will lead to 1.728 seconds loss over a day and 630.72 or 10 minutes 30 seconds over the course of a year.
 This lack of temperature correction is a strike against the SparkFun RTC.
 The second weakness of the SparkFun RTC is the lack of built in pins for connecting the RTC to the logic board.
@@ -170,12 +192,12 @@ In addition, to facilitate being a programmable display, each LED needs to be se
 Lastly, flexibility is desired as several stretch goals call for various color capabilities as well as brightness control.
 
 The first type of LED under consideration is a small LED strip purpose built as a back light.
-An example of this product can be found on adafruit with product ID 1626. \cite{led1}
+An example of this product can be found on Adafruit with product ID 1626. \cite{led1}
 The entire module is a thin LED sandwiched in diffusing material that creates a small strip of light rather than a single distinct point.
 These strips score well in power requirements, using only 20mA at around 3 volts but don’t provide many of the other desired features.
 These modules don’t contain any internal brightness control, lack the ability to produce different colors, and would require the creation of a custom addressing system to allow for individual programming.
 
-The second type of light being reviewed is a programmable RGB seven segment display (adafruit ID 1399). \cite{led2}
+The second type of light being reviewed is a programmable RGB seven segment display (Adafruit ID 1399). \cite{led2}
 These units provide several features that would be helpful for the project including flexible color and brightness.
 The color capabilities are particularly intriguing because one planned feature is a having the clock face have a gradient of colors to shift through based on time of day.
 The other specifications of these display units pose some of the same problems as the LED backlight described above.
@@ -184,7 +206,7 @@ In addition to the complicated wiring, a separate control unit would need to be 
 Lastly, the power requirements are higher than single LED solutions because these units have seven times as many LEDs to power.
 
 The last type of display unit under consideration is a programmable LED module.
-One common example of this type of unit is the NeoPixel from adafruit. \cite{led3}
+One common example of this type of unit is the NeoPixel from Adafruit. \cite{led3}
 These units provide many useful features like a unified programming interface with an internal driver which allows for full color and brightness control with a large number of pins.
 One very interesting feature is the ability to tie multiple units together and control them all individually through a common bus.
 Each module uses four pins to communicate with the controller.
@@ -236,7 +258,7 @@ This software provides nothing more than the core function of a word clock inclu
 The library lacks any other advanced features and only drives a single color of LED.
 Another setback is the almost complete lack of documentation for this software.
 
-The second set of software under consideration is a more robust suite of clock control software from a project on the website elektronika.
+The second set of software under consideration is a more robust suite of clock control software from a project on the website Elektronika.
 Also released under a permissive license, many additional features are included above and beyond the core clock functionality. \cite{software2}
 Standout features include temperature sensor reading and temperature display support as well as a scrolling display of the date.
 The other important feature of this software is a semblance of documentation.
@@ -249,7 +271,7 @@ Other than this feature, the QloneTwo library doesn’t provide any additional f
 This library also lacks any form of in depth documentation.
 
 If faced with the choice of using only off the shelf existing hardware, the library from Elektronika is the most well documented and provides the most features which line up with project requirements.
-Since the project focus is software design, the best course forward would be to take advantage of the useful bits of existing code under open licences and expand it with a more flexible framework.
+Since the project focus is software design, the best course forward would be to take advantage of the useful bits of existing code under open licenses and expand it with a more flexible framework.
 The core concept missing from all the software libraries that were reviewed is any ease in plugging additional features or display modes into the library.
 To meet this goal and to facilitate various stretch goals, the best software choice is a new implementation based on the existing Elektronika implementation.
 

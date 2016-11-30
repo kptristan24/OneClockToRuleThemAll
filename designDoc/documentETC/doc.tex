@@ -1,0 +1,90 @@
+\documentclass[10pt,draftclsnofoot,onecolumn]{IEEEtran}
+\newcommand{\namesigdate}[2][7cm]{%
+\begin{minipage}{#1}
+    #2 \vspace{1.0cm}\hrule\smallskip
+    \small \textit{Signature}
+    \vspace{1.0cm}\hrule\smallskip
+    \small \textit{Date}
+\end{minipage}
+}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\graphicspath{ {} }
+\begin{document}
+\pagenumbering{gobble}
+\title{One Clock To Rule Them All}
+\author{Tristan Hari, Tasman Thenell, and Scott Metzsch}
+\maketitle
+\begin{abstract}
+Historically, the wristwatch has had one of two faces, analog or digital. These
+formats have provided a solid mix between function and fashion, but there are
+many other possible ways of visually representing the concept of time. One
+creative idea worth exploring is timekeeping through words and letters. The
+basis of our capstone project is to investigate making such a clock with a
+microcontroller, real time clock module, and a set of LED’s. We will combine
+this physical base with a software library of our creation to power a word clock.
+\end{abstract}
+\IEEEpeerreviewmaketitle
+
+\newpage
+\pagenumbering{arabic}
+
+\title{Problem Statement}
+\section{Problem Background}
+Timekeeping isn\textquotesingle t an advanced concept at a fundamental level. Since the first
+cavepeople noticed that they had to shade their eyes from the sun differently
+at various ``times'' of the day, humans have studied time. Throughout history
+humans have created many different methods for tracking time. , each more
+ostentatious than the last, for keeping time. Classic examples of the lengths
+cultures have gone to track time include Stonehenge and Big Ben. While such
+methods of timekeeping aren\textquotesingle t necessary, we still seek even more
+interesting ways of telling time. One such example of this is the word clock. A
+word clock has a face made out of a grid of letters. This grid is layed out such that
+there are enough letters to create all words required for spelling out any given time
+of day. While clocks following this idea already exist, most are overly complicated,
+look chintzy, or are prohibitively expensive.
+
+\section{Problem Solution}
+We would like to address the problem of this type of time keeping solution not
+being readily avaliable by creating a similar product using
+off the shelf parts and our own custom software. The current concept for
+implementation is to use a microcontroller, real time clock (RTC), and LED strips
+with individually programmable lights to power the face of the clock. For the
+casing/shell we will investigate the feasibility of using 3D printing, laser cutting,
+or woodworking to create structural components. In addition to the hardware, we
+will develop a software library to run on the microcontroller that supports
+various modes of displaying time as well as providing any additional functionality
+we have time to develop.
+
+\section{Metrics for Completion}
+In order to demonstrate completion of this project, we will meet the following requirements:
+\begin{itemize}
+  \item Establish a connection between a real time clock module and a
+  microcontroller for the purpose of controlling a custom clock face.
+  \item Design a grid of letters such that there are enough of each letter for displaying
+  all of the words necessary for spelling out any time of day.
+  \item Support for an alternate output mode for displaying the time in binary coded
+  decimal (BCD) mode.
+  \item Take at least one source of input to facilitate letting the user set the
+  time on the clock.
+\end{itemize}
+
+\section{Stretch/Additional Goals}
+If time permits, our group will explore additional features that would either
+make the clock more robust or easier \quad to use. The following stretch goals have
+already been discussed:
+\begin{itemize}
+  \item Wireless or bluetooth methods for setting or changing the clock remotely,
+  possibly via a mobile app.
+  \item Support alternate physical configurations or letter grid arrangements.
+  \item Different view modes that use the eleven by eleven grid of letters as an
+  eleven by eleven pixel low resolution screen.
+\end{itemize}
+
+\newpage
+\newpage
+
+\noindent \namesigdate{Victor Hsu} \hfill \namesigdate{Tristan Hari} \par
+\vspace{2cm}
+\noindent \namesigdate{Tasman Thenell} \hfill \namesigdate{Scott Metzsch}
+\end{document}

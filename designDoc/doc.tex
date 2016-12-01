@@ -42,6 +42,37 @@ It is also difficult to track down a model that uses english lettering, as their
 There are plenty of DIY projects online that also approach this problem, however they are often very complicated and considered outside the typical users ability to accomplish.
 The intention of this product is that it will be much cheaper and easier to replicate than the current instructables.
 
+\section{Intended Audience}
+The intended audience of this document is Victor Hsu and anyone else who is interested in building a word clock on their own. 
+
 \newpage
+
+\section{Definitions}
+\begin{enumerate}[]
+  \item Time - The abstract concept that our machine is keeping track of and displaying to the user
+  \item Real Time Clock - A real time clock module is the hardware component that tracks the passage
+  of time regardless of the state of the rest of the system.
+  \item RTC - Acronym for Real Time Clock module.
+  \item Microcontroller - The brains of the clock. This module interfaces between the hardware
+  components, the RTC, LEDs and buttons, and processes the logic for all clock functionality.
+  This includes tasks like updating the display and processing user input from the buttons.
+  \item Programmable LED - A Light Emitting Diode that has variable levels of brightness and
+  color output. Each module is individually programmable in terms of brightness and color.
+  \item LED - Acronym for Light Emitting Diode. Within this project, the term LED will always
+  be used to refer to a programmable light emitting diode.
+  \item Display - The LED lit letters of the clock face in a grid arrangement are collectively
+  called the display. This term will be used to refer to the visual
+  \item Software Library - The set of control software running on the microcontroller which drives all display output.
+  \item User Interface - A set of buttons by which the user controls and interacts with the clock.
+  \item BCD - Acronym for Binary Coded Decimal.
+  \item Binary Coded Decimal - A method for encoding decimal numbers and information via binary.
+  \item USB - Acronym for Universal Serial Bus.
+  \item Universal Serial Bus - A communications medium by which the device is programmed and  powered.
+\end{enumerate}
+
+\newpage
+
+\section{Design Context}
+When designing software for our clock we will be influenced heavily by the hardware components that we were given. Our code will have sections written specifically for use with these intended components since the microcontroller, RTC, and LED strips all have specific ways they want data transfered. These hardware requirements will have to be taken into account if someone is using different components to create our word clock. 
 
 \end{document}

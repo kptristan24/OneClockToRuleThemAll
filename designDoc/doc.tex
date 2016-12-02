@@ -82,13 +82,10 @@ That being said, it also includes enough detail to serve as a resource for indiv
 When designing software for our clock we will be influenced heavily by the hardware components that we were given. Our code will have sections written specifically for use with these intended components since the microcontroller, RTC, and LED strips all have specific ways they want data transfered. These hardware requirements will have to be taken into account if someone is using different components to create our word clock.
 
 \section{Design Concerns}
+
 For our clock the main concerns are to be able to read the clock and make sure that it is accurate and does not lose time.
-
-\section{Design View}
-When talking with Victor about what he gave us some guidelines on what requirements he had for his view of the clock will be able to do. The requirements he had can be broken down into performance requirements and functional requirements as they are below.
-
-\subsection{Performance}
-The clock should not lose more than 0.432 seconds per day and the clock will update the time being displayed within 1 second of the time in minutes changing.
+We will also be concerned the clocks ability to maintain power and charge effectively.
+This will of course affect the main concerns listed, but was worth mentioning on its own as it is it's own unit of the product separate from the pieces that will control readability and timekeeping.
 
 \subsection{Function}
 The time will be set through a physical interface of 4 buttons, the clock will be able to recover from any set of presses from these buttons. Through these buttons you will be able to set a visual alarm and switch the display mode to BCD. Also the design of the face of the clock should be able to be read from 10 feet away.

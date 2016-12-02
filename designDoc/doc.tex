@@ -14,16 +14,14 @@
 \graphicspath{ {} }
 \begin{document}
 \pagenumbering{gobble}
-\title{One Clock To Rule Them All}
+\title{One Clock To Rule Them All - Product Design}
 \author{Tristan Hari, Tasman Thenell, and Scott Metzsch}
 \maketitle
 \begin{abstract}
-The purpose of this document is to provide for a critical analysis on the available technologies that can be used on our project.
-Some of our technologies have already been decided for us, however they are still subject to critical review and comparison.
-Everything will be compared in sets of three, comparing our current selection with two competing choices.
-We will review the technical details of why our preferred technology is chosen, and what benefits and disadvantages come along with it.
-In the end this assignment was able to help the group solidify and reconsider some of the choices we had in mind.
-Moving forward we can be a lot more confident in what we have to chosen to use to accomplish the task.
+The purpose of this document is to discuss the design of our project.
+Each requirement for the project needs to be designed around and those design decisions are dicussed in this document.
+The design choices made at this point serve as a starting point for implementation of this project and will be updated over time.
+The final iteration of this document with include all design requirements, specifications, and design choices.
 \end{abstract}
 
 \newpage
@@ -50,8 +48,6 @@ The intention of this product is to improve upon the situation by making the cre
 The primary intended audience for this document is our client, Victor Hsu.
 This document is intened to provide an approachable explanation to the project design to any inquiring individual.
 That being said, it also includes enough detail to serve as a resource for individuals with low level background skills in electrical engineering or computer science who are intending on modifying the system.
-
-\newpage
 
 \section{Definitions}
 \begin{enumerate}[]
@@ -89,7 +85,7 @@ For our clock the main concerns are to be able to read the clock and make sure t
 We will also be concerned the clocks ability to maintain power and charge effectively.
 This will of course affect the main concerns listed, but was worth mentioning on its own as it is it's own unit of the product separate from the pieces that will control readability and timekeeping.
 
-\subsection{Function}
+\subsection{Functionality}
 The time will be set through a physical interface of 4 buttons, the clock will be able to recover from any set of presses from these buttons.
 Through these buttons you will be able to set a visual alarm and switch the display mode to BCD.
 Also the design of the face of the clock should be able to be read from 10 feet away.

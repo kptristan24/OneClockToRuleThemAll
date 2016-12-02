@@ -96,6 +96,12 @@ Also the design of the face of the clock should be able to be read from 10 feet 
 
 \section{Design Viewpoints}
 
+We have selected three primary viewpoints from which to break down the design behind the requirements for the project. 
+The primary viewpoints are algorithmic, composition, and interface.
+The algorithmic viewpoint was selected in order to discuss the accuracy and performance of the combination of the project hardware and our planned system software.
+The composition viewpoint provides a space to describe the components of the project and how they interact, while the interface viewpoint describes user centric design components.
+
+
 \subsection{Algorithm}
 This section addresses some of our client's requirements about clock performance, BCD display mode, and time loss per day.
 
@@ -125,9 +131,49 @@ This section addresses some of our client's requirements about time loss per day
 
 \subsection{Interface}
 This section addresses our client's requirements about clock controls and ability to read the clock.
+The interface is broken down into two perspectives: users and developers.
+The user centric interface consists of a set of buttons for menu control while the developer interface consists of direct interaction with the microcontroller.
 
 \subsubsection{Clock Controls}
 
+The main design concern for clock controls was providing enough buttons for intuitive menu navigation without uneccesary complication.
+A secondary design goal was to provide developers enough sources of input for any additional functionality.
+
+To meet these design goals, a layout of four buttons on the side of the clock has been chosen. 
+These buttons provide control over the planned interface scheme which is: a select button, a back button, and buttons for up and down scrolling.
+An initial setup with only three buttons was considered but it did not make the interface simple enough from a user perspective.
+The rational behind this was a desire to not have any button have more than one function in the core interface.
+With the three button interface, that would have meant a contextual combination back and select button, or only scrolling in a single direction.
+
+From the developer perspective, four buttons also won out as it provides additional flexibility.
+While it is not known at this time if all of these buttons will be necessary, the developer perspective is secondary to the user one.
+That being said, giving additional flexibility for the physical interface for any custom project was deemed to be mostly a positive.
+
 \subsubsection{Clock Readability}
+
+While being able to control the product is important, an even larger concern was the legibility of the clock face.
+The primary purpose of a clock is to provide convienent access to the time of day.
+With any creative twist on timekeeping comes the concern that the creative aspects will get in the way of the core functionality.
+
+From the user perspective this design goal will be easy to meet.
+Unlike other novel approaches to displaying time, our display doesn't require any additional thought or effort to aquire the time.
+The whole idea behind a word clock is that reading the time is as simple as reading the clock face.
+The clockface spells out the time and words and reads like a sentence.
+
+While the display works very well from the user perspective for timekeeping, it comes with some large limitations for developers.
+Unlike most other traditional displays, a letter based matrix is drastically lower resolution and does not use uniformly shaped pixels.
+These concerns are secondary to user legibility but some choices have been made to help developers.
+The current design calls for a grid which is fourteen by fourteen letters which is a larger resolution that most word clocks.
+Providing a slightly higher resolution is the best we can do to help with the display of developer projects.
+
+\subsubsection{Developer Interface}
+
+One final interface design goal was to cater to developers or users that would like to tinker with the clock software.
+We would like to facilitate access to the control software without the need for expensive software tools or hardware modification.
+
+This design goal has been one of the easiest to meet due to the choice of microcontroller.
+The choosen controller has a standard hardware interface via a microUSB port. 
+In addition to this, it also comes with a web based integrated developer environment which provides software developer tools with the need for downloading or purchasing software.
+These features of the microcontroller combined with making the default software open source should allow anyone who would like to tinker with the product or develop for it do so without much difficulty.
 
 \end{document}

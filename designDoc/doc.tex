@@ -75,4 +75,43 @@ The intended audience of this document is Victor Hsu and anyone else who is inte
 \section{Design Context}
 When designing software for our clock we will be influenced heavily by the hardware components that we were given. Our code will have sections written specifically for use with these intended components since the microcontroller, RTC, and LED strips all have specific ways they want data transfered. These hardware requirements will have to be taken into account if someone is using different components to create our word clock. 
 
+\section{Design Concerns}
+For our clock the main concerns are to be able to read the clock and make sure that it is accurate and does not lose time. 
+
+\section{Design View}
+When talking with Victor about what he gave us some guidelines on what requirements he had for his view of the clock will be able to do. The requirements he had can be broken down into performance requirements and functional requirements as they are below. 
+
+\subsection{Performance}
+The clock should not lose more than 0.432 seconds per day and the clock will update the time being displayed within 1 second of the time in minutes changing. 
+
+\subsection{Function}
+The time will be set through a physical interface of 4 buttons, the clock will be able to recover from any set of presses from these buttons. Through these buttons you will be able to set a visual alarm and switch the display mode to BCD. Also the design of the face of the clock should be able to be read from 10 feet away. 
+
+\section{Design Viewpoints}
+
+\subsection{Algorithm}
+This section addresses some of our client's requirements about clock performance, BCD display mode, and time loss per day.
+
+\subsubsection{Clock Performance}
+
+\subsubsection{BCD Display Mode}
+
+\subsubsection{Time Loss}
+
+\subsection{Composition}
+This section addresses some of our client's requirements about time loss per day, display modes, and clock controls. 
+
+\subsubsection{Time Loss}
+
+\subsubsection{Display Modes}
+
+\subsubsection{Clock Controls}
+
+\subsection{Interface} 
+This section addresses our client's requirements about clock controls and ability to read the clock. 
+
+\subsubsection{Clock Controls}
+
+\subsubsection{Clock Readability}
+
 \end{document}

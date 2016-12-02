@@ -29,21 +29,27 @@ Moving forward we can be a lot more confident in what we have to chosen to use t
 \newpage
 
 \section{Scope}
-The product will improve the day to day clock viewing experience of the average clock user.
-It will be fashionable and affordable as an alternative to other similar products on the market.
+This product will an improved experience for users seeking an interesting and unconventional timekeeping device.
+It will provide a fashionable and affordable alternative to a class of product that is usually very expensive.
+In addition to these goals, the product will also provide an opensource platform for users with the skills to modify the programming of the device.
 
 \section{Purpose and Background}
 The intention of this document is to breakdown the details of this project, including the steps we will take to complete it and the tools/methods we will use to effectively develop our product.
 The metrics that we will use to measure product completion will also be included in this document, and will be referenced as we continue to develop throughout the year.
 The background of the product arises from the personal interest of our client, Victor Hsu.
-There are similar products on the market, such as QWLock by Ziegert and Funk, however the problem arises with the price and availability of such things.
-They are considered designer items and thusly very expensive.
-It is also difficult to track down a model that uses english lettering, as their primary customer base is in Germany.
-There are plenty of DIY projects online that also approach this problem, however they are often very complicated and considered outside the typical users ability to accomplish.
-The intention of this product is that it will be much cheaper and easier to replicate than the current instructables.
+While there are similar products already on the market, QWLock by Ziegert and Funk for example, these products suffer from high prices and low avaliability.
+Thses items traditional occupy a designer marker niche which doesn't allow most people to experience one.
+In addition to these problems, it is also difficult to track down a model that has english lettering, as Ziegert is based in Germany.
+
+We are not the first group of people to be inspired by the unique asthetic and function of the word clock.
+There are plenty of DIY projects online that also attempt to solve the problems of price and avaliability.
+While these projects have been a valuable source of insight for the project, they are often very complicated and considered outside the comfort level of our expected users.
+The intention of this product is to improve upon the situation by making the creation of a word clock less expensive, simpler, or both.
 
 \section{Intended Audience}
-The intended audience of this document is Victor Hsu and anyone else who is interested in building a word clock on their own. 
+The primary intended audience for this document is our client, Victor Hsu.
+This document is intened to provide an approachable explanation to the project design to any inquiring individual.
+That being said, it also includes enough detail to serve as a resource for individuals with low level background skills in electrical engineering or computer science who are intending on modifying the system.
 
 \newpage
 
@@ -73,19 +79,19 @@ The intended audience of this document is Victor Hsu and anyone else who is inte
 \newpage
 
 \section{Design Context}
-When designing software for our clock we will be influenced heavily by the hardware components that we were given. Our code will have sections written specifically for use with these intended components since the microcontroller, RTC, and LED strips all have specific ways they want data transfered. These hardware requirements will have to be taken into account if someone is using different components to create our word clock. 
+When designing software for our clock we will be influenced heavily by the hardware components that we were given. Our code will have sections written specifically for use with these intended components since the microcontroller, RTC, and LED strips all have specific ways they want data transfered. These hardware requirements will have to be taken into account if someone is using different components to create our word clock.
 
 \section{Design Concerns}
-For our clock the main concerns are to be able to read the clock and make sure that it is accurate and does not lose time. 
+For our clock the main concerns are to be able to read the clock and make sure that it is accurate and does not lose time.
 
 \section{Design View}
-When talking with Victor about what he gave us some guidelines on what requirements he had for his view of the clock will be able to do. The requirements he had can be broken down into performance requirements and functional requirements as they are below. 
+When talking with Victor about what he gave us some guidelines on what requirements he had for his view of the clock will be able to do. The requirements he had can be broken down into performance requirements and functional requirements as they are below.
 
 \subsection{Performance}
-The clock should not lose more than 0.432 seconds per day and the clock will update the time being displayed within 1 second of the time in minutes changing. 
+The clock should not lose more than 0.432 seconds per day and the clock will update the time being displayed within 1 second of the time in minutes changing.
 
 \subsection{Function}
-The time will be set through a physical interface of 4 buttons, the clock will be able to recover from any set of presses from these buttons. Through these buttons you will be able to set a visual alarm and switch the display mode to BCD. Also the design of the face of the clock should be able to be read from 10 feet away. 
+The time will be set through a physical interface of 4 buttons, the clock will be able to recover from any set of presses from these buttons. Through these buttons you will be able to set a visual alarm and switch the display mode to BCD. Also the design of the face of the clock should be able to be read from 10 feet away.
 
 \section{Design Viewpoints}
 
@@ -99,7 +105,7 @@ This section addresses some of our client's requirements about clock performance
 \subsubsection{Time Loss}
 
 \subsection{Composition}
-This section addresses some of our client's requirements about time loss per day, display modes, and clock controls. 
+This section addresses some of our client's requirements about time loss per day, display modes, and clock controls.
 
 \subsubsection{Time Loss}
 
@@ -107,8 +113,8 @@ This section addresses some of our client's requirements about time loss per day
 
 \subsubsection{Clock Controls}
 
-\subsection{Interface} 
-This section addresses our client's requirements about clock controls and ability to read the clock. 
+\subsection{Interface}
+This section addresses our client's requirements about clock controls and ability to read the clock.
 
 \subsubsection{Clock Controls}
 

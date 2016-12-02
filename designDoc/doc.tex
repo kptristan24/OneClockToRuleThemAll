@@ -99,7 +99,7 @@ The composition viewpoint provides a space to describe the components of the pro
 
 
 \subsection{Algorithm}
-This section addresses some of our client's requirements about clock performance, BCD display mode, and time loss per day.
+This section addresses some of our client's requirements about clock performance, BCD display mode, time loss per day, and the visual alarm.
 
 \subsubsection{Clock Performance}
 Design Concern: This addresses the design concern of being accurate and is primarily for the users.
@@ -116,29 +116,52 @@ In terms of the project Clock Performance and algorithm is entirely what determi
 
 \subsubsection{Time Loss}
 
+\subsubsection{Visual Alarm}
+Design Concern: This addresses the design concern of there being a visual alarm on the clock that does not make sound but has a visual queue that it is going off. 
+
+Analytical Methods: Setting the alarm for a time and verifying that it goes off will be the majority of the testing required for this feature. 
+The test should be used after a test of the LEDs to verify that they are working correctly. 
+This way you can tell if a bug is caused by the LEDs or the code for the visual alarm.
+
+Rationale: We decided this viewpoint was important because it is a useful feature of clocks and a requirement of our product owner. 
+Victor Hsu was also interested in having an alarm of some type added to the clock since that is a basic function of most clocks now a days. 
+
 \subsection{Composition}
 This section addresses some of our client's requirements about time loss per day, display modes, and clock controls.
 
 \subsubsection{Time Loss}
-Design Concern: This addresses the design concern of the clock being accurate over time which is important to the users. The clock will need to be accurate and not lose the time when the clock is unplugged.  
+Design Concern: This addresses the design concern of the clock being accurate over time which is important to the users. 
+The clock will need to be accurate and not lose the time when the clock is unplugged.  
 
-Analytic Methods: Comparing the RTC time to the time of the microcontroller will be done every set amount of time to maintain accuracy and recover the time of the clock if there should be a power disconnect and the microcontroller loses the time. Testing will be done though unplugging the microcontroller and then replugging the microcontroller to verify the time is still being kept.
+Analytic Methods: Comparing the RTC time to the time of the microcontroller will be done every set amount of time to maintain accuracy and recover the time of the clock if there should be a power disconnect and the microcontroller loses the time. 
+Testing will be done though unplugging the microcontroller and then replugging the microcontroller to verify the time is still being kept.
 
-Rationale: This viewpoint is important to the design of the clock because it affects the easy of use and accuracy of the clock. Victor Hsu would also consider time loss as an important aspect in the development and functionality of the clock. In terms of time loss and composition, the RTC will be the main unit to keep time since there will not be any power interruptions with it's independent battery and can then communicate the time to the microcontroller with wires so that there will always be a device keeping the time even in the event of power loss to the microcontroller.
+Rationale: This viewpoint is important to the design of the clock because it affects the easy of use and accuracy of the clock. 
+Victor Hsu would also consider time loss as an important aspect in the development and functionality of the clock. 
+In terms of time loss and composition, the RTC will be the main unit to keep time since there will not be any power interruptions with it's independent battery.
+Also the RTC can then communicate the time to the microcontroller with wires so that there will always be a device keeping the time even in the event of power loss to the microcontroller.
 
 \subsubsection{Display Modes}
 Design Concern: This addresses the design concern of the clock being able to display the clock in BCD mode and make the clock visible at 10 feet. 
 
-Analytics Methods: The LEDs are the main display and will allow the user to read the time based on the backlit letters on the face of the clock. Testing will be done though a script that runs the LEDs through all colors and brightnesses as well as checking that each letter on the clock face is able to be controlled individually. 
+Analytics Methods: The LEDs are the main display and will allow the user to read the time based on the backlit letters on the face of the clock. 
+Testing will be done though a script that runs the LEDs through all colors and brightnesses as well as checking that each letter on the clock face is able to be controlled individually. 
 
-Rationale: This viewpoint is important to the design of the clock because it affects the readability of the clock face and the letters that it is lighting. Controlling the brightness and color of the clock will help to meet Victor's requirement that the clock should be visible from 10 feet and can be also changed to displaying the time in BCD mode. These strips of LEDs will be connected to the clock through a set of wires that pass the data to the LED strips. 
+Rationale: This viewpoint is important to the design of the clock because it affects the readability of the clock face and the letters that it is lighting. 
+Controlling the brightness and color of the clock will help to meet Victor's requirement that the clock should be visible from 10 feet and can be also changed to displaying the time in BCD mode. 
+These strips of LEDs will be connected to the clock through a set of wires that pass the data to the LED strips. 
 
 \subsubsection{Clock Controls}
 Design Concern: This addresses the design concern of the ability to control the clock and make changes to display settings and the time.
 
-Analytics Methods: The buttons will be connected to the clock through a set of wires for each clock and will be tested through pressing each button and verifying that the microcontroller gets the input in terms of a press and a hold of the button. 
+Analytics Methods: The buttons will be connected to the clock through a set of wires for each clock and will be tested through pressing each button and verifying that the microcontroller gets the input.
+The input types will be split in terms of a press or a hold of the button so that either can be used for possible input control. 
+This will test both the connection between the microcontroller and the LEDs and the LEDs themselves to make sure both are working correctly. 
 
-Rationale: This viewpoint is important to the design of the clock because it affects the easy of use when choosing different settings for the clock LEDs or setting the time. Victor would agree that having buttons that work and are accurate to their function is important to the design of the clock.  
+Rationale: This viewpoint is important to the design of the clock because it affects the easy of use when choosing different settings for the clock LEDs or setting the time. 
+Victor would agree that having buttons that work and are accurate to their function is important to the design of the clock.
+These buttons are the users main interface to interact with the device.
+It is important that these buttons have no issues since the only other way to interact with the clock is through the microUSB port. 
 
 \subsection{Interface}
 This section addresses our client's requirements about clock controls and ability to read the clock.

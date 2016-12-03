@@ -102,80 +102,80 @@ The composition viewpoint provides a space to describe the components of the pro
 This section addresses some of our client's requirements about clock performance, BCD display mode, time loss per day, and the visual alarm.
 
 \subsubsection{Clock Performance}
-Design Concern: This addresses the design concern of being accurate and is primarily for the users.
+\hfill \break \indent Design Concern: This addresses the design concern of being accurate and is primarily for the users.
 The clock will need to be accurate or it is of zero worth as a clock.
 
-Analytical Methods: Simply comparing the clocks ability to remain accurate to another atomic based clock.
+\hfill \break \indent Analytical Methods: Simply comparing the clocks ability to remain accurate to another atomic based clock.
 The time we have to exhaustively test this is limited and we will only at most be running 48 hour trials.
 
-Rationale: We decided that this viewpoint was important because it directly impacts the users experience.
+\hfill \break \indent Rationale: We decided that this viewpoint was important because it directly impacts the users experience.
 Our client Victor Hsu would also consider this an important aspect as a measure of success in development of the clock.
 In terms of the project Clock Performance and algorithm is entirely what determines the worth of the product, thusly making this a top priority in terms of viewing the project.
 
 \subsubsection{BCD Display Mode}
-Design Concern: This addresses the design concern of readability for the user.
+\hfill \break \indent Design Concern: This addresses the design concern of readability for the user.
 Using the BCD display model is required for our project by its conception, and having the display properly lighting is paramount to the products success.
 
-Analytical Methods: Fortunately for this Concern, it is simply a matter of observation.
+\hfill \break \indent Analytical Methods: Fortunately for this Concern, it is simply a matter of observation.
 One would be required to view the clock for the entirety of a 24 hour day to exhaustively test this display, but short observation at AM PM times will be sufficient.
 
-Rationale: We decided that viewing the project from the BCD display perspective would be pertinent as it is what will be doing the entirety of the work for the display.
+\hfill \break \indent Rationale: We decided that viewing the project from the BCD display perspective would be pertinent as it is what will be doing the entirety of the work for the display.
 The BCD model needs to be 100% functional for the user to read the clock, for the clock to be visible, and for the time outputs to be legible and correct.
 
 \subsubsection{Time Loss}
-Design Concern: When it comes to any solitary clock that does not sync atomically, accuracy will be lost over time due to the nature of time keeping in electronics.
+\hfill \break \indent Design Concern: When it comes to any solitary clock that does not sync atomically, accuracy will be lost over time due to the nature of time keeping in electronics.
 This is an important concern as it once again addresses the clocks accuracy, in regards to accuracy loss over time.
 
-Analytical Methods: We will not have the ability to exhaustively test this, however we will be doing timing tests over short sessions to see if the time loss is accurate to the value given by the producers of the RTC.
+\hfill \break \indent Analytical Methods: We will not have the ability to exhaustively test this, however we will be doing timing tests over short sessions to see if the time loss is accurate to the value given by the producers of the RTC.
 Keyesstudio's website boasts that the clock will remain accurate within 0.1728 seconds per day, so over several days we will compare time loss with an atomic clock  and verify that the loss is within the acceptable range.
 
-Rationale: This viewpoint is pertinent to our project as a perspective of value of the clock.
+\hfill \break \indent Rationale: This viewpoint is pertinent to our project as a perspective of value of the clock.
 A clock's worth is in ability to keep time accurately, and last for long periods of time.
 Observing the clock from a time loss based perspective gives us an crucial outlook on the value of the end product.
 
 \subsubsection{Visual Alarm}
-Design Concern: This addresses the design concern of there being a visual alarm on the clock that does not make sound but has a visual queue that it is going off.
+\hfill \break \indent Design Concern: This addresses the design concern of there being a visual alarm on the clock that does not make sound but has a visual queue that it is going off.
 
-Analytical Methods: Setting the alarm for a time and verifying that it goes off will be the majority of the testing required for this feature.
+\hfill \break \indent Analytical Methods: Setting the alarm for a time and verifying that it goes off will be the majority of the testing required for this feature.
 The test should be used after a test of the LEDs to verify that they are working correctly.
 This way you can tell if a bug is caused by the LEDs or the code for the visual alarm.
 
-Rationale: We decided this viewpoint was important because it is a useful feature of clocks and a requirement of our product owner.
+\hfill \break \indent Rationale: We decided this viewpoint was important because it is a useful feature of clocks and a requirement of our product owner.
 Victor Hsu was also interested in having an alarm of some type added to the clock since that is a basic function of most clocks now a days.
 
 \subsection{Composition}
 This section addresses some of our client's requirements about time loss per day, display modes, and clock controls.
 
 \subsubsection{Time Loss}
-Design Concern: This addresses the design concern of the clock being accurate over time which is important to the users.
+\hfill \break \indent Design Concern: This addresses the design concern of the clock being accurate over time which is important to the users.
 The clock will need to be accurate and not lose the time when the clock is unplugged.
 
-Analytic Methods: Comparing the RTC time to the time of the microcontroller will be done every set amount of time to maintain accuracy and recover the time of the clock if there should be a power disconnect and the microcontroller loses the time.
+\hfill \break \indent Analytic Methods: Comparing the RTC time to the time of the microcontroller will be done every set amount of time to maintain accuracy and recover the time of the clock if there should be a power disconnect and the microcontroller loses the time.
 Testing will be done though unplugging the microcontroller and then replugging the microcontroller to verify the time is still being kept.
 
-Rationale: This viewpoint is important to the design of the clock because it affects the easy of use and accuracy of the clock.
+\hfill \break \indent Rationale: This viewpoint is important to the design of the clock because it affects the easy of use and accuracy of the clock.
 Victor Hsu would also consider time loss as an important aspect in the development and functionality of the clock.
 In terms of time loss and composition, the RTC will be the main unit to keep time since there will not be any power interruptions with it's independent battery.
 Also the RTC can then communicate the time to the microcontroller with wires so that there will always be a device keeping the time even in the event of power loss to the microcontroller.
 
 \subsubsection{Display Modes}
-Design Concern: This addresses the design concern of the clock being able to display the clock in BCD mode and make the clock visible at 10 feet.
+\hfill \break \indent Design Concern: This addresses the design concern of the clock being able to display the clock in BCD mode and make the clock visible at 10 feet.
 
-Analytics Methods: The LEDs are the main display and will allow the user to read the time based on the backlit letters on the face of the clock.
+\hfill \break \indent Analytics Methods: The LEDs are the main display and will allow the user to read the time based on the backlit letters on the face of the clock.
 Testing will be done though a script that runs the LEDs through all colors and brightnesses as well as checking that each letter on the clock face is able to be controlled individually.
 
-Rationale: This viewpoint is important to the design of the clock because it affects the readability of the clock face and the letters that it is lighting.
+\hfill \break \indent Rationale: This viewpoint is important to the design of the clock because it affects the readability of the clock face and the letters that it is lighting.
 Controlling the brightness and color of the clock will help to meet Victor's requirement that the clock should be visible from 10 feet and can be also changed to displaying the time in BCD mode.
 These strips of LEDs will be connected to the clock through a set of wires that pass the data to the LED strips.
 
 \subsubsection{Clock Controls}
-Design Concern: This addresses the design concern of the ability to control the clock and make changes to display settings and the time.
+\hfill \break \indent Design Concern: This addresses the design concern of the ability to control the clock and make changes to display settings and the time.
 
-Analytics Methods: The buttons will be connected to the clock through a set of wires for each clock and will be tested through pressing each button and verifying that the microcontroller gets the input.
+\hfill \break \indent Analytics Methods: The buttons will be connected to the clock through a set of wires for each clock and will be tested through pressing each button and verifying that the microcontroller gets the input.
 The input types will be split in terms of a press or a hold of the button so that either can be used for possible input control.
 This will test both the connection between the microcontroller and the LEDs and the LEDs themselves to make sure both are working correctly.
 
-Rationale: This viewpoint is important to the design of the clock because it affects the easy of use when choosing different settings for the clock LEDs or setting the time.
+\hfill \break \indent Rationale: This viewpoint is important to the design of the clock because it affects the easy of use when choosing different settings for the clock LEDs or setting the time.
 Victor would agree that having buttons that work and are accurate to their function is important to the design of the clock.
 These buttons are the users main interface to interact with the device.
 It is important that these buttons have no issues since the only other way to interact with the clock is through the microUSB port.
@@ -187,31 +187,31 @@ The user centric interface consists of a set of buttons for menu control while t
 
 \subsubsection{Clock Controls}
 
-The main design concern for clock controls was providing enough buttons for intuitive menu navigation without uneccesary complication.
+\hfill \break \indent The main design concern for clock controls was providing enough buttons for intuitive menu navigation without uneccesary complication.
 A secondary design goal was to provide developers enough sources of input for any additional functionality.
 
-To meet these design goals, a layout of four buttons on the side of the clock has been chosen.
+\hfill \break \indent To meet these design goals, a layout of four buttons on the side of the clock has been chosen.
 These buttons provide control over the planned interface scheme which is: a select button, a back button, and buttons for up and down scrolling.
 An initial setup with only three buttons was considered but it did not make the interface simple enough from a user perspective.
 The rational behind this was a desire to not have any button have more than one function in the core interface.
 With the three button interface, that would have meant a contextual combination back and select button, or only scrolling in a single direction.
 
-From the developer perspective, four buttons also won out as it provides additional flexibility.
+\hfill \break \indent From the developer perspective, four buttons also won out as it provides additional flexibility.
 While it is not known at this time if all of these buttons will be necessary, the developer perspective is secondary to the user one.
 That being said, giving additional flexibility for the physical interface for any custom project was deemed to be mostly a positive.
 
 \subsubsection{Clock Readability}
 
-While being able to control the product is important, an even larger concern was the legibility of the clock face.
+\hfill \break \indent While being able to control the product is important, an even larger concern was the legibility of the clock face.
 The primary purpose of a clock is to provide convienent access to the time of day.
 With any creative twist on timekeeping comes the concern that the creative aspects will get in the way of the core functionality.
 
-From the user perspective this design goal will be easy to meet.
+\hfill \break \indent From the user perspective this design goal will be easy to meet.
 Unlike other novel approaches to displaying time, our display doesn't require any additional thought or effort to aquire the time.
 The whole idea behind a word clock is that reading the time is as simple as reading the clock face.
 The clockface spells out the time and words and reads like a sentence.
 
-While the display works very well from the user perspective for timekeeping, it comes with some large limitations for developers.
+\hfill \break \indent While the display works very well from the user perspective for timekeeping, it comes with some large limitations for developers.
 Unlike most other traditional displays, a letter based matrix is drastically lower resolution and does not use uniformly shaped pixels.
 These concerns are secondary to user legibility but some choices have been made to help developers.
 The current design calls for a grid which is fourteen by fourteen letters which is a larger resolution that most word clocks.
@@ -219,9 +219,11 @@ Providing a slightly higher resolution is the best we can do to help with the di
 
 \subsubsection{Developer Interface}
 
+\hfill \break \indent 
 One final interface design goal was to cater to developers or users that would like to tinker with the clock software.
 We would like to facilitate access to the control software without the need for expensive software tools or hardware modification.
 
+\hfill \break \indent 
 This design goal has been one of the easiest to meet due to the choice of microcontroller.
 The choosen controller has a standard hardware interface via a microUSB port.
 In addition to this, it also comes with a web based integrated developer environment which provides software developer tools with the need for downloading or purchasing software.

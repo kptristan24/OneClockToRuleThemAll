@@ -1,11 +1,5 @@
-// Simple strand test for Adafruit Dot Star RGB LED strip.
-// This is a basic diagnostic tool, NOT a graphics demo...helps confirm
-// correct wiring and tests each pixel's ability to display red, green
-// and blue and to forward data down the line.  By limiting the number
-// and color of LEDs, it's reasonably safe to power a couple meters off
-// the Arduino's 5V pin.  DON'T try that with other code!
-
 #include <Adafruit_DotStar.h>
+#include <TimeLib.h>
 // Because conditional #includes don't work w/Arduino sketches...
 #include <SPI.h>         // COMMENT OUT THIS LINE FOR GEMMA OR TRINKET
 //#include <avr/power.h> // ENABLE THIS LINE FOR GEMMA OR TRINKET
@@ -31,9 +25,9 @@ uint8_t curr_pixel;
 uint32_t brightness;
 uint8_t binaryMonth;
 uint8_t binaryDay;
-uint8_t day;
-uint8_t month;
-uint32_t year;
+//uint8_t day;
+//uint8_t month;
+//uint32_t year;
 
 void messWithLEDS();
 
@@ -44,15 +38,16 @@ void setup() {
 #endif
   curr_pixel = 0;
   mode = 5;
-  brightness = 0;
+  //brightness = 0;
   if(RTC){
     //read date + time
     //set date + time
   }
   else{
-    day = 17;
-    month = 6;
-    year = 2017;
+    //day = 17;
+    //month = 6;
+    //year = 2017;
+    setTime(0, 0, 0, 12, 2, 2017);
   }
   Serial.begin(9600);
   strip.begin(); // Initialize pins for output
@@ -81,119 +76,52 @@ void loop(){
           break;
   case 3: //alarmTrigger();
           break;
-  case 4: messWithLEDS();
+  case 4: rainbowPuke();
           break;
-  case 5: hackyDate();
+  case 5: hackyMinSec();
           break;
   }
 }
 
+void hackyMinSec(){
+  strip.clear();
+  strip.setBrightness(255);
+  uint32_t colorMin = 0xFF0000; //Green
+  uint32_t colorSec = 0x00FF00; //Red
+  int mins = minute();
+  int secs = second(); 
+  int counter = 5;
+  int i = 32;
 
-void dateToBinary(){
-  int c;
-  binaryDay = 0;
-  binaryMonth = 0;
-  for (c = 4; c >= 0; c--)
-     binaryMonth += (month >> c) * pow(10, c);
-
-  for (c = 5; c >= 0; c--)
-     binaryDay += (day >> c) * pow(10, c);
-  
-  Serial.print("Day:");
-  Serial.print(binaryDay, BIN);
-  Serial.print(" Month:");
-  Serial.print(binaryMonth, BIN);
+  Serial.print("Min: ");
+  Serial.print(mins);
+  Serial.print(" Sec: ");
+  Serial.print(secs);
   Serial.println();
   
+  
+  while(counter >= 0){
+    if(mins - i >= 0){
+      strip.setPixelColor(counter+6, colorMin);
+      strip.show();
+      mins = mins - i;   
+    } else {
+      strip.setPixelColor(counter+6, 0x000000);
+      strip.show();
+    } if(secs - i >= 0){
+      strip.setPixelColor(counter, colorSec);
+      strip.show();
+      secs = secs - i;
+    } else {
+      strip.setPixelColor(counter, 0x000000);
+      strip.show();
+    }
+    i = i / 2;
+    counter--;
+  } 
 }
 
-void hackyDate(){
-  strip.clear();
-  dateToBinary();
-  switch(curr_pixel){
-  case 0: if(binaryMonth & 00001000)
-            strip.setPixelColor(0, 0xFF);
-          break;
-  case 1: if(binaryMonth & 00000100)
-            strip.setPixelColor(1, 0xFF);
-          break;
-  case 2: if(binaryMonth & 00000010)
-            strip.setPixelColor(2, 0xFF);
-          break;
-  case 3: if(binaryMonth & 00000001)
-            strip.setPixelColor(3, 0xFF);
-          break;
-  case 4:
-          break;
-  case 5:
-          break;
-  case 6:
-          break;
-  case 7: if(binaryDay & 00010000)
-            strip.setPixelColor(7, 0xFF);
-          break;
-  case 8: if(binaryDay & 00001000)
-            strip.setPixelColor(8, 0xFF);
-          break;
-  case 9: if(binaryDay & 00000100)
-            strip.setPixelColor(9, 0xFF);
-          break;
-  case 10:if(binaryDay & 00001000)
-            strip.setPixelColor(10, 0xFF);
-          break;
-  case 11: if(binaryDay & 00000001)
-            strip.setPixelColor(11, 0xFF);
-          break;
-  }
-  strip.show();
-  //delay(5);
-
-  curr_pixel++;
-  curr_pixel % 12;
-}
-
-void messWithLEDS(){
-  strip.clear();
-  //color = Color(r, g, b); //Convert separate uint8_t r, g, and b into single uint32_t
-  color = ((uint32_t)r << 16) | ((uint32_t)g << 8) | b; //Taken from Adafruit_DotStay.h
-  /*
-  for(int i = NUMPIXELS - 1; i > 0 ; i--){ 
-    strip.setPixelColor(i, list[i-1]); //Changes LED color to color of previous LED
-    list[i] = list[i - 1]; //Changes LED color in list to color of previous LED
-  }
-  strip.setPixelColor(0, color); //Changes first LED to new color
-  list[0] = color; //Stores new color to first position of LED list
-  */
-  strip.setPixelColor(curr_pixel, color);
-  strip.setBrightness(brightness / 16);
-  strip.show();
-  //delay(1);
-
-  //Logic to loop through colors
-  if(r == 255 && b == 0 && g < 255){
-    g += 1;
-  }else if(g == 255 && b == 0 && r > 0){
-    r -= 1;
-  }else if(r == 0 && g == 255 && b < 255){
-    b += 1;
-  }else if(b == 255 && r == 0 && g > 0){
-    g -= 1;
-  }else if(g == 0 && b == 255 && r < 255){
-    r += 1;
-  }else if(r == 255 && g == 0 && b > 0){
-    b -= 1;
-  }
-
-  brightness++;
-  brightness = brightness % 4095;
-
-  curr_pixel++;
-  if(curr_pixel >= NUMPIXELS){
-    curr_pixel = 0;
-  }
-}
-/*
-void loop() {
+void rainbowPuke() {
   strip.clear();
   //color = Color(r, g, b); //Convert separate uint8_t r, g, and b into single uint32_t
   color = ((uint32_t)r << 16) | ((uint32_t)g << 8) | b; //Taken from Adafruit_DotStay.h
@@ -243,4 +171,3 @@ void loop() {
   Serial.println();
   
 }
-*/

@@ -288,20 +288,23 @@ The core concept missing from all the software libraries that were reviewed is a
 To meet this goal and to facilitate various stretch goals, the best software choice is a new implementation based on the existing Elektronika implementation.
 
 \subsection{Testing}
-The world of engineering testing and development has many routes to take, but the end goal is to achieve testing that finds most bugs in the product before it reaches the user.
-Culminating the accumulated knowledge from the past testing experiences of people in our group, as well as reviewing testing standard online we have a fairly decided test flow.
-The method of our development cycle will be done via agile.
-We have a zen board extension for our github that allows us to create user stories and epics as tickets, and further increase our ability to efficiently create unit tests and produce a quality product.
-The other two large development processes are waterfall and spiral.
-Waterfall involves a strict step by step project breakdown with very strict requirements from start to finish.
-This does not match our capstone project very well, as the product itself is very open ended in design by nature.
-Upon first meeting with the client he provided us with a general concept of what he would like the end product to be, and in turn asked us to design the details.
-Without strict project requirements, waterfall style development simply will not function as intended \cite{testing}.
-A lot of development cycles use the spiral method, which has been found to be very effective when dealing with projects that involve the customers input for iterations of the design, as ours does.
-However, the reason we decided to go with agile over spiral is that spiral lends itself more to larger groups and teams, with a larger product to be developed.
-We, as a small team of only three don’t need all of the checks and balances that spiral development would have us do, and it would truly slow us down in the long run.
-Agile lends itself especially well with our project because we interact with the customer often, have mandatory weekly updates that function as secondary scrums, and have quickly changing requirements and tests.
-All this in mind we will be proceeding with the agile style.
+In an effort to keep things modern and hip, our team will be applying agile practices to our development cycle.
+This method relies heavily on good testing practices, and with that in mind, we have a set of methods that we will use as we proceed forward.
+The agile testing method we will be implementing is Lean Testing.
+This in the spirit of keeping our testing accurate while not developing useless artifacts for after the project is done.
+Since this is just a project and not a permanent product or company, without any further development in mind, making advanced test suites and the like are rather unnecessary.
+In order to provide accurate lean testing, we will be pairing 1 team member as the tester, with two team members as developers for each unit test.
+Hopefully the ones in the developer role at the time will be the ones who worked on the specific segment being tested.
+This allows us to keep a very extensive testing method while we do it manually. 
+The project allows for this type of manual testing for most of our purposes, and the situations where we cannot manually test have been addressed in the design document.
+Regarding our work schedule, we mostly will be meeting once a week, testing goals, making a week plan, and share-developing during said meetings.
+This is essentially a big scrum and adds to the compatibility of our development practices going forward.
+
+This is mind, we recognize that the Waterfall methodology is also a good fit for our project, as it seems to fall in line very well with the actual class structure.
+The general steps for Waterfall are strict, and as follows: Gather document requirements, Design, Code and Unit Test, Perform system testing, Perform User acceptance testing, Fix Issues, and Deliver the product.
+While this does fit very well in terms of the class structure, it falls inferior to our modified agile testing/development, due to the high variability in availability of the developers, and our client.
+The clients presence is not required for the most part in Waterfall methodology, and we have decided to keep victor involved at essentially each iteration.
+This of course means, our development leans much more to the modified agile style.
 
 \newpage
 \bibliographystyle{ieeetr}

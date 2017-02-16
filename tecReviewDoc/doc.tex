@@ -69,13 +69,13 @@ This term we started working with our micro controller and ran into a few issues
 
 The IDE of this board on the surface is nice because it is web based and many examples that will help with learning how to use the board. But after further exploration we discovered many sections of code were auto generated and made is difficult for us to read and follow what was going on.
 
-The other main issue was the library support for this board. We could not find library support for this type of board. To get around this issue we would have had to written our own libraries or set up the existing libraries for other board types and change many defined variables and globals to what work with our board and the pins assignments on our current board. 
+The other main issue was the library support for this board. We could not find library support for this type of board. To get around this issue we would have had to written our own libraries or set up the existing libraries for other board types and change many defined variables and globals to what work with our board and the pins assignments on our current board.
 
-When we ran into these issues and found little help on the internet we started to research other board options that would help us get moving forward and writing code for our project. Arduinos were a readily available option that would be better suited for our project. We choose to use the Keyestudio's Arduino Uno R3 board because it addressed the issues with had with our old board and more. 
+When we ran into these issues and found little help on the internet we started to research other board options that would help us get moving forward and writing code for our project. Arduinos were a readily available option that would be better suited for our project. We choose to use the Keyestudio's Arduino Uno R3 board because it addressed the issues with had with our old board and more.
 
-The KeyeStudio Arduino Uno R3 runs off a ATmega328 core which has a large amount of supported libraries that would help us to easily start working with our RTC and LED strips. The libraries we found for RTC and LED interaction were well written and had many examples and tutorials on how to get them setup and running. The concern about the IDE was also solved with the switch to an Arduino. We are now using the Arduino IDE which has many examples, wikis, and forums online that will help us trouble shoot issues and roadblocks that we run into when getting hardware to interact, code to compile, and flashing files onto the board. 
+The KeyeStudio Arduino Uno R3 runs off a ATmega328 core which has a large amount of supported libraries that would help us to easily start working with our RTC and LED strips. The libraries we found for RTC and LED interaction were well written and had many examples and tutorials on how to get them setup and running. The concern about the IDE was also solved with the switch to an Arduino. We are now using the Arduino IDE which has many examples, wikis, and forums online that will help us trouble shoot issues and roadblocks that we run into when getting hardware to interact, code to compile, and flashing files onto the board.
 
-Along with solving out two concerns with the MPBLABXpress the Arduino also brings plug and play functionality and easier ability to define and change the pins that are being used for our RTC and LED strips. The added benefits of being able to plug in components with wires instead of soldering, ability to easily change what pins are used for communication, and addressing our concerns of the old board make the KeyeStudio Arduino Uno R3 a great choice for our new board moving forward. 
+Along with solving out two concerns with the MPBLABXpress the Arduino also brings plug and play functionality and easier ability to define and change the pins that are being used for our RTC and LED strips. The added benefits of being able to plug in components with wires instead of soldering, ability to easily change what pins are used for communication, and addressing our concerns of the old board make the KeyeStudio Arduino Uno R3 a great choice for our new board moving forward.
 
 \subsection{RTC}
 We are working to create a clock that will tell time with words instead of hands or numbers.
@@ -249,7 +249,7 @@ These portable battery packs come in a variety of dimensions and power capacitie
 Of course these wouldn’t be the only answer for power but such packs can be charged via standard USB wall adapters which would be simple to include.
 
 The other battery based solution being considered is to design a custom solution using an array of batteries and prebuilt voltage regulating hardware.
-An example of this type of power supply setup can be seen in the BattBorg, an addon designed for the Raspberry Pi. \cite{power1}
+An example of this type of power supply setup can be seen in the BattBorg, an add on designed for the Raspberry Pi. \cite{power1}
 This option would be the most flexible but would require the largest amount of hardware development to deploy.
 
 Unlike other categories of the literature review, the only definite selection being made at this time is the use of a standard microUSB power source.
@@ -295,12 +295,12 @@ This in the spirit of keeping our testing accurate while not developing useless 
 Since this is just a project and not a permanent product or company, without any further development in mind, making advanced test suites and the like are rather unnecessary.
 In order to provide accurate lean testing, we will be pairing 1 team member as the tester, with two team members as developers for each unit test.
 Hopefully the ones in the developer role at the time will be the ones who worked on the specific segment being tested.
-This allows us to keep a very extensive testing method while we do it manually. 
+This allows us to keep a very extensive testing method while we do it manually.
 The project allows for this type of manual testing for most of our purposes, and the situations where we cannot manually test have been addressed in the design document.
 Regarding our work schedule, we mostly will be meeting once a week, testing goals, making a week plan, and share-developing during said meetings.
 This is essentially a big scrum and adds to the compatibility of our development practices going forward.
 
-This is mind, we recognize that the Waterfall methodology is also a good fit for our project, as it seems to fall in line very well with the actual class structure.
+This in mind, we recognize that the Waterfall methodology is also a good fit for our project, as it seems to fall in line very well with the actual class structure.
 The general steps for Waterfall are strict, and as follows: Gather document requirements, Design, Code and Unit Test, Perform system testing, Perform User acceptance testing, Fix Issues, and Deliver the product.
 While this does fit very well in terms of the class structure, it falls inferior to our modified agile testing/development, due to the high variability in availability of the developers, and our client.
 The clients presence is not required for the most part in Waterfall methodology, and we have decided to keep victor involved at essentially each iteration.

@@ -96,39 +96,42 @@ The purpose of the project is to build a set of open clock control software for 
 For the fall term there were many documents to write that will help to layout and define what we will be working on during the winter and spring terms next year.
 Most of these documents will undergo revisions to make them better as we begin to better understand our project.
 That being said, the final product and goal are a fixed target, not including stretch goals, and are unlikely to change.
+
 \subsection{Problem Statement}
 The problem statement was the first formal piece of writing to put the project onto paper.
 In this document we were working to create a definition and description of what our research and work will be based around for the rest of the year.
 By the end of the year, the problem described in this document is what we are seeking to solve.
 For our project, the problem being solved was making an affordable word clock that is friendly towards user modification.
-\subsection{Requirements Document}
-Once we had a better understanding of the specifics of the problem, a set of requirements were developed to guide the project.
-In this document we were tasked with outlining the project so that both us and our client are clear on what the end product will be.
-This document is important because it will serve as a list to create user stories and as a road map of sorts on when we expect to have certain feature completed by.
+
 \subsection{Technology Review}
-After developing a set of requirements, it became clear that there were many aspects of the project would require additional information outside of what we started the project with.
-In order to rectify these deficiencies, we selected nine important components from the project and took them through a technology review process.
-For this document many groups would research possible solutions to their requirements and then choose which one was best suited for the task.
-But out project differed from most for this document, mainly because 3 of our main features were chosen for us by our project owner Victor.
-The microcontroller, RTC, and LEDs that make up the main components of our clock were supplied by Victor.
-So instead of finding which products to use for our clock, we wrote a comparison of alternative components to look into the quality of Victor's decisions.
+The technology review has been updated to reflect several changes in the project that have occured over the past two months.
+The largest changes take the form of a change in the development board.
+While the MPLABS Xpress board seemed like a good idea on paper, it didn't have much in the way of software support.
+In addition to this, the documentation and code examples for the board were ranging from poor to nonexistant.
+
+The new board chosen to replace it is an Arduino Uno.
+This board has better software support and documentation by a very large margin.
+This is documented in the Technology Review in the form of discussing the new board as well as the libraries that come with it.
+Extensive research into libraries allowed development to progress more in two weeks than it had duing the six weeks prior.
+
 \subsection{Design Document}
-The final technical document that was created this term was the Design Document.
-In this we document we created a road map for development for the rest of the year.
-The details of this map may change, but the big pictures and final destination will stay the same.
+The Design Document has been updated to reflect changing technology and hardware choices.
+The largest changes were made to the developer support section.
+With the change to an easier and more well documented board, development stays relatively similar but with more options.
+In addition to this, the new board has more memory which allows developers additional freedom to change and add features.
 
 \section{Current Stage of Project}
-From our fall progress report to now we have made some major progress in getting closer to having our clock ready for expo in May. 
+From our fall progress report to now we have made some major progress in getting closer to having our clock ready for expo in May.
 Currently we have all the major components talking that would inhibit working on code.
-We have the RTC communicating with the board and can set the time and display it in the serial monitor. 
-The LEDs are connected and correctly lighting up thanks to the libraries we found the connect them. 
-Getting the LEDs and RTC to connect and work was quite easy after moving to the new Arduino board since there are thousands of libraries that we can download and implement. 
-The change of the board has really increased our productivity and ability to move forward. 
+We have the RTC communicating with the board and can set the time and display it in the serial monitor.
+The LEDs are connected and correctly lighting up thanks to the libraries we found the connect them.
+Getting the LEDs and RTC to connect and work was quite easy after moving to the new Arduino board since there are thousands of libraries that we can download and implement.
+The change of the board has really increased our productivity and ability to move forward.
 
 Looking forward we still have a bit to work on but most of the work is centered around designing and manufacturing the case for the clock.
-We still need to design the word layout for the clock face itself, but there are some algorithms and tools and we have found online to use. 
-Designing some demos for the expo event are also on our to do list. 
-These demos will show control of color, brightness, different time display modes, and possibly games such as snake. 
+We still need to design the word layout for the clock face itself, but there are some algorithms and tools and we have found online to use.
+Designing some demos for the expo event are also on our to do list.
+These demos will show control of color, brightness, different time display modes, and possibly games such as snake.
 
 \section{Problems and Solutions}
 The main problems that we have run into right now is learning the hardware side of our project.

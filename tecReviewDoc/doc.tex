@@ -287,6 +287,21 @@ Since the project focus is software design, the best course forward would be to 
 The core concept missing from all the software libraries that were reviewed is any ease in plugging additional features or display modes into the library.
 To meet this goal and to facilitate various stretch goals, the best software choice is a new implementation based on the existing Elektronika implementation.
 
+\subsection{Winter Term Updates}
+The past term of development has led to changes in the power requirements for the project in addition to developments in terms of software support.
+
+Power developments have centered around how much current is neccessary for the lights.
+Initial estimates for power requirements were high because the concept was that lights would be constantly on.
+Advancements have been made in terms of controlling the lights which we have used to only ever have one light on at a time.
+Because of this iterating process, the power requirements have dropped drastically to the point that a 5 volt feed at 2 amps from a power supply or USB source will be sufficient.
+Because of this, battery power is still being considered for a wall mounted version of the clock.
+
+Another major update to the project is related to software support.
+The project has changed to using an Arduino board which has very broad software support.
+The previous board didn't actually support any of the libraries listed above whereas the new board does.
+In addition to supporting those libraries, other libraries have been found which have significantly moved the project along.
+These include libraries for taking care of day light savings time and RTC control.
+
 \subsection{Testing}
 In an effort to keep things modern and hip, our team will be applying agile practices to our development cycle.
 This method relies heavily on good testing practices, and with that in mind, we have a set of methods that we will use as we proceed forward.

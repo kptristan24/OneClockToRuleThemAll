@@ -46,7 +46,7 @@ The intention of this product is to improve upon the situation by making the cre
 
 \section{Intended Audience}
 The primary intended audience for this document is our client, Victor Hsu.
-This document is intened to provide an approachable explanation to the project design to any inquiring individual.
+This document is intended to provide an approachable explanation to the project design to any inquiring individual.
 That being said, it also includes enough detail to serve as a resource for individuals with low level background skills in electrical engineering or computer science who are intending on modifying the system.
 
 \section{Definitions}
@@ -168,7 +168,7 @@ Testing will be done though a script that runs the LEDs through all colors and b
 Controlling the brightness and color of the clock will help to meet Victor's requirement that the clock should be visible from 10 feet.
 These strips of LEDs will be connected to the clock through a set of wires that pass the data to the LED strips.
 
-The other important concern being addressed is supporting BCD output mode. 
+The other important concern being addressed is supporting BCD output mode.
 Instead of powering a grid of letters, the BCD output mode is crucial for allowing the software suite to control other displays.
 BCD is a generic format which could make our control software usable for a wide range of projects.
 In addition to that, it also is very simple to test BCD formatting using something like a nixie tube.
@@ -212,8 +212,8 @@ With any creative twist on timekeeping comes the concern that the creative aspec
 
 \vspace{2mm} From the user perspective this design goal will be easy to meet.
 Unlike other novel approaches to displaying time, our display doesn't require any additional thought or effort to aquire the time.
-The whole idea behind a word clock is that reading the time is as simple as reading the clock face.
-The clockface spells out the time and words and reads like a sentence.
+The whole idea behind a word clock is that reading the time is as simple as reading the words on the clock face.
+The clockface spells out the time in words and reads like a sentence.
 
 \vspace{2mm} While the display works very well from the user perspective for timekeeping, it comes with some large limitations for developers.
 Unlike most other traditional displays, a letter based matrix is drastically lower resolution and does not use uniformly shaped pixels.
@@ -227,12 +227,19 @@ Providing a slightly higher resolution is the best we can do to help with the di
 \vspace{2mm}
 One final interface design goal was to cater to developers or users that would like to tinker with the clock software.
 We would like to facilitate access to the control software without the need for expensive software tools or hardware modification.
+These goals were taken into consideration when picking the board and this has lead to a flexible toolset that costs nothing.
 
 \vspace{2mm}
 This design goal has been one of the easiest to meet due to the choice of microcontroller.
-The choosen controller has a standard hardware interface via a microUSB port.
+The choosen controller has a standard hardware interface which comes in the form of a miniUSB port.
 In addition to this, it also comes with a web based integrated developer environment which provides software developer tools with the need for downloading or purchasing software.
+While most boards have accompanying software, on standard operating systems this board is plug and play and requires almost nothing in the way of drivers or additional setup.
 These features of the microcontroller combined with making the default software open source should allow anyone who would like to tinker with the product or develop for it do so without much difficulty.
+
+The other aspect of the chosen board that is conducive to development is the abundant supply of libraries and examples.
+Having a product within the Arduino family of boards paves the way towards a numerious existing parts of software projects.
+The process of adding hardware to the project for which there is already an Arduino library is usually as simple as including the library.
+This level of software and hardware support combined with spare pins on the board should leave developers ample room for projects.
 
 \newpage
 

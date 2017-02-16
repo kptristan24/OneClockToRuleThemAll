@@ -37,7 +37,7 @@ void setup() {
   clock_prescale_set(clock_div_1); // Enable 16 MHz on Trinket
 #endif
   curr_pixel = 0;
-  mode = 4;
+  mode = 5;
   //brightness = 0;
   if(RTC){
     //read date + time

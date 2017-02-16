@@ -7,8 +7,8 @@
 #define NUMPIXELS 12 // Number of LEDs in strip
 
 // Here's how to control the LEDs from any two pins:
-#define DATAPIN    12
-#define CLOCKPIN   13
+#define DATAPIN    12 //RED WIRE
+#define CLOCKPIN   13 //GREEN WIRE
 #define RTC        0
 Adafruit_DotStar strip = Adafruit_DotStar(
   NUMPIXELS, DATAPIN, CLOCKPIN, DOTSTAR_BRG);
@@ -37,7 +37,7 @@ void setup() {
   clock_prescale_set(clock_div_1); // Enable 16 MHz on Trinket
 #endif
   curr_pixel = 0;
-  mode = 5;
+  mode = 4;
   //brightness = 0;
   if(RTC){
     //read date + time
@@ -160,14 +160,5 @@ void rainbowPuke() {
   if(curr_pixel >= NUMPIXELS){
     curr_pixel = 0;
   }
-  //Messing around with print statements. I need some tips on this section
-  
-  Serial.print("r = ");
-  Serial.print(r, DEC);
-  Serial.print(", g = ");
-  Serial.print(g, DEC);
-  Serial.print(", b = ");
-  Serial.print(b, DEC);
-  Serial.println();
   
 }

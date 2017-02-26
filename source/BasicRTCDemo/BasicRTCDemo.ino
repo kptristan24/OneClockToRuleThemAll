@@ -1,6 +1,3 @@
-#include <SPI.h>
-#include <SparkFunDS3234RTC.h>
-
 /******************************************************************************
 DS3234_RTC_Demo.ino
 Jim Lindblom @ SparkFun Electronics

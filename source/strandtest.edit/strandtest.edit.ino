@@ -1,15 +1,18 @@
-#include <Adafruit_DotStar.h>
-#include <TimeLib.h>
+
 // Because conditional #includes don't work w/Arduino sketches...
 #include <SPI.h>         // COMMENT OUT THIS LINE FOR GEMMA OR TRINKET
+#include <SparkFunDS3234RTC.h>
 //#include <avr/power.h> // ENABLE THIS LINE FOR GEMMA OR TRINKET
-
-#define NUMPIXELS 12 // Number of LEDs in strip
+#include <Adafruit_DotStar.h>
+#include <TimeLib.h>
+#define NUMPIXELS 14 // Number of LEDs in strip
+#define DS13074_CS_PIN 10 // DeadOn RTC Chip-select pin
+#define INTERRUPT_PIN 2 // DeadOn RTC SQW/interrupt pin (optional)
 
 // Here's how to control the LEDs from any two pins:
-#define DATAPIN    12 //RED WIRE
-#define CLOCKPIN   13 //GREEN WIRE
-#define RTC        0
+#define DATAPIN    7 //RED WIRE
+#define CLOCKPIN   8 //GREEN WIRE
+#define RTC        1
 Adafruit_DotStar strip = Adafruit_DotStar(
   NUMPIXELS, DATAPIN, CLOCKPIN, DOTSTAR_BRG);
 // The last parameter is optional -- this is the color data order of the
@@ -32,6 +35,7 @@ uint8_t binaryDay;
 void messWithLEDS();
 
 void setup() {
+   Serial.begin(9600);
 
 #if defined(__AVR_ATtiny85__) && (F_CPU == 16000000L)
   clock_prescale_set(clock_div_1); // Enable 16 MHz on Trinket
@@ -40,8 +44,14 @@ void setup() {
   mode = 5;
   //brightness = 0;
   if(RTC){
-    //read date + time
-    //set date + time
+    #ifdef INTERRUPT_PIN // If using the SQW pin as an interrupt
+      pinMode(INTERRUPT_PIN, INPUT_PULLUP);
+    #endif
+    rtc.begin(DS13074_CS_PIN);
+    //rtc.autoTime();
+    rtc.setTime(0, 39, 13, 2, 31, 10, 16);
+    rtc.update();
+    rtc.enableAlarmInterrupt();
   }
   else{
     //day = 17;
@@ -49,7 +59,6 @@ void setup() {
     //year = 2017;
     setTime(0, 0, 0, 12, 2, 2017);
   }
-  Serial.begin(9600);
   strip.begin(); // Initialize pins for output
   strip.setBrightness(255);
   strip.show();  // Turn all LEDs off ASAP
@@ -66,6 +75,7 @@ uint8_t b = 0x00;
 uint32_t list[NUMPIXELS];
 
 void loop(){  
+  rtc.update();
   //handleInput();
   switch(mode){
   case 0: //timeDisplayWords();
@@ -88,8 +98,16 @@ void hackyMinSec(){
   strip.setBrightness(255);
   uint32_t colorMin = 0xFF0000; //Green
   uint32_t colorSec = 0x00FF00; //Red
-  int mins = minute();
-  int secs = second(); 
+  int mins;
+  int secs;
+  if(RTC){
+    mins = rtc.hour();
+    secs = rtc.minute(); 
+  }
+  else{
+    mins = minute();
+    secs = second(); 
+  }
   int counter = 5;
   int i = 32;
 

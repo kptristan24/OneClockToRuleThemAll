@@ -27,10 +27,23 @@ wordClock::wordClock(){
         letters[20] = ten;
         letters[21] = eleven;
         letters[22] = twelve;
-        letters[23] = amE;
-        letters[24] = pmE;
         
-                
+        setupExtraWords();
+}
+
+void wordClock::setupExtraWords(){
+        if(extra[0])
+                letters[23] = amE;
+        if(extra[1])
+                letters[24] = pmE;
+        if(extra[2])
+                letters[25] = minOne;
+        if(extra[3])
+                letters[26] = minTwo;
+        if(extra[4])
+                letters[27] = minThree;
+        if(extra[5])
+                letters[28] = minFour;
 }
 
 wordClock::~wordClock(){
@@ -76,7 +89,39 @@ void wordClock::updateGridFromTime(int hours, int minutes){
         }
         
         //Set additional words...
+        
+        if(hours < 12){
+                gridLEDs[letters[23][1]] = 1;
+                gridLEDs[letters[23][2]] = 1;
+        }
+        else{
+                gridLEDs[letters[24][1]] = 1;
+                gridLEDs[letters[24][2]] = 1;
+        }
+        
+        // if there are leds/words for single minute increments, update them
+        if(extra[2] || extra[3] || extra[4] || extra[5])
+                updateMinutes(minutes);
+}
 
+void wordClock::updateMinutes(int minutes){
+        int min = minutes % 5;
+        int i, position = 0;
+        
+        if(min == 1 && extra[2])
+                position = 25;
+        else if(min == 2 && extra[3])
+                position = 26;
+        else if(min == 3 && extra[4])
+                position = 27;
+        else if(min == 4 && extra[5])
+                position = 28;
+                
+        if(position){
+                for(i = 1; i < letters[position][0]; i++){
+                        gridLEDs[letters[position][i]] = 1;
+                }
+        }
 }
 
 void wordClock::updateDisplayFromGrid(Adafruit_DotStar *strip){

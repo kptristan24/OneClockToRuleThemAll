@@ -6,7 +6,9 @@
  *
  */
 
-// Times within the hour
+#define TIME24HOUR 0
+
+//******* Times within the hour *******//
 static int fiveM[6] = {6,0,0,0,0,0};
 
 static int tenM[6] = {6,0,0,0,0,0};
@@ -30,7 +32,7 @@ static int fiftyM[6] = {6,0,0,0,0,0};
 static int fiftyfiveM[6] = {6,0,0,0,0,0};
 
 
-// Hour word positions
+//******* Hour word positions *******//
 static int one[4] = {4,0,0,0};
 
 static int two[4] = {4,0,0,0};
@@ -55,14 +57,26 @@ static int eleven[7] = {7,0,0,0,0,0,0};
 
 static int twelve[7] = {7,0,0,0,0,0,0};
 
+//set the 24 hour time flag and include 13-23 if using "military" time
 
-// Extra Words
-//This first array defines which of the extra words are on your grid
-static int extra[6] = {1,1,0,0,0,0};
 
+//******* Extra Words ********//
+
+//This first array defines which of the extra words exist
+static int extra[6] = {1,1,1,1,1,1};
+
+//does the grid contain am/pm?
 static int amE[3] = {3, 0 , 0};
 
 static int pmE[3] = {3, 0 , 0};
 
-//static int
+//are their words/symbols for minute incrememnts?
+static int minOne[2] = {2, 0};
+
+static int minTwo[2] = {2, 0};
+
+static int minThree[2] = {2, 0};
+
+static int minFour[2] = {2, 0};
+
 

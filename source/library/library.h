@@ -19,11 +19,12 @@ public:
         wordClock();
         ~wordClock();
         void testMe();
-
+        void setupExtraWords();
         // Run once during setup function after the strip is initialized and the time is known
         void wordClockSetup(Adafruit_DotStar *,int,int); // hours (24 hour format), minutes
         uint32_t genTimeColor(int,int); // hours (24 hour format), minutes
         void updateGridFromTime(int, int); // hours (24 hour format), minutes
+        void updateMinutes(int); // if the clock face has lights or words for increments of time less than five minutes
         void updateDisplayFromGrid(Adafruit_DotStar *);
 private:
         int test;

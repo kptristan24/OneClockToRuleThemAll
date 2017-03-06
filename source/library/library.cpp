@@ -33,16 +33,63 @@ wordClock::wordClock(){
                 
 }
 
-wordClock::~wordClock(){ 
+wordClock::~wordClock(){
         delete [] letters;
+}
+
+void wordClock::wordClockSetup(Adafruit_DotStar *strip, int hours, int minutes){
+        color = genTimeColor(hours, minutes);
+        updateGridFromTime(hours, minutes);
+        updateDisplayFromGrid(strip);
 }
 
 void wordClock::testMe(){
         Serial.print(test);
 }
 
-void wordClock::updateGrid(int hours, int minutes){
+uint32_t wordClock::genTimeColor(int hours, int minutes){
+        //using colorspecturm, generate a color for the time of day
+}
+
+void wordClock::updateGridFromTime(int hours, int minutes){
+        int i, hourPos = 0, minutePos = 0;
         
+        //figure out the correct color
+        color = genTimeColor(hours,minutes);
+        
+        //clear grid
+        for(i = 0; i < NUM_LEDS; i++){
+                gridLEDs[i] = 0;
+        }
+        
+        //figure out hour and time phrase positions
+        /* TODO */
+        
+        //turn on grid for hour
+        for(i = 1; i < letters[hourPos][0]; i++){
+                gridLEDs[letters[hourPos][i]] = 1;
+        }
+        
+        //turn on grid for minutes phrase
+        for(i = 1; i < letters[minutePos][0]; i++){
+                gridLEDs[letters[minutePos][i]] = 1;
+        }
+        
+        //Set additional words...
+
+}
+
+void wordClock::updateDisplayFromGrid(Adafruit_DotStar *strip){
+        int i;
+  
+        strip->clear();
+        for(i = 0; i < NUM_LEDS; i++){
+                if(gridLEDs[i]){
+                        strip->setPixelColor(i, color);
+                }
+        }
+        
+        strip->show();
 }
 
 

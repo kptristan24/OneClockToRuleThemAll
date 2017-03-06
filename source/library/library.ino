@@ -23,7 +23,7 @@ Adafruit_DotStar strip = Adafruit_DotStar(
 
 // Hardware SPI is a little faster, but must be wired to specific pins
 // (Arduino Uno = pin 11 for data, 13 for clock, other boards are different).
-//Adafruit_DotStar strip = Adafruit_DotStar(NUMPIXELS, DOTSTAR_BRG);
+// Adafruit_DotStar strip = Adafruit_DotStar(NUMPIXELS, DOTSTAR_BRG);
 
 wordClock wc = wordClock();
 
@@ -32,6 +32,11 @@ uint8_t curr_pixel;
 uint32_t brightness;
 uint8_t binaryMonth;
 uint8_t binaryDay;
+
+uint32_t curHour();
+uint32_t curMinute();
+uint32_t curSecond();
+
 //uint8_t day;
 //uint8_t month;
 //uint32_t year;
@@ -62,10 +67,12 @@ void setup() {
     //month = 6;
     //year = 2017;
     setTime(0, 0, 0, 12, 2, 2017);
+
   }
   strip.begin(); // Initialize pins for output
-  strip.setBrightness(255);
-  strip.show();  // Turn all LEDs off ASAP
+  wc.wordClockSetup(&strip, curHour(), curSecond());
+  //strip.setBrightness(255);
+  //strip.show();  // Turn all LEDs off ASAP
 }
 
 // Runs 10 LEDs at a time along strip, cycling through red, green and blue.
@@ -105,12 +112,12 @@ void hackyMinSec(){
   int mins;
   int secs;
   if(RTC){
-    mins = rtc.hour();
-    secs = rtc.minute();
+    mins = curHour();
+    secs = curMinute();
   }
   else{
-    mins = minute();
-    secs = second();
+    mins = curMinute();
+    secs = curSecond();
   }
   int counter = 5;
   int i = 32;
@@ -144,9 +151,6 @@ void hackyMinSec(){
     counter--;
   }
 
-  char test[150][150];
-
-  Serial.print(test[20][20]);
 }
 
 void rainbowPuke() {
@@ -189,4 +193,29 @@ void rainbowPuke() {
     curr_pixel = 0;
   }
   
+}
+
+uint32_t curHour(){
+        if(RTC){
+                return (uint32_t)rtc.hour();
+        }
+        else{
+                return (uint32_t)hour();
+        }
+}
+uint32_t curMinute(){
+        if(RTC){
+                return (uint32_t)rtc.minute();
+        }
+        else{
+                return (uint32_t)minute();
+        }
+}
+uint32_t curSecond(){
+        if(RTC){
+                return (uint32_t)rtc.second();
+        }
+        else{
+                return (uint32_t)second();
+        }
 }

@@ -2,14 +2,18 @@
 #define SNAKE_H
 
 #include <Arduino.h>
-#include "game.h"
+#include "state.h"
 
 struct point{
+        point(){
+                x = 0;
+                y = 0;
+        }
         point(int a, int b){
                 x = a;
                 y = b;
         }
-        void setPoint(int a, int b){
+        void set(int a, int b){
                 x = a;
                 y = b;
         }
@@ -24,14 +28,18 @@ struct point{
         int y;
 };
 
-class snake : public game{
+class snake : public state{
 public:
-        snake(Adafruit_DotStar *);
+        snake(Adafruit_DotStar *, wordClock *);
         ~snake();
         
         bool handleInput();
         void runLogic();
         void drawFrame();
+        
+        void paused();
+        void gameOver();
+        void newGame();
 private:
         int **grid;
         int xSize;
@@ -45,6 +53,8 @@ private:
         point tail;
         
         point food;
+        
+        bool isPaused;
         
 };
 

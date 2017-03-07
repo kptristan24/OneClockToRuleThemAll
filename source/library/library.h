@@ -33,6 +33,7 @@ private:
         uint32_t color;
         int **letters;
         int gridLEDs[NUM_LEDS];
+        
 };
 
 #endif

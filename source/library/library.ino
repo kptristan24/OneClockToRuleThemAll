@@ -3,6 +3,8 @@
 #include <SPI.h>         // COMMENT OUT THIS LINE FOR GEMMA OR TRINKET
 #include <SparkFunDS3234RTC.h>
 #include "library.h"
+#include "state.h"
+#include "snake.h"
 //#include <avr/power.h> // ENABLE THIS LINE FOR GEMMA OR TRINKET
 #include <Adafruit_DotStar.h>
 #include <TimeLib.h>

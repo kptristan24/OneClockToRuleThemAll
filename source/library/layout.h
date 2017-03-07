@@ -6,6 +6,9 @@
  *
  */
 
+#ifndef LAYOUT_H
+#define LAYOUT_H
+
 #define TIME24HOUR 0
 
 //******* Times within the hour *******//
@@ -80,3 +83,4 @@ static int minThree[2] = {2, 0};
 static int minFour[2] = {2, 0};
 
 
+#endif

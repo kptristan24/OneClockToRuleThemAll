@@ -137,4 +137,11 @@ void wordClock::updateDisplayFromGrid(Adafruit_DotStar *strip){
         strip->show();
 }
 
+int wordClock::getDisplaySize(){
+        return NUM_LEDS;
+}
+
+int wordClock::getLEDSPerRow(){
+        return ROW_LENGTH;
+}
 

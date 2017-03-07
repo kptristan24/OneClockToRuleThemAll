@@ -26,6 +26,8 @@ public:
         void updateGridFromTime(int, int); // hours (24 hour format), minutes
         void updateMinutes(int); // if the clock face has lights or words for increments of time less than five minutes
         void updateDisplayFromGrid(Adafruit_DotStar *);
+        int getDisplaySize();
+        int getLEDSPerRow();
 private:
         int test;
         uint32_t color;

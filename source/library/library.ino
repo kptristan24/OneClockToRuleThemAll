@@ -2,7 +2,7 @@
 // Because conditional #includes don't work w/Arduino sketches...
 #include <SPI.h>         // COMMENT OUT THIS LINE FOR GEMMA OR TRINKET
 #include <SparkFunDS3234RTC.h>
-#include "library.h"
+#include "wc.h"
 #include "state.h"
 #include "snake.h"
 //#include <avr/power.h> // ENABLE THIS LINE FOR GEMMA OR TRINKET
@@ -90,6 +90,7 @@ uint32_t list[NUMPIXELS];
 void loop(){
   rtc.update();
   //handleInput();
+  Serial.print(4);
   switch(mode){
   case 0: //timeDisplayWords();
           break;

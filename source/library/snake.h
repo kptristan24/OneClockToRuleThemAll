@@ -35,6 +35,7 @@ public:
         
         bool handleInput();
         void runLogic();
+        point moveSnake(); //helper for runLogic movement processing
         void drawFrame();
         
         void paused();
@@ -46,6 +47,7 @@ private:
         int ySize;
         
         int input;
+        int grow;
         
         int direction;
         int length;
@@ -55,7 +57,7 @@ private:
         point food;
         
         bool isPaused;
-        
+        int state; //0 running, 1 paused, 2 score screen
 };
 
 #endif

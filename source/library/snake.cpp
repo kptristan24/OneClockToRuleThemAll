@@ -55,13 +55,45 @@ bool snake::handleInput(){
 }
 
 void snake::runLogic(){
+        point temp;
+        
         if(isPaused){
                 paused();
                 return;
         }
         
         //update position, check for out of bounds head, check for food
+        temp = moveSnake();
+        if(head.x < 0 || head.x >= xSize){
+                state = 2;
+        }
+        if(head.y < 0 || head.y >= ySize){
+                state = 2;
+        }
         
+        
+}
+
+point snake::moveSnake(){
+        int x, y;
+        if(direction == 0){
+                y = head.y;
+                x = head.x + 1;
+        }
+        else if(direction == 1){
+                y = head.y - 1;
+                x = head.x;
+        }
+        else if(direction == 2){
+                y = head.y;
+                x = head.x - 1;
+        }
+        else if(direction == 3){
+                y = head.y + 1;
+                x = head.x;
+        }
+        
+        return point(x,y);
 }
 
 void snake::drawFrame(){
@@ -102,4 +134,6 @@ void snake::newGame(){
         direction = 0;
         length = 1;
         isPaused = true;
+        state = 1;
+        grow = 0;
 }

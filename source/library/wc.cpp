@@ -1,6 +1,7 @@
-#include "library.h"
+#include "wc.h"
 
 wordClock::wordClock(){
+        int i;
         test = 4;
         letters = new int*[23 + 6];
         
@@ -27,6 +28,11 @@ wordClock::wordClock(){
         letters[20] = ten;
         letters[21] = eleven;
         letters[22] = twelve;
+        
+        for(i = 0; i < ROW_LENGTH; i++){
+                letterPos[0][i] = 0;
+                letterPos[1][i] = 0;
+        }
         
         setupExtraWords();
 }
@@ -145,3 +151,12 @@ int wordClock::getLEDSPerRow(){
         return ROW_LENGTH;
 }
 
+void wordClock::writeLetter(char letter, int row, int offset){
+        int vPosition;
+        vPosition = (row - 1) * 7; //0 (top row) or 7 (bot row)
+        
+}
+        
+void wordClock::showScrollingText(char *message, int length, int row){
+        
+}

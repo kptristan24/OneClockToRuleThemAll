@@ -28,6 +28,7 @@ Adafruit_DotStar strip = Adafruit_DotStar(
 // Adafruit_DotStar strip = Adafruit_DotStar(NUMPIXELS, DOTSTAR_BRG);
 
 wordClock wc = wordClock();
+displayLib disp;
 
 uint8_t mode;
 uint8_t curr_pixel;
@@ -132,8 +133,8 @@ void hackyMinSec(){
   Serial.println();
   Serial.print(" Test: ");
   wc.testMe();
-  
-  
+
+
   while(counter >= 0){
     if(mins - i >= 0){
       strip.setPixelColor(counter+6, colorMin);
@@ -160,14 +161,14 @@ void rainbowPuke() {
   strip.clear();
   //color = Color(r, g, b); //Convert separate uint8_t r, g, and b into single uint32_t
   color = ((uint32_t)r << 16) | ((uint32_t)g << 8) | b; //Taken from Adafruit_DotStay.h
-  
+
   for(int i = NUMPIXELS - 1; i > 0 ; i--){
     strip.setPixelColor(i, list[i-1]); //Changes LED color to color of previous LED
     list[i] = list[i - 1]; //Changes LED color in list to color of previous LED
   }
   strip.setPixelColor(0, color); //Changes first LED to new color
   list[0] = color; //Stores new color to first position of LED list
-  
+
   strip.setPixelColor(curr_pixel, color);
   strip.setBrightness(brightness / 16);
   strip.show();
@@ -195,7 +196,7 @@ void rainbowPuke() {
   if(curr_pixel >= NUMPIXELS){
     curr_pixel = 0;
   }
-  
+
 }
 
 uint32_t curHour(){

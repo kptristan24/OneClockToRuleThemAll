@@ -2,6 +2,7 @@
 #define DISPLAY_H
 
 #include <FastLED.h>
+#include "layout.h"
 
 /* Chipset options (from fast LED)
 	LPD8806,
@@ -26,13 +27,16 @@
 class display{
 public:
         display();
+        void setupWords(); 
+        void setupExtraWords();
 
         void updateDisplay();
         void debugUpdateDisplay(); //Just prints display state to console
 
-        CRBG *rawStrip();
+        CRGB *rawStrip();
 private:
         CRGB LEDstrip[NUM_LEDS];
+        uint8_t **words;
 };
 
 #endif

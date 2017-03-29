@@ -37,6 +37,7 @@ public:
                 size--;
                 if(!size){
                         base = NULL;
+                        stack = NULL;
                 }
         };
 private:

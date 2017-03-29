@@ -12,8 +12,13 @@
 class clockLib{
 public:
         clockLib();
+        uint32_t curMinute();
+        uint32_t curHour();
+        uint32_t curSecond();
+
+        //To-do Alarm functions
 private:
-        
+
 };
 
 #endif

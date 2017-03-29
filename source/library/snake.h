@@ -17,7 +17,7 @@ struct point{
                 x = a;
                 y = b;
         }
-        
+
         bool checkEquals(const point &other){
                 if(other.x == x && other.y == y){
                         return true;
@@ -30,33 +30,28 @@ struct point{
 
 class snake : public state{
 public:
-        snake(Adafruit_DotStar *, wordClock *);
+        snake();
         ~snake();
-        
+
         bool handleInput();
         void runLogic();
         point moveSnake(); //helper for runLogic movement processing
         void drawFrame();
-        
+
         void paused();
         void gameOver();
         void newGame();
 private:
+        int direction;
+        point head;
+        point tail;
+        point food;
+
         int **grid;
         int xSize;
         int ySize;
-        
         int input;
         int grow;
-        
-        int direction;
-        int length;
-        point head;
-        point tail;
-        
-        point food;
-        
-        bool isPaused;
         int state; //0 running, 1 paused, 2 score screen
 };
 

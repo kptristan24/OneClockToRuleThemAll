@@ -9,7 +9,8 @@ struct node{
                 this->next = next;
         };
         ~node(){
-                delete curState;
+                if(curState)
+                        delete curState;
         };
         state *curState;
         node *next;

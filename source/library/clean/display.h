@@ -27,14 +27,15 @@
 class display{
 public:
         display();
-        void setupWords(); 
+        void setupWords();
         void setupExtraWords();
 
         void updateDisplay();
         void debugUpdateDisplay(); //Just prints display state to console
 
-        CRGB *rawStrip();
+        CRGB **rawStrip();
 private:
+        CRGB **array; //abstraction for treating strip like an array
         CRGB LEDstrip[NUM_LEDS];
         uint8_t **words;
 };

@@ -30,20 +30,23 @@ void setup() {
 }
 
 void loop() {
-        (*top)->curState->handleInput();
-        (*top)->curState->runLogic();
-        (*top)->curState->drawFrame();
+        rtc.update();
+        if(!clk.checkAlarms()){
+                (*top)->curState->handleInput();
+                (*top)->curState->runLogic();
+                (*top)->curState->drawFrame();
+        }
 
-        if(signal){
-                switch(signal){
-                case 1: stk.push(newState); //new state construction requested.
-                        break;
-                case 2: stk.pop(); //exit top state
-                        break;
-                case 3: stk.pop(); stk.push(newState); //state replacement requested
-                        break;
-                default: Serial.print("State change requested with unknown signal: ");
-                         Serial.print(signal);
-                }
+        switch(signal){
+        case 0: break;                  //nothing requested
+        case 1: stk.push(newState);     //add new state requested.
+                break;
+        case 2: stk.pop();              //exit top state
+                break;
+        case 3: stk.pop();              //replace top state
+                stk.push(newState);
+                break;
+        default: Serial.print("State change requested with unknown signal: ");
+                 Serial.print(signal);
         }
 }

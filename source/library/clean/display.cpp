@@ -4,6 +4,11 @@ display::display(){
 #if !HEADLESS
         FastLED.addLeds<CHIPSET, DATA_PIN, CLOCK_PIN>(LEDstrip, NUM_LEDS);
 #endif
+        array = new CRGB*[NUM_LEDS/ROW_LENGTH];
+        for(int i = 0; i < NUM_LEDS/ROW_LENGTH; i++){
+                array[i] = LEDstrip[ROW_LENGTH * i];
+        }
+        
         words = new uint8_t*[NUM_WORDS + NUM_EXTRA];
         setupWords();
         setupExtraWords();
@@ -62,8 +67,9 @@ void display::updateDisplay(){
 void display::debugUpdateDisplay(){
         int rows;
         unsigned char rowContents;
-
         rows = NUM_LEDS / ROW_LENGTH;
+
+        Serial.print("Display state:");
         for(int i = 0; i < rows; i++){
                 rowContents = 0;
                 for(int j = 0; j < ROW_LENGTH; j++){
@@ -74,6 +80,6 @@ void display::debugUpdateDisplay(){
         }
 }
 
-CRGB *display::rawStrip(){
-        return LEDstrip;
+CRGB **display::rawStrip(){
+        return array;
 }

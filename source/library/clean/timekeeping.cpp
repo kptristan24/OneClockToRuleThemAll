@@ -68,8 +68,26 @@ void clockLib::addAlarm(const timeS &newAlarm){
         }
 }
 
-void clockLib::removeAlarm(const int &position){
-        alarms.erase(alarms.at(position));
+bool clockLib::removeAlarm(const int &position){
+        if(position < alarms.size()){
+                alarms.erase(alarms.at(position))
+                //__setNextAlarm();
+                return true;
+        }
+
+        return false;
+}
+
+bool clockLib::removeAlarm(const timeS &alarmTime){
+        for(auto t : alarms){
+                if(equal(*t, alarmTime)){
+                        alarms.erase(t);
+                        //setNextAlarm();
+                        return true;
+                }
+        }
+        
+        return false;
 }
 
 //Double check the implementaiton of trigger alarm next day

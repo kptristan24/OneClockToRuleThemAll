@@ -31,7 +31,7 @@ void setup() {
 
 void loop() {
         rtc.update();
-        if(!clk.checkAlarms()){
+        if(!clk.checkAlarms()){ //can generate a state transistion if an alarm goes off
                 (*top)->curState->handleInput();
                 (*top)->curState->runLogic();
                 (*top)->curState->drawFrame();

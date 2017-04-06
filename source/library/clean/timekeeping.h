@@ -19,7 +19,6 @@ struct timeS{
                 minute = m;
                 hour = h;
         }
-        
         bool equals(const timeS &lH, const timeS &rH) const {
                 return (rH.minute == lH.minute)
                     && (rH.hour == lH.hour);
@@ -40,6 +39,7 @@ struct timeS{
 class clockLib{
 public:
         clockLib();
+        //get time functions
         uint32_t curMinute();
         uint32_t curHour();
         uint32_t curSecond();
@@ -47,11 +47,18 @@ public:
         //Alarm functions
         bool checkAlarms();
         void addAlarm(const timeS &);
-        void removeAlarm(const int &);
+        
+        //remove an alarm at a position or a specific time, returns true on success
+        bool removeAlarm(const int &);
+        bool removeAlarm(const timeS &);
         
         //To-Do alarm functions
-        void __setNextAlarm(const int &);
+        
 private:
+        //WIP alarm functions
+        //Update the rtc hardware alarm to match the next upcoming alarm
+        void __setNextAlarm(const int &);
+        
         vector<timeS> alarms;
 };
 

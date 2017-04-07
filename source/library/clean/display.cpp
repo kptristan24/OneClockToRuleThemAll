@@ -83,3 +83,16 @@ void display::debugUpdateDisplay(){
 CRGB **display::rawStrip(){
         return array;
 }
+
+void display::updateFromArray(int **numArray, CRGB &color, bool refresh){
+        FastLED.clear();
+        for(int i = 0; i < NUM_LEDS/ROW_LENGTH; i++){
+                for(int j = 0; j < ROW_LENGTH; j++){
+                        if(numArray[i][j])
+                                array[i][j] = color;
+                }
+        }
+        
+        if(refresh)
+                updateDisplay();
+}

@@ -34,6 +34,13 @@ public:
         void debugUpdateDisplay(); //Just prints display state to console
 
         CRGB **rawStrip();
+        
+        void updateFromArray(int **, CRGB &, bool); //array, color to use, trigger screen drawing
+        
+        /*To-Do
+                * Scrolling text interface
+                * Specific point access
+        */
 private:
         CRGB **array; //abstraction for treating strip like an array
         CRGB LEDstrip[NUM_LEDS];

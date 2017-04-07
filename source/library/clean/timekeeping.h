@@ -7,7 +7,6 @@
 #include "alarmState.h"
 
 //hardware setup
-#define REAL_RTC       0        //set to 1 if using a connected RTC
 #define CS_PIN         10       // DeadOn RTC Chip-select pin
 #define INTERRUPT_PIN  2
 
@@ -39,25 +38,26 @@ struct timeS{
 class clockLib{
 public:
         clockLib();
-        //get time functions
+        //get time functions DO NOT USE, USE DIRECT RTC FUNCTIONS
         uint32_t curMinute();
         uint32_t curHour();
         uint32_t curSecond();
 
         //Alarm functions
         bool checkAlarms();
-        void addAlarm(const timeS &);
+        void addAlarm(const timeS &); //attempts to add alarm, won't add duplicate time
         
         //remove an alarm at a position or a specific time, returns true on success
         bool removeAlarm(const int &);
         bool removeAlarm(const timeS &);
         
-        //To-Do alarm functions
+        //To-Do functions
         
 private:
-        //WIP alarm functions
         //Update the rtc hardware alarm to match the next upcoming alarm
         void __setNextAlarm(const int &);
+        void __sortAlarms();
+        void __compareTimes(const timeS &first, const timeS &second);
         
         vector<timeS> alarms;
 };

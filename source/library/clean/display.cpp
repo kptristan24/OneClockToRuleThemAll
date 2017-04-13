@@ -1,13 +1,15 @@
 #include "display.h"
 
 display::display(){
-#if !HEADLESS
         FastLED.addLeds<CHIPSET, DATA_PIN, CLOCK_PIN>(LEDstrip, NUM_LEDS);
-#endif
+        
         array = new CRGB*[NUM_LEDS/ROW_LENGTH];
         for(int i = 0; i < NUM_LEDS/ROW_LENGTH; i++){
                 array[i] = LEDstrip[ROW_LENGTH * i];
         }
+        
+        botText = 0;
+        topText = 0;
         
         words = new uint8_t*[NUM_WORDS + NUM_EXTRA];
         setupWords();
@@ -95,4 +97,52 @@ void display::updateFromArray(int **numArray, CRGB &color, bool refresh){
         
         if(refresh)
                 updateDisplay();
+}
+
+void display::setPixel(const int &x, const int &y, CRGB &color){
+        if((x < ROW_LENGTH) && (y < NUM_LEDS/ROW_LENGTH))
+                array[y][x] = color;
+}
+
+void display::setPixel(const int &position, CRGB &color){
+        if(position < NUM_LEDS)
+                LEDstrip[position] = color;
+}
+
+void display::clearScrollingText(const int &strip){
+        if(!strip)
+                topText = 0;
+        else if(strip == 1)
+                botText = 0;
+        else if(strip == 2){
+                topText = 0;
+                botText = 0;
+        }
+}
+
+void display::setScrollingText(const char *message, const int &strip){
+        if(!strip){ //set top strip
+                topPosition = 0;
+                topText = 1;
+                topLength = strlen(message);
+                updateMessage(message, strip);
+        }
+        else{ //set bot strip
+                botPosition = 0;
+                botText = 1;
+                botLength = strlen(message);
+                updateMessage(message, strip);
+        }
+}
+
+/*
+ * Outer loop is number of letters to copy
+ * Inner loop is each row of the letter
+ * Second inner loop is each column of each letter
+ *
+ */
+void display::updateMessage(const char *message, const int &strip){
+        const uint8_t vertOffset = strip * ((NUM_LEDS/ROW_LENGTH)/2);
+        
+        
 }

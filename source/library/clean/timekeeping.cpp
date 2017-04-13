@@ -93,7 +93,10 @@ bool clockLib::removeAlarm(const timeS &alarmTime){
 //Double check the implementaiton of trigger alarm next day
 
 void clockLib::__setNextAlarm(const int &position){
-        if(alarms.size() == 1){
+        if(alarms.size() == 0){ //nothing to set
+                return;
+        }
+        else if(alarms.size() == 1){ //the only alarm, might be tomorrow
                 uint8_t day = rtc.getDay() + 1;
                 if(day > 7)
                         day = 1;

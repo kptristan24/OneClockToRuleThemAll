@@ -2,6 +2,7 @@
 #define DISPLAY_H
 
 #include <FastLED.h>
+#include <string.h>
 #include "layout.h"
 
 /* Chipset options (from fast LED)
@@ -32,19 +33,32 @@ public:
 
         void updateDisplay();
         void debugUpdateDisplay(); //Just prints display state to console
+        void updateFromArray(int **, CRGB &, bool); //array, color to use, trigger screen drawing
+
+        //Control a single pixel
+        void setPixel(const int &, const int &, CRGB &); //at (x,y)
+        void setPixel(const int &, CRGB &);              //at linear position
 
         CRGB **rawStrip();
-        
-        void updateFromArray(int **, CRGB &, bool); //array, color to use, trigger screen drawing
+        void clearScrollingText(const int &); //0 - top row, 1 - bot row, 2 - both rows
         
         /*To-Do
                 * Scrolling text interface
                 * Specific point access
         */
+        void setScrollingText(const char *, const int &); //message, (0 or 1) - top or bottom row
+        void updateMessage(const char *, const int &);
 private:
         CRGB **array; //abstraction for treating strip like an array
         CRGB LEDstrip[NUM_LEDS];
         uint8_t **words;
+        
+        uint8_t botText;
+        uint8_t topText;
+        uint16_t botLength;
+        uint16_t topLength;
+        int botPosition;
+        int topPosition;
 };
 
 #endif

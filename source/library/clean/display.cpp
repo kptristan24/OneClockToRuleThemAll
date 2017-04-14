@@ -3,13 +3,14 @@
 display::display(){
         FastLED.addLeds<CHIPSET, DATA_PIN, CLOCK_PIN>(LEDstrip, NUM_LEDS);
         
-        array = new CRGB*[NUM_LEDS/ROW_LENGTH];
+        dispArray = new CRGB*[NUM_LEDS/ROW_LENGTH];
         for(int i = 0; i < NUM_LEDS/ROW_LENGTH; i++){
-                array[i] = LEDstrip[ROW_LENGTH * i];
+                dispArray[i] = LEDstrip[ROW_LENGTH * i];
         }
         
         botText = 0;
         topText = 0;
+        defaultCol = CRGB::White;
         
         words = new uint8_t*[NUM_WORDS + NUM_EXTRA];
         setupWords();
@@ -83,7 +84,7 @@ void display::debugUpdateDisplay(){
 }
 
 CRGB **display::rawStrip(){
-        return array;
+        return dispArray;
 }
 
 void display::updateFromArray(int **numArray, CRGB &color, bool refresh){
@@ -91,7 +92,7 @@ void display::updateFromArray(int **numArray, CRGB &color, bool refresh){
         for(int i = 0; i < NUM_LEDS/ROW_LENGTH; i++){
                 for(int j = 0; j < ROW_LENGTH; j++){
                         if(numArray[i][j])
-                                array[i][j] = color;
+                                dispArray[i][j] = color;
                 }
         }
         
@@ -99,12 +100,12 @@ void display::updateFromArray(int **numArray, CRGB &color, bool refresh){
                 updateDisplay();
 }
 
-void display::setPixel(const int &x, const int &y, CRGB &color){
+void display::setPixel(const int &x, const int &y, const CRGB &color){
         if((x < ROW_LENGTH) && (y < NUM_LEDS/ROW_LENGTH))
-                array[y][x] = color;
+                dispArray[y][x] = color;
 }
 
-void display::setPixel(const int &position, CRGB &color){
+void display::setPixel(const int &position, const CRGB &color){
         if(position < NUM_LEDS)
                 LEDstrip[position] = color;
 }
@@ -145,4 +146,49 @@ void display::updateMessage(const char *message, const int &strip){
         const uint8_t vertOffset = strip * ((NUM_LEDS/ROW_LENGTH)/2);
         
         
+}
+
+void display::setWordBuiltin(const int &w, const CRGB &color){
+        if(w >= (NUM_WORDS + NUM_EXTRA)){
+                return;
+        }
+        
+        int constCoord;
+        
+        if(words[w][4]){
+                constCoord = words[w][0];
+                for(int y = words[w][1]; y < words[w][3]; y++){
+                        dispArray[y][constCoord] = color;
+                }
+        }
+        else{
+                constCoord = words[w][1];
+                for(int x = words[w][0]; x < words[w][2]; x++){
+                        dispArray[constCoord][x] = color;
+                }
+        }
+}
+
+void display::setFromTime(const int &h, const int &m, const CRGB &color){
+        int afternoonT = h;
+        int timeRange = m / 5;
+
+        //set am or pm if they exist
+        if(h > 11 && extra[1])
+                setWordBuiltin(24, color);
+        else if(extra[0]){
+                setWordBuiltin(23, color);
+                afternoonT = h - 12;
+        }
+
+        //set hour word
+        setWordBuiltin(11+afternoonT, color);
+        
+        //set minute word
+        if(timeRange)
+                setWordBuiltin(tineRange, color);
+                
+        //To-Do: set minute increments
+        
+        //To-Do: set filler words
 }

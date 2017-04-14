@@ -39,17 +39,17 @@ void loop() {
 
         switch(signal){
         case 0: break;                  //nothing requested
-        case 1: disp.clearScrollingText(2);
-                stk.push(newState);     //add new state requested.
+        case 1: stk.push(newState);     //add new state requested.
                 break;
-        case 2: disp.clearScrollingText(2);
-                stk.pop();              //exit top state
+        case 2: stk.pop();              //exit top state
                 break;
-        case 3: disp.clearScrollingText(2);
-                stk.pop();              //replace top state
+        case 3: stk.pop();              //replace top state
                 stk.push(newState);
                 break;
         default: Serial.print("State change requested with unknown signal: ");
                  Serial.print(signal);
+        }
+        if(signal){
+                disp.clearScrollingText(2);
         }
 }

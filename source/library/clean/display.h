@@ -35,9 +35,11 @@ public:
         void debugUpdateDisplay(); //Just prints display state to console
         void updateFromArray(int **, CRGB &, bool); //array, color to use, trigger screen drawing
 
-        //Control a single pixel
-        void setPixel(const int &, const int &, CRGB &); //at (x,y)
-        void setPixel(const int &, CRGB &);              //at linear position
+        //Basic control Functions
+        void setPixel(const int &, const int &, const CRGB & = defaultCol); //at (x,y)
+        void setPixel(const int &, const CRGB & = defaultCol);              //at linear position
+        void setWordBuiltin(const int &, const CRGB & = defaultCol);
+        void setFromTime(const int &, const int &, const CRGB & = defaultCol); //hour, minute (in 24 hour time)
 
         CRGB **rawStrip();
         void clearScrollingText(const int &); //0 - top row, 1 - bot row, 2 - both rows
@@ -49,7 +51,9 @@ public:
         void setScrollingText(const char *, const int &); //message, (0 or 1) - top or bottom row
         void updateMessage(const char *, const int &);
 private:
-        CRGB **array; //abstraction for treating strip like an array
+
+        CRGB defaultCol;
+        CRGB **dispArray; //abstraction for treating strip like an array
         CRGB LEDstrip[NUM_LEDS];
         uint8_t **words;
         

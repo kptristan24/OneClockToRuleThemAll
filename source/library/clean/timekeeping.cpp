@@ -4,7 +4,7 @@ clockLib::clockLib(){
         #ifdef INTERRUPT_PIN // If using the SQW pin as an interrupt
         pinMode(INTERRUPT_PIN, INPUT_PULLUP);
         #endif
-        rtc.begin(DS13074_CS_PIN);
+        rtc.begin(CS_PIN);
         rtc.autoTime();
         //rtc.setTime(0, 39, 13, 2, 31, 10, 16);
         rtc.update();
@@ -38,17 +38,19 @@ uint32_t clockLib::curSecond(){
 #endif
 }
 
+/*
+
 bool clockLib::checkAlarms(){
         if(!rtc.alarm1()){
                 return false;
         }
-        
+
         timeS currentTime(curMinute(), curHour());
-        
+
         //To-Do: write state that displays that an alarm has gone off
         //newState = new alarmState(currentTime);
         //signal = 1;
-        
+
         __setNextAlarm(currentTime);
 
         return true;
@@ -62,7 +64,7 @@ void clockLib::addAlarm(const timeS &newAlarm){
                         return;
                 }
         }
-        
+
         alarms.pushback(newAlarm);
         __sortAlarms();
         __setNextAlarm();
@@ -86,7 +88,7 @@ bool clockLib::removeAlarm(const timeS &alarmTime){
                         return true;
                 }
         }
-        
+
         return false;
 }
 
@@ -103,9 +105,9 @@ void clockLib::__setNextAlarm(const int &position){
                 rtc.setAlarm1(255, alarms[0].m, alarms[0].h, day, true);
                 return;
         }
-        
+
         timeS currentTime(curMinute(), curHour());
-        
+
         //found an alarm later in the day to set
         for(auto t : alarms){
                 if(*t > currentTime){
@@ -113,7 +115,7 @@ void clockLib::__setNextAlarm(const int &position){
                         return;
                 }
         }
-        
+
         //otherwise set first alarm for tomorrow
         std::vector<timeS>::iterator it = alarms.begin();
         rtc.setAlarm1(255, (*it).m, (*it).h, day, true);
@@ -123,7 +125,7 @@ void clockLib::__sortAlarms(){
         if(alarms.size() < 2){
                 return;
         }
-        
+
         std::sort(alarms.begin(), alarms.end(), compareTimes);
 }
 
@@ -131,3 +133,5 @@ bool compareTimes(const timeS &first, const timeS &second){
         return (first.hour < second.hour)
             || ((first.hour == second.hour) && (first.minute < second.minute));
 }
+
+*/

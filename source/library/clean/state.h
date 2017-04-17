@@ -8,7 +8,7 @@ struct node;
 class state;
 
 extern display disp;
-extern clockLib clk;
+extern class clockLib clk;
 extern state *newState;
 extern uint8_t signal;
 

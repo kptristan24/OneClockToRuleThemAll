@@ -3,6 +3,7 @@
 #include "timekeeping.h"
 #include "display.h"
 #include "state.h"
+#include "demoState.h"
 #include "stateStack.h"
 
 
@@ -30,12 +31,12 @@ void setup() {
 }
 
 void loop() {
-        rtc.update();
-        if(!clk.checkAlarms()){ //can generate a state transistion if an alarm goes off
+        //rtc.update();
+        //if(!clk.checkAlarms()){ //can generate a state transistion if an alarm goes off
                 (*top)->curState->handleInput();
                 (*top)->curState->runLogic();
                 (*top)->curState->drawFrame();
-        }
+        //}
 
         switch(signal){
         case 0: break;                  //nothing requested

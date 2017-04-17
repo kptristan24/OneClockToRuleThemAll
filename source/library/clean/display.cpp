@@ -5,57 +5,56 @@ display::display(){
 
         dispArray = new CRGB*[NUM_LEDS/ROW_LENGTH];
         for(int i = 0; i < NUM_LEDS/ROW_LENGTH; i++){
-                dispArray[i] = LEDstrip[ROW_LENGTH * i];
+                dispArray[i] = &LEDstrip[ROW_LENGTH * i];
         }
 
         botText = 0;
         topText = 0;
-        defaultCol = CRGB::White;
 
-        words = new uint8_t*[NUM_WORDS + NUM_EXTRA];
+        words = new uint8_t const *[NUM_WORDS + NUM_EXTRA];
         setupWords();
         setupExtraWords();
 }
 
 void display::setupWords(){
-        letters[0] = fiveM;
-        letters[1] = tenM;
-        letters[2] = fifteenM;
-        letters[3] = twentyM;
-        letters[4] = twentyfiveM;
-        letters[5] = thirtyM;
-        letters[6] = thirtyfiveM;
-        letters[7] = fourtyM;
-        letters[8] = fourtyfiveM;
-        letters[9] = fiftyM;
-        letters[10] = fiftyfiveM;
-        letters[11] = one;
-        letters[12] = two;
-        letters[13] = three;
-        letters[14] = four;
-        letters[15] = five;
-        letters[16] = six;
-        letters[17] = seven;
-        letters[18] = eight;
-        letters[19] = nine;
-        letters[20] = ten;
-        letters[21] = eleven;
-        letters[22] = twelve;
+        words[0] = fiveM;
+        words[1] = tenM;
+        words[2] = fifteenM;
+        words[3] = twentyM;
+        words[4] = twentyfiveM;
+        words[5] = thirtyM;
+        words[6] = thirtyfiveM;
+        words[7] = fourtyM;
+        words[8] = fourtyfiveM;
+        words[9] = fiftyM;
+        words[10] = fiftyfiveM;
+        words[11] = one;
+        words[12] = two;
+        words[13] = three;
+        words[14] = four;
+        words[15] = five;
+        words[16] = six;
+        words[17] = seven;
+        words[18] = eight;
+        words[19] = nine;
+        words[20] = ten;
+        words[21] = eleven;
+        words[22] = twelve;
 }
 
 void display::setupExtraWords(){
         if(extra[0])
-                letters[23] = amE;
+                words[23] = amE;
         if(extra[1])
-                letters[24] = pmE;
+                words[24] = pmE;
         if(extra[2])
-                letters[25] = minOne;
+                words[25] = minOne;
         if(extra[3])
-                letters[26] = minTwo;
+                words[26] = minTwo;
         if(extra[4])
-                letters[27] = minThree;
+                words[27] = minThree;
         if(extra[5])
-                letters[28] = minFour;
+                words[28] = minFour;
 }
 
 int display::getVertSize(){
@@ -109,7 +108,7 @@ void display::updateFromArray(int **numArray, CRGB &color, bool refresh){
         }
 
         if(refresh)
-                updateDisplay();
+                update();
 }
 
 void display::setPixel(const int &x, const int &y, const CRGB &color){
@@ -198,7 +197,7 @@ void display::setFromTime(const int &h, const int &m, const CRGB &color){
 
         //set minute word
         if(timeRange)
-                setWordBuiltin(tineRange, color);
+                setWordBuiltin(timeRange, color);
 
         //To-Do: set minute increments
 

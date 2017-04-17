@@ -40,10 +40,10 @@ public:
         void updateFromArray(int **, CRGB &, bool); //array, color to use, trigger screen drawing
 
         //Basic control Functions
-        void setPixel(const int &, const int &, const CRGB & = defaultCol); //at (x,y)
-        void setPixel(const int &, const CRGB & = defaultCol);              //at linear position
-        void setWordBuiltin(const int &, const CRGB & = defaultCol);
-        void setFromTime(const int &, const int &, const CRGB & = defaultCol); //hour, minute (in 24 hour time)
+        void setPixel(const int &, const int &, const CRGB & = CRGB::White); //at (x,y)
+        void setPixel(const int &, const CRGB & = CRGB::White);              //at linear position
+        void setWordBuiltin(const int &, const CRGB & = CRGB::White);
+        void setFromTime(const int &, const int &, const CRGB & = CRGB::White); //hour, minute (in 24 hour time)
 
         CRGB **rawStrip();
         void clearScrollingText(const int &); //0 - top row, 1 - bot row, 2 - both rows
@@ -55,11 +55,9 @@ public:
         void setScrollingText(const char *, const int &); //message, (0 or 1) - top or bottom row
         void updateMessage(const char *, const int &);
 private:
-
-        CRGB defaultCol;
         CRGB **dispArray; //abstraction for treating strip like an array
         CRGB LEDstrip[NUM_LEDS];
-        uint8_t **words;
+        uint8_t const **words;
 
         uint8_t botText;
         uint8_t topText;

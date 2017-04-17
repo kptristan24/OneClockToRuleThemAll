@@ -2,16 +2,16 @@
 
 display::display(){
         FastLED.addLeds<CHIPSET, DATA_PIN, CLOCK_PIN>(LEDstrip, NUM_LEDS);
-        
+
         dispArray = new CRGB*[NUM_LEDS/ROW_LENGTH];
         for(int i = 0; i < NUM_LEDS/ROW_LENGTH; i++){
                 dispArray[i] = LEDstrip[ROW_LENGTH * i];
         }
-        
+
         botText = 0;
         topText = 0;
         defaultCol = CRGB::White;
-        
+
         words = new uint8_t*[NUM_WORDS + NUM_EXTRA];
         setupWords();
         setupExtraWords();
@@ -58,13 +58,25 @@ void display::setupExtraWords(){
                 letters[28] = minFour;
 }
 
-void display::updateDisplay(){
+int display::getVertSize(){
+        return NUM_LEDS / ROW_LENGTH;
+}
+
+int display::getHorizSize(){
+        return ROW_LENGTH;
+}
+
+void display::update(){
 #if !HEADLESS
 
         FastLED.show();
 #else
         debugUpdateDisplay();
 #endif
+}
+
+void display::clear(){
+        FastLED.clear();
 }
 
 void display::debugUpdateDisplay(){
@@ -95,7 +107,7 @@ void display::updateFromArray(int **numArray, CRGB &color, bool refresh){
                                 dispArray[i][j] = color;
                 }
         }
-        
+
         if(refresh)
                 updateDisplay();
 }
@@ -144,17 +156,17 @@ void display::setScrollingText(const char *message, const int &strip){
  */
 void display::updateMessage(const char *message, const int &strip){
         const uint8_t vertOffset = strip * ((NUM_LEDS/ROW_LENGTH)/2);
-        
-        
+
+
 }
 
 void display::setWordBuiltin(const int &w, const CRGB &color){
         if(w >= (NUM_WORDS + NUM_EXTRA)){
                 return;
         }
-        
+
         int constCoord;
-        
+
         if(words[w][4]){
                 constCoord = words[w][0];
                 for(int y = words[w][1]; y < words[w][3]; y++){
@@ -183,12 +195,12 @@ void display::setFromTime(const int &h, const int &m, const CRGB &color){
 
         //set hour word
         setWordBuiltin(11+afternoonT, color);
-        
+
         //set minute word
         if(timeRange)
                 setWordBuiltin(tineRange, color);
-                
+
         //To-Do: set minute increments
-        
+
         //To-Do: set filler words
 }

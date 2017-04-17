@@ -22,7 +22,7 @@ void setup() {
         #endif
 
         //setup initial state: basic timekeeping
-        stk.push(new showTime);
+        stk.push(new demo);
         top = stk.accessStack();
 
         newState = NULL;

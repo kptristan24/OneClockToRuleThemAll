@@ -1,35 +1,42 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
 
-#include <FastLED.h>
-#include <string.h>
-#include "layout.h"
+#define NIXIE_DISP 1
 
+#if NIXIE_DISP
+        #include "nixieHeader.h"
+#else
 /* Chipset options (from fast LED)
-	LPD8806,
-	WS2801,
-	WS2803,
-	SM16716,
-	P9813,
-	APA102,
-	SK9822,
-	DOTSTAR
+        LPD8806,
+        WS2801,
+        WS2803,
+        SM16716,
+        P9813,
+        APA102,
+        SK9822,
+        DOTSTAR
 */
+        #include <FastLED.h>
+        #include <string.h>
+        #include "layout.h"
+        //hardware information
+        #define CHIPSET     DOTSTAR //Must be one of the chipsets above.
+        #define NUM_LEDS    144
+        #define ROW_LENGTH  12
+        #define DATA_PIN    7
+        #define CLOCK_PIN   8
+        #define HEADLESS    1  //Don't actually use LED's, just print screen state to serial monitor
 
-//hardware information
-#define CHIPSET     DOTSTAR //Must be one of the chipsets above.
-#define NUM_LEDS    144
-#define ROW_LENGTH  12
-#define DATA_PIN    7
-#define CLOCK_PIN   8
-#define HEADLESS    1  //Don't actually use LED's, just print screen state to serial monitor
-
+#endif
 
 class display{
 public:
         display();
+
+#if !NIXIE_DISP
         void setupWords();
         void setupExtraWords();
+
 
         int getVertSize();
         int getHorizSize();
@@ -54,7 +61,10 @@ public:
         */
         void setScrollingText(const char *, const int &); //message, (0 or 1) - top or bottom row
         void updateMessage(const char *, const int &);
+#endif
+
 private:
+#if !NIXIE_DISP
         CRGB **dispArray; //abstraction for treating strip like an array
         CRGB LEDstrip[NUM_LEDS];
         uint8_t const **words;
@@ -65,6 +75,7 @@ private:
         uint16_t topLength;
         int botPosition;
         int topPosition;
+#endif
 };
 
 #endif

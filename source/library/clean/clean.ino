@@ -3,8 +3,10 @@
 #include "timekeeping.h"
 #include "display.h"
 #include "state.h"
-#include "demoState.h"
 #include "stateStack.h"
+
+#include "nixieState.h"
+//#include "demoState.h"
 
 
 //hardware interfaces
@@ -18,12 +20,17 @@ uint8_t signal;
 
 void setup() {
         Serial.begin(9600);
-        #if defined(__AVR_ATtiny85__) && (F_CPU == 16000000L)
-          clock_prescale_set(clock_div_1); // Enable 16 MHz on Trinket
-        #endif
+
+#if defined(__AVR_ATtiny85__) && (F_CPU == 16000000L)
+        clock_prescale_set(clock_div_1); // Enable 16 MHz on Trinket
+#endif
 
         //setup initial state: basic timekeeping
+#if NIXIE_DISP
+        stk.push(new nixieClock);
+#else
         stk.push(new demo);
+#endif
         top = stk.accessStack();
 
         newState = NULL;
@@ -38,6 +45,7 @@ void loop() {
                 (*top)->curState->drawFrame();
         //}
 
+#if !NIXIE_DISP
         switch(signal){
         case 0: break;                  //nothing requested
         case 1: stk.push(newState);     //add new state requested.
@@ -53,4 +61,5 @@ void loop() {
         if(signal){
                 disp.clearScrollingText(2);
         }
+#endif
 }

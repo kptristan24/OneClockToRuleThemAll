@@ -1,7 +1,6 @@
 #include "display.h"
 
 display::display(){
-#if NIXIE_DISP
         for(int i = 0; i < 6; i++){
                 pinMode(select_pins[i], OUTPUT);
         }
@@ -9,23 +8,10 @@ display::display(){
         for(int i = 0; i < 4; i++){
                 pinMode(data_pins[i], OUTPUT);
         }
-#else
-        FastLED.addLeds<CHIPSET, DATA_PIN, CLOCK_PIN>(LEDstrip, NUM_LEDS);
 
-        dispArray = new CRGB*[NUM_LEDS/ROW_LENGTH];
-        for(int i = 0; i < NUM_LEDS/ROW_LENGTH; i++){
-                dispArray[i] = &LEDstrip[ROW_LENGTH * i];
-        }
-
-        botText = 0;
-        topText = 0;
-
-        words = new uint8_t const *[NUM_WORDS + NUM_EXTRA];
-        setupWords();
-        setupExtraWords();
-#endif
 }
 
+/*
 void display::setupWords(){
         words[0] = fiveM;
         words[1] = tenM;
@@ -157,12 +143,10 @@ void display::setScrollingText(const char *message, const int &strip){
         }
 }
 
-/*
- * Outer loop is number of letters to copy
- * Inner loop is each row of the letter
- * Second inner loop is each column of each letter
- *
- */
+// Outer loop is number of letters to copy
+// Inner loop is each row of the letter
+// Second inner loop is each column of each letter
+
 void display::updateMessage(const char *message, const int &strip){
         const uint8_t vertOffset = strip * ((NUM_LEDS/ROW_LENGTH)/2);
 
@@ -213,3 +197,4 @@ void display::setFromTime(const int &h, const int &m, const CRGB &color){
 
         //To-Do: set filler words
 }
+*/

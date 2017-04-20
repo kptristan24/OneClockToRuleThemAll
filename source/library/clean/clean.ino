@@ -4,9 +4,7 @@
 #include "display.h"
 #include "state.h"
 #include "stateStack.h"
-
-#include "nixieState.h"
-//#include "demoState.h"
+#include "demoState.h"
 
 
 //hardware interfaces
@@ -26,11 +24,7 @@ void setup() {
 #endif
 
         //setup initial state: basic timekeeping
-#if NIXIE_DISP
-        stk.push(new nixieClock);
-#else
         stk.push(new demo);
-#endif
         top = stk.accessStack();
 
         newState = NULL;
@@ -38,14 +32,13 @@ void setup() {
 }
 
 void loop() {
-        //rtc.update();
-        //if(!clk.checkAlarms()){ //can generate a state transistion if an alarm goes off
+        rtc.update();
+        if(!clk.checkAlarms()){ //can generate a state transistion if an alarm goes off
                 (*top)->curState->handleInput();
                 (*top)->curState->runLogic();
                 (*top)->curState->drawFrame();
-        //}
+        }
 
-#if !NIXIE_DISP
         switch(signal){
         case 0: break;                  //nothing requested
         case 1: stk.push(newState);     //add new state requested.
@@ -61,5 +54,4 @@ void loop() {
         if(signal){
                 disp.clearScrollingText(2);
         }
-#endif
 }

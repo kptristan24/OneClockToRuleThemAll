@@ -6,6 +6,7 @@
 #include "stateStack.h"
 #include "alarmState.h"
 #include "timeS.h"
+#include "avec.h"
 
 //hardware setup
 #define CS_PIN         10       // DeadOn RTC Chip-select pin
@@ -37,11 +38,8 @@ public:
 private:
         //Update the rtc hardware alarm to match the next upcoming alarm
         void __setNextAlarm(const int &);
-        void __sortAlarms();
-        void __compareTimes(const timeS &first, const timeS &second);
 
-        vector<timeS> alarms;
-
+        aVec alarms;
 };
 
 #endif

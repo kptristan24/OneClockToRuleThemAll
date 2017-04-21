@@ -38,7 +38,7 @@ uint32_t clockLib::curSecond(){
 #endif
 }
 
-/*
+
 
 bool clockLib::checkAlarms(){
         if(!rtc.alarm1()){
@@ -58,21 +58,20 @@ bool clockLib::checkAlarms(){
 
 //To-Do: change to insert before correct element, which will remove the need for a full sort
 void clockLib::addAlarm(const timeS &newAlarm){
-        for(auto t : alarms){
-                if(equals(*t, newAlarm)){
+        for(int i = 0; i < alarms.size(); i++){
+                if(alarms[i] == newAlarm){
                         Serial.print("tried to set alarm at time of existing alarm");
                         return;
                 }
         }
 
-        alarms.pushback(newAlarm);
-        __sortAlarms();
+        alarms.insert_ordered(newAlarm);
         __setNextAlarm();
 }
 
 bool clockLib::removeAlarm(const int &position){
         if(position < alarms.size()){
-                alarms.erase(alarms.at(position))
+                alarms.erase(position);
                 __setNextAlarm();
                 return true;
         }
@@ -81,9 +80,9 @@ bool clockLib::removeAlarm(const int &position){
 }
 
 bool clockLib::removeAlarm(const timeS &alarmTime){
-        for(auto t : alarms){
-                if(equal(*t, alarmTime)){
-                        alarms.erase(t);
+        for(int i = 0; i < alarms.size(); i++){
+                if(alarmTime == alarms[i]){
+                        alarms.erase(i);
                         __setNextAlarm();
                         return true;
                 }
@@ -109,29 +108,13 @@ void clockLib::__setNextAlarm(const int &position){
         timeS currentTime(curMinute(), curHour());
 
         //found an alarm later in the day to set
-        for(auto t : alarms){
-                if(*t > currentTime){
-                        rtc.setAlarm(255, (*it).m, (*it).h);
+        for(int i = 0; i < alarms.size(); i++){
+                if(alarms[i] > currentTime){
+                        rtc.setAlarm(255, alarms[i].m, alarms[i].h);
                         return;
                 }
         }
 
         //otherwise set first alarm for tomorrow
-        std::vector<timeS>::iterator it = alarms.begin();
-        rtc.setAlarm1(255, (*it).m, (*it).h, day, true);
+        rtc.setAlarm1(255, alarms[0].m, alarms[0].h, day, true);
 }
-
-void clockLib::__sortAlarms(){
-        if(alarms.size() < 2){
-                return;
-        }
-
-        std::sort(alarms.begin(), alarms.end(), compareTimes);
-}
-
-bool compareTimes(const timeS &first, const timeS &second){
-        return (first.hour < second.hour)
-            || ((first.hour == second.hour) && (first.minute < second.minute));
-}
-
-*/

@@ -10,6 +10,7 @@ public:
         aVec(){
                 data = new timeS[2];
                 capacity = 2;
+                curSize = 0;
         }
         int size(){
                 return curSize;
@@ -42,11 +43,20 @@ public:
                                 resize();
                 }
         }
-        /*
-        void sort(){
+        const timeS & operator [](int i) const {return data[i];}
+        timeS & operator [](int i) {return data[i];}
+        void erase(const int &i) const {
+                if(i >= curSize)
+                        return;
+                else if(i == (curSize - 1))
+                        curSize--;
+                else{
+                        for(int pos = i; pos < curSize - 1; pos++)
+                                data[pos] = data[pos + 1];
 
+                        curSize--;
+                }
         }
-        */
         void resize(const int &size = 2){
                 timeS *temp = data;
 

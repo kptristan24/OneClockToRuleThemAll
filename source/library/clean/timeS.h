@@ -10,6 +10,10 @@ struct timeS{
                 return (rH.minute == lH.minute)
                     && (rH.hour == lH.hour);
         }
+        bool operator ==(const timeS &lH, const timeS &rH) const {
+                return (rH.minute == lH.minute)
+                    && (rH.hour == lH.hour);
+        }
         bool operator>(const timeS &rH) const {
                 return (hour > rH.hour)
                     || ((hour == rH.hour) && (minute > rH.minute));

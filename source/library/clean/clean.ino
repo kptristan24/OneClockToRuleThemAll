@@ -28,6 +28,8 @@ void setup() {
         clock_prescale_set(clock_div_1); // Enable 16 MHz on Trinket
 #endif
 
+        randomSeed(analogRead(0));
+
         //setup initial state: basic timekeeping
         stk.push(new demo);
         top = stk.accessStack();

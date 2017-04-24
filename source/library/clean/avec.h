@@ -45,7 +45,7 @@ public:
         }
         const timeS & operator [](int i) const {return data[i];}
         timeS & operator [](int i) {return data[i];}
-        void erase(const int &i) const {
+        void erase(const int &i){
                 if(i >= curSize)
                         return;
                 else if(i == (curSize - 1))
@@ -69,7 +69,7 @@ public:
         }
 private:
         int curSize;
-        int capacity
+        int capacity;
         timeS *data;
 };
 

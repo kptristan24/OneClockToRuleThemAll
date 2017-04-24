@@ -45,13 +45,11 @@ bool clockLib::checkAlarms(){
                 return false;
         }
 
-        timeS currentTime(curMinute(), curHour());
-
         //To-Do: write state that displays that an alarm has gone off
         //newState = new alarmState(currentTime);
         //signal = 1;
 
-        __setNextAlarm(currentTime);
+        __setNextAlarm();
 
         return true;
 }
@@ -93,7 +91,7 @@ bool clockLib::removeAlarm(const timeS &alarmTime){
 
 //Double check the implementaiton of trigger alarm next day
 
-void clockLib::__setNextAlarm(const int &position){
+void clockLib::__setNextAlarm(){
         if(alarms.size() == 0){ //nothing to set
                 return;
         }
@@ -101,7 +99,7 @@ void clockLib::__setNextAlarm(const int &position){
                 uint8_t day = rtc.getDay() + 1;
                 if(day > 7)
                         day = 1;
-                rtc.setAlarm1(255, alarms[0].m, alarms[0].h, day, true);
+                rtc.setAlarm1((uint8_t)255, alarms[0].minute, alarms[0].hour, day, true);
                 return;
         }
 
@@ -110,11 +108,11 @@ void clockLib::__setNextAlarm(const int &position){
         //found an alarm later in the day to set
         for(int i = 0; i < alarms.size(); i++){
                 if(alarms[i] > currentTime){
-                        rtc.setAlarm(255, alarms[i].m, alarms[i].h);
+                        rtc.setAlarm1((uint8_t)255, alarms[i].minute, alarms[i].hour);
                         return;
                 }
         }
 
         //otherwise set first alarm for tomorrow
-        rtc.setAlarm1(255, alarms[0].m, alarms[0].h, day, true);
+        rtc.setAlarm1((uint8_t)255, alarms[0].minute, alarms[0].hour, (uint8_t)(rtc.getDay() + 1), true);
 }

@@ -7,7 +7,20 @@ demo::demo(){
 }
 
 void demo::handleInput(){
+        const int input = buttons.getInput();
 
+        switch(input){
+        case 0:
+                //break;
+        case 1:
+                //break;
+        case 2: curTest = 0;
+                curState = 1;
+                frameCounter = 0;
+                break;
+        default: //no button input
+                break;
+        }
 }
 
 void demo::runLogic(){

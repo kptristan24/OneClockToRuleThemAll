@@ -2,6 +2,7 @@
 #define TIMES_H
 
 struct timeS{
+        timeS(){minute = 0; hour = 0;}
         timeS(const int &m, const int &h){
                 minute = m;
                 hour = h;
@@ -10,9 +11,9 @@ struct timeS{
                 return (rH.minute == lH.minute)
                     && (rH.hour == lH.hour);
         }
-        bool operator ==(const timeS &lH, const timeS &rH) const {
-                return (rH.minute == lH.minute)
-                    && (rH.hour == lH.hour);
+        bool operator ==(const timeS &other) const {
+                return (this->minute == other.minute)
+                    && (this->hour == other.hour);
         }
         bool operator>(const timeS &rH) const {
                 return (hour > rH.hour)

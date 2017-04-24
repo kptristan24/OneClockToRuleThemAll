@@ -4,11 +4,13 @@
 #include "timekeeping.h"
 #include "display.h"
 #include "state.h"
+#include "buttons.h"
 
 extern display disp;
 extern clockLib clk;
 extern state *newState;
 extern uint8_t signal;
+extern Buttons buttons;
 
 class demo : public state{
 public:

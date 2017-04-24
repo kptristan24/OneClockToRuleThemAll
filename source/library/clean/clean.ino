@@ -1,7 +1,11 @@
 
 #include <SPI.h>
+//hardware abstraction libraries
 #include "timekeeping.h"
 #include "display.h"
+#include "buttons.h"
+
+//state abstraction code
 #include "state.h"
 #include "stateStack.h"
 #include "demoState.h"
@@ -11,6 +15,7 @@
 display disp = display();
 clockLib clk = clockLib();
 stateStack stk = stateStack();
+Buttons buttons = Buttons();
 
 node **top;
 state *newState;
@@ -32,13 +37,18 @@ void setup() {
 }
 
 void loop() {
+        //Run hardware interaction updates
         rtc.update();
+        buttons.update();
+
+        //check for alarms and then run the current state
         if(!clk.checkAlarms()){ //can generate a state transistion if an alarm goes off
                 (*top)->curState->handleInput();
                 (*top)->curState->runLogic();
                 (*top)->curState->drawFrame();
         }
 
+        //Statemachine manager
         switch(signal){
         case 0: break;                  //nothing requested
         case 1: stk.push(newState);     //add new state requested.

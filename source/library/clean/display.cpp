@@ -17,8 +17,7 @@ display::display(){
                 dispArray[i] = &LEDstrip[ROW_LENGTH * i];
         }
 
-        botText = 0;
-        topText = 0;
+        clearScrollingText(2);
 
         words = new uint8_t const *[NUM_WORDS + NUM_EXTRA];
         setupWords();
@@ -121,41 +120,82 @@ void display::updateFromArray(int **numArray, CRGB &color, bool refresh){
                 update();
 }
 
-void display::setPixel(const int &x, const int &y, const CRGB &color){
+void display::setPixel(int x, int y, const CRGB &color){
         if((x < ROW_LENGTH) && (y < NUM_LEDS/ROW_LENGTH))
                 dispArray[y][x] = color;
 }
 
-void display::setPixel(const int &position, const CRGB &color){
+void display::setPixel(int position, const CRGB &color){
         if(position < NUM_LEDS)
                 LEDstrip[position] = color;
 }
 
-void display::clearScrollingText(const int &strip){
-        if(!strip)
-                topText = 0;
-        else if(strip == 1)
-                botText = 0;
-        else if(strip == 2){
-                topText = 0;
-                botText = 0;
+void display::clearScrollingText(int strip){
+        if(strip == 0 || strip == 2){ //clear top strip
+                text[0] = 0;
+                offset[0] = 0;
+                length[0] = 0;
+                currentChar[0] = 0;
+        }
+
+        if(strip == 1 || strip == 2){ //clear bot strip
+                text[1] = 0;
+                offset[1] = 0;
+                length[1] = 0;
+                currentChar[1] = 0;
+        }
+
+        if(strip == 2)
+                frameCounter = 0;
+}
+
+void drawChar(char c, int horizOffset, int row, const CRGB &color){
+        int vertOffset = (NUM_LEDS/ROW_LENGTH) * row;
+        int charPosition = (((int)c - 32) * 3) + 6;
+
+        for(int j = horizOffset; j < horizOffset + 3; j++){
+                if(j < 0 || j >= ROW_LENGTH)
+                        continue;
+                for(int k = 0; k < 5; k++)
+                        if(CHECKBIT(Wendy3x5[charPosition + (j - horizOffset)], k))
+                                dispArray[vertOffset + k][j] = color;
         }
 }
 
-void display::setScrollingText(const char *message, const int &strip){
-        if(!strip){ //set top strip
-                topPosition = 0;
-                topText = 1;
-                topLength = strlen(message);
-                updateMessage(message, strip);
-        }
-        else{ //set bot strip
-                botPosition = 0;
-                botText = 1;
-                botLength = strlen(message);
-                updateMessage(message, strip);
+void scrollingText(char *m, int row, const CRGB &col1, const CRGB &col2){
+        if(!text[row])
+                length[row] = strlen(m);
+
+        int tempCurrentChar = currentChar[row];
+        __updateTextVariables(row);
+
+        for(int i = 0; i < 5; i++){
+                tempCurrentChar++;
+                if(tempCurrentChar >= length[row])
+                        tempCurrentChar = 0;
+
+                if(CHECKBIT(tempCurrentChar, 1)) //odd numbered character in m
+                        drawChar(m[tempCurrentChar], -offset[row] + (3 * i), row, col1);
+                else //even numbered character in m
+                        drawChar(m[tempCurrentChar], -offset[row] + (3 * i), row, col2);
         }
 }
+
+void __updateTextVariables(int row){
+        if(frameCounter == TEXT_SPEED){
+                frameCounter = 0;
+                offset[row]++;
+                if(offset[row] == 3){
+                        offset[row] = 0;
+                        currentChar[row]++;
+                        if(currentChar[row] == length[row])
+                                currentChar[row] = 0;
+                }
+        }
+
+        frameCounter++;
+}
+
 
 /*
  * Outer loop is number of letters to copy
@@ -163,13 +203,8 @@ void display::setScrollingText(const char *message, const int &strip){
  * Second inner loop is each column of each letter
  *
  */
-void display::updateMessage(const char *message, const int &strip){
-        const uint8_t vertOffset = strip * ((NUM_LEDS/ROW_LENGTH)/2);
 
-
-}
-
-void display::setWordBuiltin(const int &w, const CRGB &color){
+void display::setWordBuiltin(int w, const CRGB &color){
         if(w >= (NUM_WORDS + NUM_EXTRA)){
                 return;
         }
@@ -190,7 +225,7 @@ void display::setWordBuiltin(const int &w, const CRGB &color){
         }
 }
 
-void display::setFromTime(const int &h, const int &m, const CRGB &color){
+void display::setFromTime(int h, int m, const CRGB &color){
         int afternoonT = h;
         int timeRange = m / 5;
 

@@ -4,6 +4,7 @@
 #include <FastLED.h>
 #include <string.h>
 #include "layout.h"
+#include "timeS.h"
 #include "Wendy3x5.h"
 
 #define CHECKBIT(ADDRESS,BIT) (ADDRESS & (1<<BIT))
@@ -50,6 +51,8 @@ public:
         void setPixel(int, const CRGB &);              //at linear position
         void setWordBuiltin(int, const CRGB & = CRGB::White);
         void setFromTime(int, int, const CRGB & = CRGB::White); //hour, minute (in 24 hour time)
+        void setFromTime(const timeS &, const CRGB & = CRGB::White);
+
         //void drawLine();
 
         //scrolling Text functions

@@ -8,7 +8,7 @@
 //state abstraction code
 #include "state.h"
 #include "stateStack.h"
-#include "demoState.h"
+#include "basicTime.h"
 
 //hardware interfaces
 display *disp;
@@ -31,7 +31,7 @@ void setup() {
         randomSeed(analogRead(0));
 
         //setup initial state: basic timekeeping
-        stk->push(new demo);
+        stk->push(new basicTime);
         top = stk->accessStack();
 
         newState = NULL;

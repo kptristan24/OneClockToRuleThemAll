@@ -1,11 +1,12 @@
-#ifndef ALARMSTATE_H
-#define ALARMSTATE_H
+#ifndef BASICTIME_H
+#define BASICTIME_H
 
 #include "timekeeping.h"
 #include "display.h"
 #include "state.h"
 #include "buttons.h"
 #include "timeS.h"
+#include "mainMenu.h"
 
 extern display *disp;
 extern clockLib *clk;
@@ -13,14 +14,15 @@ extern state *newState;
 extern uint8_t signal;
 extern Buttons *buttons;
 
-class alarmState : public state{
+
+class basicTime : public state{
 public:
-        alarmState(const timeS &);
+        basicTime();
         void handleInput();
         void runLogic();
         void drawFrame();
 private:
-        char alarmTime[7];
+        timeS currentTime;
 };
 
 #endif

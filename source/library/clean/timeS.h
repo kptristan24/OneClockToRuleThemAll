@@ -7,6 +7,10 @@ struct timeS{
                 minute = m;
                 hour = h;
         }
+        void set(const int &h, const int &m){
+                hour = h;
+                minute = m;
+        }
         bool equals(const timeS &lH, const timeS &rH) const {
                 return (rH.minute == lH.minute)
                     && (rH.hour == lH.hour);

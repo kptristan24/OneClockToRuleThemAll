@@ -246,3 +246,27 @@ void display::setFromTime(int h, int m, const CRGB &color){
 
         //To-Do: set filler words
 }
+
+void display::setFromTime(const timeS &t, const CRGB &color){
+        int afternoonT = t.hour;
+        int timeRange = t.minute / 5;
+
+        //set am or pm if they exist
+        if(t.hour > 11 && extra[1])
+                setWordBuiltin(24, color);
+        else if(extra[0]){
+                setWordBuiltin(23, color);
+                afternoonT = t.hour - 12;
+        }
+
+        //set hour word
+        setWordBuiltin(11+afternoonT, color);
+
+        //set minute word
+        if(timeRange)
+                setWordBuiltin(timeRange, color);
+
+        //To-Do: set minute increments
+
+        //To-Do: set filler words
+}

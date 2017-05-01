@@ -1,11 +1,15 @@
-#ifndef ALARMSTATE_H
-#define ALARMSTATE_H
+#ifndef MAINMENU_H
+#define MAINMENU_H
 
 #include "timekeeping.h"
 #include "display.h"
 #include "state.h"
 #include "buttons.h"
 #include "timeS.h"
+#include "snake.h"
+#include "demoState.h"
+
+#define NUM_OPTIONS 4
 
 extern display *disp;
 extern clockLib *clk;
@@ -13,14 +17,15 @@ extern state *newState;
 extern uint8_t signal;
 extern Buttons *buttons;
 
-class alarmState : public state{
+class mainMenu : public state{
 public:
-        alarmState(const timeS &);
+        mainMenu();
         void handleInput();
         void runLogic();
         void drawFrame();
 private:
-        char alarmTime[7];
+        uint8_t currentlySelected;
+        uint8_t transition;
 };
 
 #endif

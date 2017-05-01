@@ -15,6 +15,10 @@ void clockLib::update(){
         rtc.update();
 }
 
+timeS clockLib::getCurrentTime(){
+        return timeS(rtc.hour(), rtc.minute());
+}
+
 //DEPRICATED: use rtc directly
 uint32_t clockLib::curHour(){
 #if REAL_RTC
@@ -49,9 +53,9 @@ bool clockLib::checkAlarms(){
                 return false;
         }
 
-        //To-Do: write state that displays that an alarm has gone off
-        //newState = new alarmState(currentTime);
-        //signal = 1;
+        timeS currentTime(curMinute(), curHour());
+        newState = new alarmState(currentTime);
+        signal = 1;
 
         __setNextAlarm();
 

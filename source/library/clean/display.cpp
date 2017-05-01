@@ -1,28 +1,29 @@
 #include "display.h"
 
 display::display(){
-#if NIXIE_DISP
-        for(int i = 0; i < 6; i++){
-                pinMode(select_pins[i], OUTPUT);
-        }
+        //pinMode(CLOCK_PIN, OUTPUT);
+        //pinMode(DATA_PIN, OUTPUT);
+        FastLED.addLeds<DOTSTAR, DATA_PIN, CLOCK_PIN, BGR>(LEDstrip, NUM_LEDS);
 
-        for(int i = 0; i < 4; i++){
-                pinMode(data_pins[i], OUTPUT);
-        }
-#else
-        FastLED.addLeds<CHIPSET, DATA_PIN, CLOCK_PIN>(LEDstrip, NUM_LEDS);
-
+        /*
         dispArray = new CRGB*[NUM_LEDS/ROW_LENGTH];
         for(int i = 0; i < NUM_LEDS/ROW_LENGTH; i++){
                 dispArray[i] = &LEDstrip[ROW_LENGTH * i];
         }
+        */
 
         clearScrollingText(2);
 
         words = new uint8_t const *[NUM_WORDS + NUM_EXTRA];
         setupWords();
         setupExtraWords();
-#endif
+
+        FastLED.setBrightness(255);
+        //LEDstrip[2] = CRGB::Blue;
+
+
+        FastLED.clear();
+        FastLED.show();
 }
 
 void display::setupWords(){
@@ -75,12 +76,9 @@ int display::getHorizSize(){
 }
 
 void display::update(){
-#if !HEADLESS
 
         FastLED.show();
-#else
-        debugUpdateDisplay();
-#endif
+        //debugUpdateDisplay();
 }
 
 void display::clear(){
@@ -100,6 +98,7 @@ void display::debugUpdateDisplay(){
                                 rowContents |= 1 << j;
                 }
                 Serial.print(rowContents, BIN);
+                Serial.print("\n");
         }
 }
 
@@ -112,7 +111,7 @@ void display::updateFromArray(int **numArray, CRGB &color, bool refresh){
         for(int i = 0; i < NUM_LEDS/ROW_LENGTH; i++){
                 for(int j = 0; j < ROW_LENGTH; j++){
                         if(numArray[i][j])
-                                dispArray[i][j] = color;
+                                __arrayAccessFunction(i, j, color);
                 }
         }
 
@@ -122,12 +121,16 @@ void display::updateFromArray(int **numArray, CRGB &color, bool refresh){
 
 void display::setPixel(int x, int y, const CRGB &color){
         if((x < ROW_LENGTH) && (y < NUM_LEDS/ROW_LENGTH))
-                dispArray[y][x] = color;
+                __arrayAccessFunction(y, x, color);
 }
 
-void display::setPixel(int position, const CRGB &color){
-        if(position < NUM_LEDS)
-                LEDstrip[position] = color;
+void display::setPixel(int x, const CRGB &color){
+        Serial.print("setPixel called with:");
+        Serial.print(x, DEC);
+        Serial.print("\n");
+        if(x < NUM_LEDS)
+                LEDstrip[x] = CRGB::Red;
+
 }
 
 void display::clearScrollingText(int strip){
@@ -149,8 +152,10 @@ void display::clearScrollingText(int strip){
                 frameCounter = 0;
 }
 
-void drawChar(char c, int horizOffset, int row, const CRGB &color){
+void display::drawChar(char c, int horizOffset, int row, const CRGB &color){
         int vertOffset = (NUM_LEDS/ROW_LENGTH) * row;
+        uint8_t charData[3];
+        __bufferChar(charData,(((int)c - 32) * 3) + 6);
         int charPosition = (((int)c - 32) * 3) + 6;
 
         for(int j = horizOffset; j < horizOffset + 3; j++){
@@ -158,11 +163,11 @@ void drawChar(char c, int horizOffset, int row, const CRGB &color){
                         continue;
                 for(int k = 0; k < 5; k++)
                         if(CHECKBIT(Wendy3x5[charPosition + (j - horizOffset)], k))
-                                dispArray[vertOffset + k][j] = color;
+                                __arrayAccessFunction(vertOffset + k, j, color);
         }
 }
 
-void scrollingText(char *m, int row, const CRGB &col1, const CRGB &col2){
+void display::scrollingText(char *m, int row, const CRGB &col1, const CRGB &col2){
         if(!text[row])
                 length[row] = strlen(m);
 
@@ -181,7 +186,7 @@ void scrollingText(char *m, int row, const CRGB &col1, const CRGB &col2){
         }
 }
 
-void __updateTextVariables(int row){
+void display::__updateTextVariables(int row){
         if(frameCounter == TEXT_SPEED){
                 frameCounter = 0;
                 offset[row]++;
@@ -196,6 +201,27 @@ void __updateTextVariables(int row){
         frameCounter++;
 }
 
+void display::__bufferChar(uint8_t *buffer, int whichChar){
+        buffer[0] = pgm_read_byte_near(Wendy3x5[whichChar]);
+        buffer[1] = pgm_read_byte_near(Wendy3x5[whichChar + 1]);
+        buffer[2] = pgm_read_byte_near(Wendy3x5[whichChar + 2]);
+}
+
+void display::__arrayAccessFunction(int y, int x, const CRGB &color){
+        //currently no idiot checking for if x or y are in range
+        if(ALT_DIR){
+                int basePos;
+                if(y & 1<<1)
+                        basePos = (y - 1) * ROW_LENGTH;
+                else
+                        basePos = y * ROW_LENGTH;
+
+                LEDstrip[basePos + (ROW_LENGTH - x - 1)];
+        }
+        else{
+                LEDstrip[(y * ROW_LENGTH) + x] = color;
+        }
+}
 
 /*
  * Outer loop is number of letters to copy
@@ -214,13 +240,13 @@ void display::setWordBuiltin(int w, const CRGB &color){
         if(words[w][4]){
                 constCoord = words[w][0];
                 for(int y = words[w][1]; y < words[w][3]; y++){
-                        dispArray[y][constCoord] = color;
+                        __arrayAccessFunction(y, constCoord, color);
                 }
         }
         else{
                 constCoord = words[w][1];
                 for(int x = words[w][0]; x < words[w][2]; x++){
-                        dispArray[constCoord][x] = color;
+                        __arrayAccessFunction(constCoord, x, color);
                 }
         }
 }

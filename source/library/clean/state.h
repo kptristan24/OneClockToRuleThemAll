@@ -7,15 +7,15 @@
 struct node;
 class state;
 
-extern display disp;
-extern class clockLib clk;
+extern display *disp;
+extern class clockLib *clk;
 extern state *newState;
 extern uint8_t signal;
 
 class state{
 public:
         state(){
-          
+
         };
         ~state(){
 
@@ -34,7 +34,7 @@ public:
 
         };
         ~showTime(){
-                
+
         };
 
         void handleInput(){

@@ -6,11 +6,12 @@
 #include "state.h"
 #include "buttons.h"
 
-extern display disp;
-extern clockLib clk;
+extern display *disp;
+extern clockLib *clk;
 extern state *newState;
+extern CRGB LEDstrip[13];
 extern uint8_t signal;
-extern Buttons buttons;
+extern Buttons *buttons;
 
 class demo : public state{
 public:
@@ -22,7 +23,7 @@ public:
         void testEachPosition();
         void testRows();
         void testColumns();
-
+        void testText();
 private:
         int frameCounter;
         int curState;

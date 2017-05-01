@@ -2,8 +2,8 @@
 
 snake::snake(){
         int i;
-        xSize = disp.getLEDSPerRow();
-        ySize = disp.getDisplaySize()/xSize;
+        xSize = disp->getHorizSize();
+        ySize = disp->getVertSize();
 
         grid = new int*[ySize];
         for(i = 0; i < ySize; i++){
@@ -95,7 +95,7 @@ void snake::moveFood(){
 }
 
 void snake::updateTail(){
-        
+
 }
 
 void snake::moveSnake(){

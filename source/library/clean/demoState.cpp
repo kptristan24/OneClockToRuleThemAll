@@ -7,6 +7,7 @@ demo::demo(){
 }
 
 void demo::handleInput(){
+
         const int input = buttons.getInput();
 
         switch(input){
@@ -21,6 +22,7 @@ void demo::handleInput(){
         default: //no button input
                 break;
         }
+
 }
 
 void demo::runLogic(){
@@ -28,6 +30,9 @@ void demo::runLogic(){
 }
 
 void demo::drawFrame(){
+        Serial.print("drawFrame called in demo\n");
+
+
         switch(curState){
         case 1: testEachPosition();
                 break;
@@ -35,39 +40,48 @@ void demo::drawFrame(){
                 break;
         case 3: testColumns();
                 break;
+        case 4: testText();
+                break;
         default:
                 curState = 1;
         }
 
+        disp->update();
         frameCounter++;
 }
 
 void demo::testEachPosition(){
-        const int row = curTest / disp.getHorizSize();
+        const int row = curTest / disp->getHorizSize();
 
-        if(!(frameCounter % 60)){
-                disp.clear();
-                disp.setPixel(row, (curTest % disp.getHorizSize()));
+        if(frameCounter == 30){
+                frameCounter = 0;
+                Serial.print("Setting new pixel\n");
+                disp->clear();
+                disp->setPixel(curTest, CRGB::Red);
                 curTest++;
+                if(curTest > NUM_LEDS)
+                        curTest = 0;
         }
         else{
                 return;
         }
 
+
         if(curTest == disp.getHorizSize() * disp.getVertSize()){
                 curState++;
                 curTest = 0;
         }
+        
 }
 
 void demo::testRows(){
-        const int numRows = disp.getVertSize();
+        const int numRows = disp->getVertSize();
 
         if(!(frameCounter % 60)){
-                disp.clear();
-                const int numCols = disp.getHorizSize();
+                disp->clear();
+                const int numCols = disp->getHorizSize();
                 for(int i = 0; i < numCols; i++)
-                        disp.setPixel(curTest, i);
+                        disp->setPixel(curTest, i);
 
                 curTest++;
         }
@@ -82,13 +96,13 @@ void demo::testRows(){
 }
 
 void demo::testColumns(){
-        const int numCols = disp.getHorizSize();
+        const int numCols = disp->getHorizSize();
 
         if(!(frameCounter % 60)){
-                disp.clear();
-                const int numRows = disp.getVertSize();
+                disp->clear();
+                const int numRows = disp->getVertSize();
                 for(int i = 0; i < numRows; i++)
-                        disp.setPixel(i, curTest);
+                        disp->setPixel(i, curTest);
 
                 curTest++;
         }
@@ -100,4 +114,8 @@ void demo::testColumns(){
                 curState++;
                 curTest = 0;
         }
+}
+
+void demo::testText(){
+        disp->scrollingText("Git Gud! ", 0, CRGB::Red, CRGB::Blue);
 }

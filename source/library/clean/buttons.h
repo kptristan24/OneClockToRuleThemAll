@@ -17,6 +17,7 @@ public:
         }
 
         void update(){
+                /*
                 //check if a button has been pressed
                 for(int i = 0; i < NUM_BUTTONS; i++){
                         if(!buttonStatus[i]){
@@ -32,6 +33,7 @@ public:
                                 if(!buttonStatus[i])
                                         buttonChecked[i] = 0;
                         }
+                */
         }
 
         const int getInput(){

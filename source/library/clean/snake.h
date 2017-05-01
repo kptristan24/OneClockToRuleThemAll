@@ -6,8 +6,8 @@
 #include "state.h"
 #include "buttons.h"
 
-extern display disp;
-extern clockLib clk;
+extern display *disp;
+extern clockLib *clk;
 extern state *newState;
 extern uint8_t signal;
 extern Buttons buttons;
@@ -56,6 +56,7 @@ private:
         point head;
         point tail;
         point food;
+        int length;
 
         int **grid;
         int xSize;
@@ -63,6 +64,7 @@ private:
         int input;
         int grow;
         int state; //0 running, 1 paused, 2 score screen
+        bool isPaused;
 };
 
 #endif

@@ -11,10 +11,9 @@ void demo::handleInput(){
         const int input = buttons->getInput();
 
         switch(input){
-        case 0:
-                //break;
-        case 1:
-                //break;
+        case 0: //first or second button exits the demo
+        case 1: signal = 2;
+                break;
         case 2: curTest = 0;
                 curState = 1;
                 frameCounter = 0;

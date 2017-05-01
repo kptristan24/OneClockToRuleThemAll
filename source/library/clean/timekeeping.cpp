@@ -11,6 +11,10 @@ clockLib::clockLib(){
         rtc.enableAlarmInterrupt();
 }
 
+void clockLib::update(){
+        rtc.update();
+}
+
 //DEPRICATED: use rtc directly
 uint32_t clockLib::curHour(){
 #if REAL_RTC

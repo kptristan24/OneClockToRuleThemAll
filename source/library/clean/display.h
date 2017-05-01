@@ -22,12 +22,11 @@ extern CRGB LEDstrip[13];
         DOTSTAR
 */
 #define CHIPSET     DOTSTAR //Must be one of the chipsets above.
-#define NUM_LEDS    13
-#define ROW_LENGTH  13
+#define NUM_LEDS    144
+#define ROW_LENGTH  12
 #define ALT_DIR     1 //are the strips wired in alternating directions
 #define DATA_PIN    4
 #define CLOCK_PIN   5
-#define HEADLESS    0  //Don't actually use LED's, just print screen state to serial monitor
 #define TEXT_SPEED  10
 
 class display{
@@ -40,7 +39,6 @@ public:
         //accessors
         int getVertSize();
         int getHorizSize();
-        CRGB **rawStrip();
 
         void update();
         void clear();
@@ -58,10 +56,10 @@ public:
         void clearScrollingText(int); //0 - top row, 1 - bot row, 2 - both rows
         void drawChar(char, int, int, const CRGB &); //character, x position, row, color
         //ScrollingText Parameters: message, length, row (0=top, 1=bot), and two colors
-        void scrollingText(char *, int, const CRGB & = CRGB::White, const CRGB & = CRGB::Blue);
+        void scrollingText(const char *, int, const CRGB & = CRGB::White, const CRGB & = CRGB::Blue);
 
 private:
-        CRGB **dispArray; //abstraction for treating strip like an array
+        CRGB LEDstrip[NUM_LEDS];
         uint8_t const **words;
 
         void __arrayAccessFunction(int, int, const CRGB &);

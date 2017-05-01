@@ -19,6 +19,8 @@ class clockLib{
 public:
         clockLib();
 
+        void update();
+
         //get time functions DEPRICATED!!! DO NOT USE. USE DIRECT RTC FUNCTIONS
         uint32_t curMinute();
         uint32_t curHour();

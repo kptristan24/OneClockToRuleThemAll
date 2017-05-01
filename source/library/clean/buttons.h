@@ -15,9 +15,7 @@ public:
                         pinMode(BUTTON_PINS[i], INPUT);
                 }
         }
-
         void update(){
-                /*
                 //check if a button has been pressed
                 for(int i = 0; i < NUM_BUTTONS; i++){
                         if(!buttonStatus[i]){
@@ -33,9 +31,7 @@ public:
                                 if(!buttonStatus[i])
                                         buttonChecked[i] = 0;
                         }
-                */
         }
-
         const int getInput(){
                 for(int i = 0; i < NUM_BUTTONS; i++){
                         if(buttonStatus[i] && !buttonChecked[i]){

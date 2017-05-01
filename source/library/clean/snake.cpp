@@ -25,7 +25,7 @@ snake::~snake(){
 }
 
 void snake::handleInput(){
-        const uint8_t input = buttons.getInput();
+        const uint8_t input = buttons->getInput();
 
         if(input == 0){
                 signal = 2;

@@ -9,7 +9,6 @@
 extern display *disp;
 extern clockLib *clk;
 extern state *newState;
-extern CRGB LEDstrip[13];
 extern uint8_t signal;
 extern Buttons *buttons;
 

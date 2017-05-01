@@ -8,7 +8,7 @@ demo::demo(){
 
 void demo::handleInput(){
 
-        const int input = buttons.getInput();
+        const int input = buttons->getInput();
 
         switch(input){
         case 0:
@@ -67,11 +67,11 @@ void demo::testEachPosition(){
         }
 
 
-        if(curTest == disp.getHorizSize() * disp.getVertSize()){
+        if(curTest == disp->getHorizSize() * disp->getVertSize()){
                 curState++;
                 curTest = 0;
         }
-        
+
 }
 
 void demo::testRows(){
@@ -117,5 +117,5 @@ void demo::testColumns(){
 }
 
 void demo::testText(){
-        disp->scrollingText("Git Gud! ", 0, CRGB::Red, CRGB::Blue);
+        disp->scrollingText("Hello World! ", 0, CRGB::Red, CRGB::Blue);
 }

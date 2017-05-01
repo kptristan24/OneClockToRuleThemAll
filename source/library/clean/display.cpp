@@ -1,16 +1,7 @@
 #include "display.h"
 
 display::display(){
-        //pinMode(CLOCK_PIN, OUTPUT);
-        //pinMode(DATA_PIN, OUTPUT);
-        FastLED.addLeds<DOTSTAR, DATA_PIN, CLOCK_PIN, BGR>(LEDstrip, NUM_LEDS);
-
-        /*
-        dispArray = new CRGB*[NUM_LEDS/ROW_LENGTH];
-        for(int i = 0; i < NUM_LEDS/ROW_LENGTH; i++){
-                dispArray[i] = &LEDstrip[ROW_LENGTH * i];
-        }
-        */
+        FastLED.addLeds<CHIPSET, DATA_PIN, CLOCK_PIN, BGR>(LEDstrip, NUM_LEDS);
 
         clearScrollingText(2);
 
@@ -19,9 +10,6 @@ display::display(){
         setupExtraWords();
 
         FastLED.setBrightness(255);
-        //LEDstrip[2] = CRGB::Blue;
-
-
         FastLED.clear();
         FastLED.show();
 }
@@ -76,9 +64,7 @@ int display::getHorizSize(){
 }
 
 void display::update(){
-
         FastLED.show();
-        //debugUpdateDisplay();
 }
 
 void display::clear(){
@@ -102,10 +88,6 @@ void display::debugUpdateDisplay(){
         }
 }
 
-CRGB **display::rawStrip(){
-        return dispArray;
-}
-
 void display::updateFromArray(int **numArray, CRGB &color, bool refresh){
         FastLED.clear();
         for(int i = 0; i < NUM_LEDS/ROW_LENGTH; i++){
@@ -125,9 +107,6 @@ void display::setPixel(int x, int y, const CRGB &color){
 }
 
 void display::setPixel(int x, const CRGB &color){
-        Serial.print("setPixel called with:");
-        Serial.print(x, DEC);
-        Serial.print("\n");
         if(x < NUM_LEDS)
                 LEDstrip[x] = CRGB::Red;
 
@@ -167,7 +146,7 @@ void display::drawChar(char c, int horizOffset, int row, const CRGB &color){
         }
 }
 
-void display::scrollingText(char *m, int row, const CRGB &col1, const CRGB &col2){
+void display::scrollingText(const char *m, int row, const CRGB &col1, const CRGB &col2){
         if(!text[row])
                 length[row] = strlen(m);
 
@@ -222,13 +201,6 @@ void display::__arrayAccessFunction(int y, int x, const CRGB &color){
                 LEDstrip[(y * ROW_LENGTH) + x] = color;
         }
 }
-
-/*
- * Outer loop is number of letters to copy
- * Inner loop is each row of the letter
- * Second inner loop is each column of each letter
- *
- */
 
 void display::setWordBuiltin(int w, const CRGB &color){
         if(w >= (NUM_WORDS + NUM_EXTRA)){

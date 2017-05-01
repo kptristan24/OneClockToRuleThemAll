@@ -10,7 +10,7 @@ extern display *disp;
 extern clockLib *clk;
 extern state *newState;
 extern uint8_t signal;
-extern Buttons buttons;
+extern Buttons *buttons;
 
 struct point{
         point(){

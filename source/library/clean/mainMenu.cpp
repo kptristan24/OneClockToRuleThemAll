@@ -36,7 +36,10 @@ void mainMenu::runLogic(){
                 case 2: signal = 3; //launch snake game
                         newState = new snake;
                         break;
-                case 3: signal = 2; //exit
+                case 3: signal = 3;
+                        newState = new editAlarms;
+                        break;
+                case 4: signal = 2; //exit
                         break;
                 }
         }
@@ -51,7 +54,9 @@ void mainMenu::drawFrame(){
                 break;
         case 2: disp->scrollingText("Snake Game ", 1, CRGB::Blue, CRGB::Aqua);
                 break;
-        case 3: disp->scrollingText("Exit ", 1, CRGB::Blue, CRGB::Aqua);
+        case 3: disp->scrollingText("Edit Alarms ", 1, CRGB::Blue, CRGB::Aqua);
+                break;
+        case 4: disp->scrollingText("Exit ", 1, CRGB::Blue, CRGB::Aqua);
                 break;
         }
 }

@@ -36,13 +36,15 @@ public:
         bool removeAlarm(const int &);
         bool removeAlarm(const timeS &);
 
+        int numAlarms();
+        uint8_t getAlarmTime(uint8_t, timeS &);
         //To-Do functions
 
 private:
         //Update the rtc hardware alarm to match the next upcoming alarm
         void __setNextAlarm();
 
-        aVec alarms;
+
 };
 
 #endif

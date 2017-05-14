@@ -2,10 +2,11 @@
 #define TIMES_H
 
 struct timeS{
-        timeS(){minute = 0; hour = 0;}
-        timeS(const int &m, const int &h){
+        timeS(){minute = 0; hour = 0; second = 0;}
+        timeS(const int &s, const int &m, const int &h){
                 minute = m;
                 hour = h;
+                second = s;
         }
         void set(const int &h, const int &m){
                 hour = h;
@@ -28,6 +29,7 @@ struct timeS{
                     || ((hour == rH.hour) && (minute < rH.minute));
         }
 
+        uint8_t second;
         uint8_t minute;
         uint8_t hour;
 };

@@ -6,6 +6,7 @@
 
 class stateStack{
 public:
+        enum Transition {NOTHING, EXIT, NEW, REPLACE};
         stateStack(){
                 size = 0;
                 stack = NULL;

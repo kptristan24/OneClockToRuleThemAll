@@ -1,40 +1,96 @@
-#include "editAlarms.h"
 
+//setup the three menus
 editAlarms::editAlarms(){
-        currentlySelected = 0;
         currentState = 0;
-        subState = 0;
+
+        mainMenu.setMenuName("Alarm Menu ");
+        mainMenu.addOption("Exit ", &signal, option::SET, stateStack::EXIT);
+        mainMenu.addOption("New Alarm ", changeToAdd);
+        mainMenu.addOption("Delete Alarm ", changeToDelete);
+
+        //addAlarm.setMenuName("Time ");
+        //addAlarm.addOption("Time ");
+
+        deleteAlarm.addOption("Exit ", &currentState, option::SET, 0);
+        deleteAlarm.addOption("Next Alarm ", deleteGetNextAlarm);
+        deleteAlarm.addOption("Delete ", deleteAlarmResponse);
+}
+
+void editAlarms::changeToAdd(){
+        currentlySelected = 0;
+        alarmTime = clk->getCurrentTime();
+        updateTimeString();
+        addUpdateColors();
+}
+
+void editAlarms::changeToDelete(){
+        if(clk->getAlarmTime(0, alarmTime)){
+                deleteAlarm.setMenuName(timeStr);
+                currentlySelected = 0;
+                currentState = 2;
+                updateTimeString();
+        }
+        else{ //no alarms currently set, return to menu
+                currentlyState = 0;
+        }
 }
 
 void editAlarms::handleInput(){
-        int input = buttons->getInput();
         switch(currentState){
-        case 0: switch(input){ //control alarm menu
-                case 0: currentlySelected--; //scroll up
-                        if(currentlySelected < 0) currentlySelected = 2;
-                        disp->clearScrollingText(1);
-                case 1: currentlySelected++; //scroll down
-                        if(currentlySelected == 3) currentlySelected = 0;
-                        disp->clearScrollingText(1);
-                        break;
-                case 2: signal = 2; //exit alarm settings menu
-                }
+        case 0: mainMenu.update();
                 break;
-        /* todo, add and delete control code
-        case 1: switch(input){ //control add menu
-                case 0:
-                case 1:
-                case 2:
-                }
+        case 1: addAlarmInput();
                 break;
-        case 2: switch(input){ //control delete menu
-                case 0:
-                case 1:
-                case 2:
-                }
+        case 2: deleteAlarm.update();
                 break;
-        */
         }
+}
+
+void editAlarms::addAlarmInput(){
+        switch(currentlySelected){
+        case 0:
+        case 1:
+        case 2:
+        default:
+                currentState = 0;
+        }
+}
+
+void editAlarms::deleteAlarmResponse(){
+        clk->removeAlarm(alarmTime);
+        currentlySelected--;
+        deleteGetNextAlarm();
+}
+
+void editAlarms::deleteGetNextAlarm(){
+        currentlySelected++;
+        if(!clk->getAlarmTime(currentlySelected, alarmTime)){
+                currentlySelected = 0;
+                if(!clk->getAlarmTime(currentlySelected, alarmTime)){
+                        currentState = 0;
+                }
+        }
+        deleteAlarm.setMenuName(timeStr);
+        updateTimeString();
+}
+
+void editAlarms::updateTimeString(){
+        if(alarmTime.hour > 9){
+                timeStr[0] = '1';
+                timeStr[1] = (alarmTime.hour - 10) + 48;
+        }
+        else{
+                timeStr[0] = '0';
+                timeStr[1] = alarmTime.hour + 48;
+        }
+
+        if(alarmTime.minute > 9){
+                uint8_t temp = alarmTime.minute / 10;
+                timeStr[2] = temp + 48;
+                timeStr[3] = (alarmTime.minute - temp * 10) + 48;
+        }
+
+        timeStr[4] = '\n';
 }
 
 void editAlarms::runLogic(){
@@ -43,32 +99,33 @@ void editAlarms::runLogic(){
 
 void editAlarms::drawFrame(){
         switch(currentState){
-        case 0: showMenu();
+        case 0: mainMenu.draw();
                 break;
-        case 1: addAlarm();
+        case 1: addAlarm.draw();
                 break;
-        case 2: deleteAlarm();
+        case 2: deleteAlarm.draw();
                 break;
         }
 }
 
-void editAlarms::showMenu(){
-        disp->scrollingText("Edit Alarms: ", 0, CRGB::Red, CRGB::Blue);
-        switch(currentState){
-        case 0: disp->scrollingText("Add Alarm ", 1, CRGB::Red, CRGB::Blue);
+void editAlarms::addUpdateColors(){
+        switch(currentlySelected){
+        case 0: h = CRGB::Red;
+                m = CRGB::Green;
+                a = CRGB::Green;
                 break;
-        case 1: disp->scrollingText("Delete Alarm ", 1, CRGB::Red, CRGB::Blue);
+        case 1: h = CRGB::Green;
+                m = CRGB::Red;
+                a = CRGB::Green;
                 break;
-        case 2: disp->scrollingText("Exit ", 1, CRGB::Red, CRGB::Blue);
+        case 2: h = CRGB::Green;
+                m = CRGB::Green;
+                a = CRGB::Red;
+                break;
         }
 }
 
-void editAlarms::addAlarm(){
-        disp->scrollingText("Time: ", 0, CRGB::Red, CRGB::Blue);
-        //Display temp time of alarm
-}
+void editAlarms::addDrawTime(){
 
-void editAlarms::deleteAlarm(){
-        disp->scrollingText("Delete: ", 0, CRGB::Red, CRGB::Blue);
-        //Display temp time of currently selected alarm.
+
 }

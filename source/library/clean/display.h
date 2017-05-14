@@ -52,14 +52,22 @@ public:
         void setWordBuiltin(int, const CRGB & = CRGB::White);
         void setFromTime(int, int, const CRGB & = CRGB::White); //hour, minute (in 24 hour time)
         void setFromTime(const timeS &, const CRGB & = CRGB::White);
-
+        CRGB getColorFromTime(const timeS &);
         //void drawLine();
 
-        //scrolling Text functions
+        /**     Text functions     **/
         void clearScrollingText(int); //0 - top row, 1 - bot row, 2 - both rows
         void drawChar(char, int, int, const CRGB &); //character, x position, row, color
-        //ScrollingText Parameters: message, length, row (0=top, 1=bot), and two colors
+
+        //Text Parameters: message, row (0=top, 1=bot), and two colors
         void scrollingText(const char *, int, const CRGB & = CRGB::White, const CRGB & = CRGB::Blue);
+        
+        /* Parameters: message, row (0=top, 1=bot), length, and a color
+         * Only displays up to ROW_LENGTH / 3 characters
+         * The second versions expects an array of colors the same length as the characters
+         */
+        void staticText(const char *, int, int, const CRGB & = CRGB::White);
+        void staticText(const char *, int, int, const CRGB *);
 
 private:
         CRGB LEDstrip[NUM_LEDS];

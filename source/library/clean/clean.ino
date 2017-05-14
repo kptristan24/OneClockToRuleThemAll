@@ -35,7 +35,7 @@ void setup() {
         top = stk->accessStack();
 
         newState = NULL;
-        signal = 0;
+        signal = stateStack::NOTHING;
 }
 
 void loop() {
@@ -52,14 +52,14 @@ void loop() {
 
         //Statemachine manager
         switch(signal){
-        case 0: break;                  //nothing requested
-        case 1: stk->push(newState);     //add new state requested.
-                break;
-        case 2: stk->pop();              //exit top state
-                break;
-        case 3: stk->pop();              //replace top state
-                stk->push(newState);
-                break;
+        case stateStack::NOTHING: break;                  //nothing requested
+        case stateStack::NEW    : stk->push(newState);     //add new state requested.
+                                  break;
+        case stateStack::EXIT   : stk->pop();              //exit top state
+                                  break;
+        case stateStack::REPLACE: stk->pop();              //replace top state
+                                  stk->push(newState);
+                                  break;
         default: Serial.print("State change requested with unknown signal: ");
                  Serial.print(signal);
         }
@@ -67,7 +67,7 @@ void loop() {
         //things that need to be cleaned up if a state change occured
         if(signal){
                 top = stk->accessStack();
-                signal = 0;
+                signal = stateStack::NOTHING;
                 newState = nullptr;
                 disp->clearScrollingText(2);
         }

@@ -1,9 +1,9 @@
 #include "timekeeping.h"
 
 clockLib::clockLib(){
-        #ifdef INTERRUPT_PIN // If using the SQW pin as an interrupt
+#ifdef INTERRUPT_PIN // If using the SQW pin as an interrupt
         pinMode(INTERRUPT_PIN, INPUT_PULLUP);
-        #endif
+#endif
         rtc.begin(CS_PIN);
         rtc.autoTime();
         //rtc.setTime(0, 39, 13, 2, 31, 10, 16);
@@ -16,7 +16,7 @@ void clockLib::update(){
 }
 
 timeS clockLib::getCurrentTime(){
-        return timeS(rtc.hour(), rtc.minute());
+        return timeS(rtc.second(). rtc.minute(), rtc.hour());
 }
 
 //DEPRICATED: use rtc directly
@@ -53,7 +53,7 @@ bool clockLib::checkAlarms(){
                 return false;
         }
 
-        timeS currentTime(curMinute(), curHour());
+        timeS currentTime(rtc.second(), curMinute(), curHour());
         newState = new alarmState(currentTime);
         signal = 1;
 
@@ -111,7 +111,7 @@ void clockLib::__setNextAlarm(){
                 return;
         }
 
-        timeS currentTime(curMinute(), curHour());
+        timeS currentTime(rtc.second(), curMinute(), curHour());
 
         //found an alarm later in the day to set
         for(int i = 0; i < alarms.size(); i++){
@@ -123,4 +123,16 @@ void clockLib::__setNextAlarm(){
 
         //otherwise set first alarm for tomorrow
         rtc.setAlarm1((uint8_t)255, alarms[0].minute, alarms[0].hour, (uint8_t)(rtc.getDay() + 1), true);
+}
+
+int clockLib::numAlarms(){
+        return alarms.size();
+}
+
+uint8_t getAlarmTime(uint8_t pos, timeS &extTime){
+        if(pos > alarms.size() || alarms.size() == 0)
+                return 0;
+
+        extTime = data[pos];
+        return 1;
 }

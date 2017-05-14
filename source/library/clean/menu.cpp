@@ -19,6 +19,8 @@ menu::~menu(){
         option *temp;
         while(options){
                 temp = options.next;
+                if(temp == options)
+                        temp = nullptr;
                 delete options;
                 options = temp;
         }
@@ -49,22 +51,44 @@ void menu::addOption(const char *text, func_ptr action){
 
 void menu::update(){
         int input = buttons->getInput();
-        if(options == nullptr && input){
+        if(options == nullptr && input){ //if there aren't any options, quit
                 signal = 2;
                 return;
         }
 
         switch(input){
-        case 0: 
+        case 0: options = options->next;
                 break;
-        case 1:
+        case 1: options = options->prev;
                 break;
-        case 2:
-
+        case 2: __executeOption();
                 break;
         }
 }
 
 void menu::draw(){
+        disp->scrollingText(title, 0, CRGB::Red, CRGB::Fuchsia);
+        switch(options->mode){
+        case option::EXT: options->display();
+                          break;
+        case default    : disp->scrollingText(options->text, 1, CRGB::Blue, CRGB::Aqua);
+                          break;
+        }
+}
 
+void menu::__executeOption(){
+        switch(options->mode){
+        case option::FUNC: options->action();
+                           break;
+        case option::EXT : options->action();
+                           break;
+        case option::SET : *(options->v) = change;
+                           break;
+        case option::MOD : *(options->v) += change;
+                           break;
+        case option::INC : *(options->v)++;
+                           break;
+        case option::DEC : *(options->v)--;
+                           break;
+        }
 }

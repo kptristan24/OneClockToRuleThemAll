@@ -146,6 +146,27 @@ void display::drawChar(char c, int horizOffset, int row, const CRGB &color){
         }
 }
 
+//To-Do: figure out better color control, maybe per character
+void display::staticText(const char *m, int row, int length, const CRGB &col1, const CRGB &col2){
+        int numChars = length;
+        if(numChars > (ROW_LENGTH / 3))
+                numChars = ROW_LENGTH / 3;
+        
+        for(int i = 0; i < numChars; i++){
+                drawChar(m[i], i*3, row, col1);
+        }
+}
+
+void display::staticText(const char *, int, int, const CRGB *colors){
+        int numChars = length;
+        if(numChars > (ROW_LENGTH / 3))
+                numChars = ROW_LENGTH / 3;
+        
+        for(int i = 0; i < numChars; i++){
+                drawChar(m[i], i*3, row, colors[i]);
+        }
+}
+
 void display::scrollingText(const char *m, int row, const CRGB &col1, const CRGB &col2){
         if(!text[row])
                 length[row] = strlen(m);
@@ -245,6 +266,10 @@ void display::setFromTime(int h, int m, const CRGB &color){
         //To-Do: set minute increments
 
         //To-Do: set filler words
+}
+
+CRGB display::getColorFromTime(const timeS &){
+        
 }
 
 void display::setFromTime(const timeS &t, const CRGB &color){

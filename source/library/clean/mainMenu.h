@@ -25,7 +25,7 @@ public:
         void runLogic();
         void drawFrame();
 private:
-        uint8_t currentlySelected;
+        menu clockMenu;
         uint8_t transition;
 };
 

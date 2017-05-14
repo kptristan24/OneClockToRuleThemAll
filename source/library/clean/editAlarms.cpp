@@ -47,12 +47,42 @@ void editAlarms::handleInput(){
 }
 
 void editAlarms::addAlarmInput(){
+        int input = buttons->getInput();
+        if(input == 2){
+                currentlySelected++;
+                if(currentlySelected == 3)
+                        currentState = 0;
+        }
+        else if(input == 1 || input == 0)
+                addInputHelper(input);
+}
+
+void editAlarms::addInputHelper(uint8_t input){
         switch(currentlySelected){
-        case 0:
-        case 1:
-        case 2:
-        default:
-                currentState = 0;
+        case 0: amPm = !amPm
+                break;
+        case 1: if(!input){
+                        alarmTime.hour++;
+                        if(alarmTime.hour > 12)
+                                alarmTime.hour = 1;
+                }
+                else{
+                        if(alarmTime.hour == 1)
+                                alarmTime.hour = 12;
+                        else
+                                alarmTime.hour--;
+                }
+        case 2: if(!input){
+                        alarmTime.minute++;
+                        if(alarmTime.minute > 59)
+                                alarmTime.minute = 0;
+                }
+                else{
+                        if(alarmTime.minute == 0)
+                                alarmTime.minute = 59;
+                        else
+                                alarmTime.minute--;
+                }
         }
 }
 

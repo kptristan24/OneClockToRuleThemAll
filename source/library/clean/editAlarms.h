@@ -43,7 +43,7 @@ private:
         uint8_t currentState;
         uint8_t hours;
         uint8_t minutes;
-        uint8_t amPm;
+        bool amPm;
         timeS alarmTime;
         char timeStr[5];
 };

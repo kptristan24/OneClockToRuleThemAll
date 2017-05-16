@@ -8,7 +8,7 @@ void basicTime::handleInput(){
         int input = buttons->getInput();
 
         if(input == 2){ //menu button pressed
-                signal = 1;
+                signal = stateStack::NEW;
                 newState = new mainMenu;
         }
 }

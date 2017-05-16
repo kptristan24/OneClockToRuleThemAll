@@ -111,17 +111,47 @@ The clock will also provide a way for the user to set and edit alarms. While mak
 Aside from that, all the other goals were simply that: it continues to operate in the normal range of temperature, at least a year straight, and is visible from 10-20 feet.
 
 
-\section{Document Updates}
-With half a term of additional development time, the project has moved forward towards an alpha state.
-To reflect changes that occured over the course of developing the alpha, another round updates to documentation have occred.
-These changes are reflected soley in the tech review and design document.
-The changes made to these documents are outlined below.
+\section{Current State of project}
 
-\subsection{Problem Statement}
-The problem statement was the first formal piece of writing to put the project onto paper.
-In this document we were working to create a definition and description of what our research and work will be based around for the rest of the year.
-By the end of the year, the problem described in this document is what we are seeking to solve.
-For our project, the problem being solved was making an affordable word clock that is friendly towards user modification.
+\subsection{Hardware}
+In terms of hardware we have all of our electronic components working.
+The Arduino Uno is working correctly and can communicate with the LEDs, RTC, and buttons.
+The LEDs are all soldered together and have valid connections between the 12 strips.
+We also have a power adapter with more amps that we are using to power both the board and LEDs.
+
+In terms of the case hardware we are almost done with the case.
+We have the 4 sides of the case cut to size with grooves cut for the front and back plate to slide in.
+We have also stained these 4 sides.
+
+\subsection{Software}
+The current state of the software for the program is solid but needs more testing.
+Due to difficulties relating to hardware assembly, large chunks of code have only been lightly tested.
+That being said, feature completeness has been achieved and will be demonstrated during Expo.
+
+The code is broken into two main components: the hardware abstractions and libraries, and example programs that use those libraries.
+Each main hardware component (RTC, Buttons, and LEDs) are wrapped in abstractions which handle setting up these objects as well as facilitating ease of use.
+Our example code is what presents the features described in our requirements to the user.
+
+The core of the project is broken into a group of software libraries which are tied together in the main Arduino program loop.
+These acts as the “operating system” of the clock from which different programs can be run, the running program can be changed, and alarms can trigger.
+
+To get more detailed about this operating system comparison, each program for our system is a subclass of an abstract class called “state”.
+All states share four common functions by which the operating system will interact with them.
+The first of these functions is a constructor: a function which does any “run-once” setup for the program or state.
+
+Three additional functions form the interface with between the operating system code and the running program: handleInput, runLogic, and drawFrame.
+The first of these functions is tasked with dealing with user input.
+The second function does any computing or processing work that needs to happen for the state.
+The final function is tasked with updating the screen of the clock.
+For some states this could be menu text, for others it could be the time in words, and for others it might be a digital time.
+
+The second set of software written for our project is a set of example states.
+These could be compared to Internet Explorer and MS Paint that come bundled with Windows.
+These example states are a set of programs that run on top of the aforementioned set of abstractions which form the operating system for this product.
+
+The example states (or programs) that are included in our project are geared towards meeting the software functionality requirements for our project.
+Some of the states we have developed which will be shown off at expo are: normal word clock, digital clock, system menu, add/remove alarms, game of snake,  LED demo, and a triggered alarm.
+Thanks to the high level abstraction offered by our hardware libraries, most of these states are relatively simple which was one of the goals of the project.
 
 \subsection{Technology Review}
 The technology review has been updated to reflect several changes in the project that have occured over the past two months.
@@ -134,42 +164,55 @@ This board has better software support and documentation by a very large margin.
 This is documented in the Technology Review in the form of discussing the new board as well as the libraries that come with it.
 Extensive research into libraries allowed development to progress more in two weeks than it had duing the six weeks prior.
 
-\subsection{Design Document}
-The Design Document has been updated to reflect changing technology and hardware choices.
-The largest changes were made to the developer support section.
-With the change to an easier and more well documented board, development stays relatively similar but with more options.
-In addition to this, the new board has more memory which allows developers additional freedom to change and add features.
+\section{Remaining Work}
+\subsection{Hardware}
+Our remaining problem is that we are waiting for our final clock face cut from Kevin.
+We should have started the prototyping process sooner to allow for more iterations of the case and clock face before we needed our final product.
+Once we have the final test cut back from Kevin we will have all the hardware sections of the project completed.
 
-\section{Current Stage of Project}
-From our fall progress report to now we have made some major progress in getting closer to having our clock ready for expo in May.
-Currently we have all the major components talking that would inhibit working on code.
-We have the RTC communicating with the board and can set the time and display it in the serial monitor.
-The LEDs are connected and correctly lighting up thanks to the libraries we found the connect them.
-Getting the LEDs and RTC to connect and work was quite easy after moving to the new Arduino board since there are thousands of libraries that we can download and implement.
-The change of the board has really increased our productivity and ability to move forward.
+\subsection{Software}
+The largest remaining piece of work that needs to be done is debugging.
+Various technical and cranial setbacks meant that we didn’t have a full set of the hardware assembled to test code on until somewhat recently.
+Debugging is going well and is following the logical order of necessity: state manager first, display library second, time library third, and lastly button control.
+That being said, all the core features are on course to be functional at Expo.
 
-Looking forward we still have a bit to work on but most of the work is centered around designing and manufacturing the case for the clock.
-We still need to design the word layout for the clock face itself, but there are some algorithms and tools and we have found online to use.
-Designing some demos for the expo event are also on our to do list.
-These demos will show control of color, brightness, different time display modes, and possibly games such as snake.
+In addition to a scrolling text library, the code for static text needs to be finished.
+This functionality allows the clock to show words of length four or less in fixed positions.
+This was left until the end of development as scrolling text is significantly more complicated and static text can reuse most of the same code.
 
-\section{Problems and Solutions}
-The main problems that we have run into right now is learning the hardware side of our project.
-We have not researched the ways to connect all the hardware to the microcontroller, but have started to figure this out from experimentation and documentation.
-Once we figure out how to connect everything, writing all the code for the clock should come quickly since it is in C and everybody on the team has relevant coding and embedded experience.
-Another problem we have had is time management on writing and planning out the documents outlined in the Project Purposes and Goals section.
-The main reason for our time management issues was that it usually took awhile for us to understand exactly what the assignment description was asking for.
-We found the assignment descriptions a little vague at times and we had to contact our TA or a professor to fully understand assignments.
-Meetings with our TA Jon Dodge were useful all term since we were able to ask questions and get a better understand of a document by asking him questions.
+Another requested feature that won’t be complete for Expo is a color gradient generator.
+This boils down to coming up with an algorithm that generates a unique color for the time of day.
+The idea behind this capability is that the word clock (or other modes) can gradually shift through pleasant colors throughout the day.
+The holdup here is an algorithm.
+The function infrastructure is already in place.
 
-\section{Interesting Pieces of Code}
-There are several awesome things that have pushed the project forward at an amazing rate.
-First of all, we found an amazing library for interaction with the RTC from Dreamspark.
-The library is compatible with our model RTC and contains extremely helpful functions such as RTC.Hour(), and RTC.Minute().
-Having an RTC library this powerful is extremely useful and makes the idea of adding more flush features a reality.
-We also found an awesome LED control library Adafruit.star.h, which has tonnes of documentation online and very powerful tools within it.
-With it, we were very quickly able to generate a simple binary clock to test the library and the RTC reads in tandom.
-It is very interesting.
+Being able to change the simulated pace of time for the sake of demonstration is one feature we are rushing to complete before expo.
+This will act as a wrapper around the get time functions in the clock so that we can accelerate the passage of time for the clock.
+This would be useful for demonstrating alarms going off or the gradual change in color if that feature is ready by Friday.
+
+Another item that remains on the “to-do” list is rewriting the alarm system to not rely on hardware alarms.
+While using the hardware alarm feature on the Real Time Clock (RTC) can work fine, it would easier and cleaner to have alarms be handled in software.
+This also frees the hardware alarms up for usage in project code without conflicting with clock functionality.
+Another perk of this change would be that it makes it even simpler to port our project to a different RTC chip because we use less specific hardware features.
+
+The last part of the project that needs to be completed before we turn our work over to our client is documentation.
+Code interface has been commented to make it easy to interact with functions.
+That being said, we need to produce a set of formal documentation about using our code as well as further documenting the example classes (programs) that run the basic clock functionality.
+Documentation was set aside to get things ready for Expo which means it will need to be a top priority in the three remaining weeks after Expo.
+
+\section{Impeding Factors}
+Over the course of the project there were two major things that impeding progress for us.
+The first of which is the original microcontroller we had.
+The MPBLABXpress Evaluation board we started with looked appealing and had a nice demo example, upon further inspection we found that this was just a nice appearance.
+Once we started looking into writing code to control a strip of LEDs we ran into many issues.
+Large sections of the code is auto generated which made it difficult to understand and make edits to files.
+Second the problem is that library integration was difficult to implement and we would be using multiple libraries to control the RTC and LEDs.
+When we came to the conclusion that this board wasn’t going to work we decided to move to an Arduino Uno for our microcontroller.
+
+The second main issue we had in our project was designing the case.
+With all of us being CS students we have limited woodworking experience.
+To get around this problem we created multiple prototypes and talked with people at lumber stores to learn about different techniques and wood we might use for the case.
+With the multiple people and prototypes we made our final case has turned out great and has a nice finish and appearance.
 
 \section{Weekly Update Summaries}
 \subsection{Week 1}

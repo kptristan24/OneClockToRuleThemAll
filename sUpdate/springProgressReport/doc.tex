@@ -1,9 +1,34 @@
 \documentclass[onecolumn, draftclsnofoot,10pt, compsoc]{IEEEtran}
-\usepackage{graphicx}
 \usepackage{url}
 \usepackage{setspace}
-
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{textcomp}
+\usepackage{listings}
 \usepackage{geometry}
+\lstset{
+	language=C,
+	keywordstyle=\bfseries\ttfamily\color[rgb]{0,0,1},
+	identifierstyle=\ttfamily,
+	commentstyle=\color[rgb]{0.133,0.545,0.133},
+	stringstyle=\ttfamily\color[rgb]{0.627,0.126,0.941},
+	showstringspaces=false,
+	basicstyle=\small,
+	numberstyle=\footnotesize,
+	numbers=left,
+	stepnumber=1,
+	numbersep=10pt,
+	tabsize=8,
+	breaklines=true,
+	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+	breakatwhitespace=false,
+	aboveskip={1.5\baselineskip},
+  columns=fixed,
+  upquote=true,
+  extendedchars=true
+}
+\renewcommand{\lstlistingname}{Code Example}
+\graphicspath{ {} }
 \geometry{textheight=9.5in, textwidth=7in}
 
 % 1. Fill in these details
@@ -214,71 +239,25 @@ With all of us being CS students we have limited woodworking experience.
 To get around this problem we created multiple prototypes and talked with people at lumber stores to learn about different techniques and wood we might use for the case.
 With the multiple people and prototypes we made our final case has turned out great and has a nice finish and appearance.
 
-\section{Weekly Update Summaries}
-\subsection{Week 1}
-This week we mostly just got our bearings back on the status of the project and with our client, and prepared for the term.
-We did not have much in terms of significance for the project progress.
-
-\subsection{Week 2}
-This week we got very back into fast pace development and we discovered something of major significance for the project.
-After spending hours verifying a researching alternatives, we decided at this point that we needed to use a more friendly microcontroller.
-We went to approach Victor with the KeyeStudio Uno, and see what he thinks.
-
-\subsection{Week 3}
-This week was excellent in terms of progress.
-We got our new board, and we successfully got accurate time readings from the RTC reading to the serial monitor!
-This is huge as is basically verifies the biggest part of the clocks functionality.
-
-\subsection{Week 4}
-This week we found several awesome RTC and LED libraries, that led to huge bounds in project progress.
-We basically spent some time discovering functions and how we're going to use them.
-We also got basic LED lights going.
-
-\subsection{Week 5}
-This week we met again with Victor and discussed the rest of the products that needed to be purchased for the completion of the product.
-We settled buttons, powering, wiring, and LED details.
-
-\newpage
-\section{Retrospective of the Past 10 Weeks}
-\vspace{2mm}
-\begin{center}
-\begin{tabular}{| p{0.3\linewidth} | p{0.3\linewidth} | p{0.3\linewidth} |}
-\hline
-Positives Column &
-Deltas Column &
-Actions Column \\
-\hline
-Changed board to KeyeStudio Uno board &
-Get RTC connected and reading &
-Get LED connected and outputting \\
-\hline
- &
- &
-Begin work on project starting with hardware related steps.  \\
-\hline
-Changed board to KeyeStudio Uno board &
- &
-New Board and libraries and coding environment \\
-\hline
-Received RTC from Victor &
-Need to learn connectivity and find power source &
-Research how to properly connect microcontroller and find what type of battery the RTC uses \\
-\hline
- &
- &
-Develop Case and letter grid \\
-\hline
-Finished initial draft of product requirements and design. &
-&
-Design pin assignment and \\
-\hline
-Develop tests &
-Finished initial draft of product requirements and design. &
-\\
-\hline
-
-
-\end{tabular}
-\end{center}
+\section{Code Samples}
+\subsection{Scrolling Text}
+\lstinputlisting[language=c++, caption=Scrolling text Example., captionpos=b]{codeExamples/demoState.cpp}
+One of the key abstractions that powers the interface for the clock: scrolling text.
+Our software supports two independent lines of text which can be set, cleared, and updated independently.
+This was done in order to be able to show text that isn’t among the words cut into the clock faceplate.
+One place this is crucial is for displaying menu text.
+\vspace{5mm}
+\subsection{Menu Code}
+\lstinputlisting[language=c++, caption=Main Menu State., captionpos=b]{codeExamples/mainMenu.cpp}
+Another core UI element in the menu.
+For our system, a menu is composed of two sections: the menu title (displayed on the top row of text), and the menu options (displayed on the lower row).
+Rather than having to right clusters of switch statements and other conditional logic every time a manu is needed, a menu item is provided.
+This object does all the heavy lifting of displaying menus and handling user interaction.
+\vspace{5mm}
+\subsection{The "Operating System"}
+\lstinputlisting[language=c++, caption=Core System Loop., captionpos=b]{codeExamples/clean.cpp}
+Displayed above is the core code for running the clock.
+A user of our software need not alter any of this, they only need to select the starting state of the clock.
+The key pieces here are check for hardware signals (from buttons or RTC), run the current program, change the running program if required, and run cleanup to prepare for a new program.
 
 \end{document}

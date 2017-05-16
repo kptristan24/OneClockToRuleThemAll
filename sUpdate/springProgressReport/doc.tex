@@ -28,7 +28,8 @@
   extendedchars=true
 }
 \renewcommand{\lstlistingname}{Code Example}
-\graphicspath{ {} }
+
+\graphicspath{ {./exPics} }
 \geometry{textheight=9.5in, textwidth=7in}
 
 % 1. Fill in these details
@@ -259,5 +260,11 @@ This object does all the heavy lifting of displaying menus and handling user int
 Displayed above is the core code for running the clock.
 A user of our software need not alter any of this, they only need to select the starting state of the clock.
 The key pieces here are check for hardware signals (from buttons or RTC), run the current program, change the running program if required, and run cleanup to prepare for a new program.
+
+\section{Project Pictures}
+\centering
+\includegraphics[width=0.8\textwidth, natwidth=600,natheight=800]{./exPics/scott.eps} %natwidth=3024,natheight=4032
+\includegraphics[width=0.8\textwidth, natwidth=600,natheight=800]{./exPics/wood.eps}
+\includegraphics[width=0.8\textwidth, natwidth=529,natheight=532]{./exPics/light.eps}
 
 \end{document}

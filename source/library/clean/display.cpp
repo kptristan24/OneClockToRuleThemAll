@@ -132,7 +132,7 @@ void display::clearScrollingText(int strip){
 }
 
 void display::drawChar(char c, int horizOffset, int row, const CRGB &color){
-        int vertOffset = (NUM_LEDS/ROW_LENGTH) * row;
+        int vertOffset = (NUM_LEDS/ROW_LENGTH)/2 * row;
         uint8_t charData[3];
         __bufferChar(charData,(((int)c - 32) * 3) + 6);
         int charPosition = (((int)c - 32) * 3) + 6;
@@ -141,7 +141,8 @@ void display::drawChar(char c, int horizOffset, int row, const CRGB &color){
                 if(j < 0 || j >= ROW_LENGTH)
                         continue;
                 for(int k = 0; k < 5; k++)
-                        if(CHECKBIT(Wendy3x5[charPosition + (j - horizOffset)], k))
+                        //if(CHECKBIT(Wendy3x5[charPosition + (j - horizOffset)], k))
+                        if(CHECKBIT(charData[j], k))
                                 __arrayAccessFunction(vertOffset + k, j, color);
         }
 }
@@ -151,23 +152,24 @@ void display::staticText(const char *m, int row, int length, const CRGB &col1, c
         int numChars = length;
         if(numChars > (ROW_LENGTH / 3))
                 numChars = ROW_LENGTH / 3;
-        
+
         for(int i = 0; i < numChars; i++){
                 drawChar(m[i], i*3, row, col1);
         }
 }
 
-void display::staticText(const char *, int, int, const CRGB *colors){
+void display::staticText(const char *m, int row, int length, const CRGB *colors){
         int numChars = length;
         if(numChars > (ROW_LENGTH / 3))
                 numChars = ROW_LENGTH / 3;
-        
+
         for(int i = 0; i < numChars; i++){
                 drawChar(m[i], i*3, row, colors[i]);
         }
 }
 
 void display::scrollingText(const char *m, int row, const CRGB &col1, const CRGB &col2){
+        Serial.print("Scrolling text called: \n");
         if(!text[row])
                 length[row] = strlen(m);
 
@@ -175,7 +177,6 @@ void display::scrollingText(const char *m, int row, const CRGB &col1, const CRGB
         __updateTextVariables(row);
 
         for(int i = 0; i < 5; i++){
-                tempCurrentChar++;
                 if(tempCurrentChar >= length[row])
                         tempCurrentChar = 0;
 
@@ -183,11 +184,13 @@ void display::scrollingText(const char *m, int row, const CRGB &col1, const CRGB
                         drawChar(m[tempCurrentChar], -offset[row] + (3 * i), row, col1);
                 else //even numbered character in m
                         drawChar(m[tempCurrentChar], -offset[row] + (3 * i), row, col2);
+
+                tempCurrentChar++;
         }
 }
 
-void display::__updateTextVariables(int row){
-        if(frameCounter == TEXT_SPEED){
+void display::__updateTextVariables(uint8_t row){
+        if(frameCounter >= TEXT_SPEED){
                 frameCounter = 0;
                 offset[row]++;
                 if(offset[row] == 3){
@@ -211,12 +214,11 @@ void display::__arrayAccessFunction(int y, int x, const CRGB &color){
         //currently no idiot checking for if x or y are in range
         if(ALT_DIR){
                 int basePos;
-                if(y & 1<<1)
-                        basePos = (y - 1) * ROW_LENGTH;
+                basePos = y * ROW_LENGTH;
+                if(y & 1)
+                        LEDstrip[basePos + (ROW_LENGTH - x - 1)] = color;
                 else
-                        basePos = y * ROW_LENGTH;
-
-                LEDstrip[basePos + (ROW_LENGTH - x - 1)];
+                        LEDstrip[basePos + x] = color;
         }
         else{
                 LEDstrip[(y * ROW_LENGTH) + x] = color;
@@ -269,7 +271,7 @@ void display::setFromTime(int h, int m, const CRGB &color){
 }
 
 CRGB display::getColorFromTime(const timeS &){
-        
+
 }
 
 void display::setFromTime(const timeS &t, const CRGB &color){

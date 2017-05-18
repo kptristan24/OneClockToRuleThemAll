@@ -44,7 +44,7 @@ private:
         //Update the rtc hardware alarm to match the next upcoming alarm
         void __setNextAlarm();
 
-
+        aVec alarms;
 };
 
 #endif

@@ -18,7 +18,7 @@ menu::~menu(){
 
         option *temp;
         while(options){
-                temp = options.next;
+                temp = options->next;
                 if(temp == options)
                         temp = nullptr;
                 delete options;
@@ -43,8 +43,8 @@ void menu::addOption(const char *text, func_ptr action){
         else{
                 newOption->prev = options;
                 newOption->next = options->next;
-                (option->next)->prev = newOption;
-                option->next = newOption;
+                (options->next)->prev = newOption;
+                options->next = newOption;
                 options = newOption;
         }
 }
@@ -57,11 +57,14 @@ void menu::update(){
         }
 
         switch(input){
-        case 0: options = options->next;
+        case 0: disp->clearScrollingText(dispaly::BOT);
+                options = options->next;
                 break;
-        case 1: options = options->prev;
+        case 1: disp->clearScrollingText(dispaly::BOT);
+                options = options->prev;
                 break;
-        case 2: __executeOption();
+        case 2: disp->clearScrollingText(dispaly::BOT);
+                __executeOption();
                 break;
         }
 }
@@ -71,7 +74,7 @@ void menu::draw(){
         switch(options->mode){
         case option::EXT: options->display();
                           break;
-        case default    : disp->scrollingText(options->text, 1, CRGB::Blue, CRGB::Aqua);
+        default         : disp->scrollingText(options->text, 1, CRGB::Blue, CRGB::Aqua);
                           break;
         }
 }
@@ -82,13 +85,13 @@ void menu::__executeOption(){
                            break;
         case option::EXT : options->action();
                            break;
-        case option::SET : *(options->v) = change;
+        case option::SET : *(options->var) = options->change;
                            break;
-        case option::MOD : *(options->v) += change;
+        case option::MOD : *(options->var) += options->change;
                            break;
-        case option::INC : *(options->v)++;
+        case option::INC : *(options->var)++;
                            break;
-        case option::DEC : *(options->v)--;
+        case option::DECR: *(options->var)--;
                            break;
         }
 }

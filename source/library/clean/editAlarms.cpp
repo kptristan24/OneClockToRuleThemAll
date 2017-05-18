@@ -1,15 +1,14 @@
 
+
+enum Mode {MENU, NEW, DELETE};
 //setup the three menus
 editAlarms::editAlarms(){
-        currentState = 0;
+        currentState = MENU;
 
         mainMenu.setMenuName("Alarm Menu ");
         mainMenu.addOption("Exit ", &signal, option::SET, stateStack::EXIT);
         mainMenu.addOption("New Alarm ", changeToAdd);
         mainMenu.addOption("Delete Alarm ", changeToDelete);
-
-        //addAlarm.setMenuName("Time ");
-        //addAlarm.addOption("Time ");
 
         deleteAlarm.addOption("Exit ", &currentState, option::SET, 0);
         deleteAlarm.addOption("Next Alarm ", deleteGetNextAlarm);
@@ -17,6 +16,7 @@ editAlarms::editAlarms(){
 }
 
 void editAlarms::changeToAdd(){
+        currentState = NEW;
         currentlySelected = 0;
         alarmTime = clk->getCurrentTime();
         updateTimeString();
@@ -27,22 +27,22 @@ void editAlarms::changeToDelete(){
         if(clk->getAlarmTime(0, alarmTime)){
                 deleteAlarm.setMenuName(timeStr);
                 currentlySelected = 0;
-                currentState = 2;
+                currentState = DELETE;
                 updateTimeString();
         }
         else{ //no alarms currently set, return to menu
-                currentlyState = 0;
+                currentlyState = MENU;
         }
 }
 
 void editAlarms::handleInput(){
         switch(currentState){
-        case 0: mainMenu.update();
-                break;
-        case 1: addAlarmInput();
-                break;
-        case 2: deleteAlarm.update();
-                break;
+        case MENU  : mainMenu.update();
+                     break;
+        case NEW   : addAlarmInput();
+                     break;
+        case DELETE: deleteAlarm.update();
+                     break;
         }
 }
 
@@ -50,11 +50,15 @@ void editAlarms::addAlarmInput(){
         int input = buttons->getInput();
         if(input == 2){
                 currentlySelected++;
-                if(currentlySelected == 3)
-                        currentState = 0;
+                if(currentlySelected == 3){
+                        currentState = MENU;
+                        clk->addAlarm(alarmTime);
+                }
         }
-        else if(input == 1 || input == 0)
+        else if(input == 1 || input == 0){
                 addInputHelper(input);
+                addUpdateTimeString();
+        }
 }
 
 void editAlarms::addInputHelper(uint8_t input){
@@ -72,6 +76,7 @@ void editAlarms::addInputHelper(uint8_t input){
                         else
                                 alarmTime.hour--;
                 }
+                break;
         case 2: if(!input){
                         alarmTime.minute++;
                         if(alarmTime.minute > 59)
@@ -83,6 +88,7 @@ void editAlarms::addInputHelper(uint8_t input){
                         else
                                 alarmTime.minute--;
                 }
+                break;
         }
 }
 
@@ -97,7 +103,7 @@ void editAlarms::deleteGetNextAlarm(){
         if(!clk->getAlarmTime(currentlySelected, alarmTime)){
                 currentlySelected = 0;
                 if(!clk->getAlarmTime(currentlySelected, alarmTime)){
-                        currentState = 0;
+                        currentState = MENU;
                 }
         }
         deleteAlarm.setMenuName(timeStr);
@@ -123,39 +129,48 @@ void editAlarms::updateTimeString(){
         timeStr[4] = '\n';
 }
 
+
 void editAlarms::runLogic(){
 
 }
 
 void editAlarms::drawFrame(){
         switch(currentState){
-        case 0: mainMenu.draw();
-                break;
-        case 1: addAlarm.draw();
-                break;
-        case 2: deleteAlarm.draw();
-                break;
+        case MENU  : mainMenu.draw();
+                     break;
+        case NEW   : addAlarm.draw();
+                     break;
+        case DELETE: deleteAlarm.draw();
+                     break;
         }
 }
 
 void editAlarms::addUpdateColors(){
-        switch(currentlySelected){
-        case 0: h = CRGB::Red;
-                m = CRGB::Green;
-                a = CRGB::Green;
+        switch(currentlySelected){ //hours
+        case 0: hourCol = CRGB::Red;
+                minCol  = CRGB::Green;
+                amPmCol = CRGB::Green;
                 break;
-        case 1: h = CRGB::Green;
-                m = CRGB::Red;
-                a = CRGB::Green;
+        case 1: hourCol = CRGB::Green; //minutes
+                minCol  = CRGB::Red;
+                amPmCol = CRGB::Green;
                 break;
-        case 2: h = CRGB::Green;
-                m = CRGB::Green;
-                a = CRGB::Red;
+        case 2: hourCol = CRGB::Green; //am/pm
+                minCol  = CRGB::Green;
+                amPmCol = CRGB::Red;
                 break;
         }
 }
 
+void editAlarms::addUpdateTimeString(){
+
+}
+
 void editAlarms::addDrawTime(){
+        disp->staticText(timeStr, display::TOP, 4, (const CRGB[]){hourCol, hourCol, minCol, minCol});
 
-
+        if(amPm)
+                disp->staticText("PM ", display::BOT, 2, amPmCol, amPmCol);
+        else
+                disp->staticText("AM ", display::BOT, 2, amPmCol, amPmCol);
 }

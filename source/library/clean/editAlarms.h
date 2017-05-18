@@ -15,16 +15,16 @@ extern Buttons *buttons;
 
 class editAlarms : public state{
 public:
+        enum Mode {MENU, NEW, DELETE};
         editAlarms();
         void handleInput();
         void runLogic();
         void drawFrame();
 
+private:
         void showMenu();
         void addAlarm();
         void deleteAlarm();
-
-private:
         void updateAlarmTime(uint8_t, uint8_t);
         void changeToAdd();
         void changeToDelete();
@@ -34,8 +34,9 @@ private:
         void addDrawTime();
         void addAlarmInput();
         void addUpdateColors();
+        void addUpdateTimeString();
 
-        CRGB m, h, a;
+        CRGB minCol, hourCol, amPmCol;
         menu mainMenu;
         menu addAlarm;
         menu deleteAlarm;
@@ -45,7 +46,7 @@ private:
         uint8_t minutes;
         bool amPm;
         timeS alarmTime;
-        char timeStr[5];
+        char timeStr[4];
 };
 
 

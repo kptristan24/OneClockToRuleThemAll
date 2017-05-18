@@ -15,7 +15,7 @@ extern Buttons *buttons;
 typedef void (*func_ptr)();
 
 struct option{
-        enum MODES {FUNC, SET, MOD, INC, DEC, EXT};
+        enum MODES {FUNC, SET, MOD, INC, DECR, EXT};
 
         option(const char *m, func_ptr a){
                 action = a;

@@ -16,7 +16,7 @@ void clockLib::update(){
 }
 
 timeS clockLib::getCurrentTime(){
-        return timeS(rtc.second(). rtc.minute(), rtc.hour());
+        return timeS(rtc.second(), rtc.minute(), rtc.hour());
 }
 
 //DEPRICATED: use rtc directly
@@ -129,10 +129,10 @@ int clockLib::numAlarms(){
         return alarms.size();
 }
 
-uint8_t getAlarmTime(uint8_t pos, timeS &extTime){
+uint8_t clockLib::getAlarmTime(uint8_t pos, timeS &extTime){
         if(pos > alarms.size() || alarms.size() == 0)
                 return 0;
 
-        extTime = data[pos];
+        extTime = alarms[pos];
         return 1;
 }

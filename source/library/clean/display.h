@@ -32,6 +32,7 @@ extern CRGB LEDstrip[13];
 
 class display{
 public:
+        enum TextRow {TOP, BOT};
         display();
 
         void setupWords();
@@ -61,12 +62,12 @@ public:
 
         //Text Parameters: message, row (0=top, 1=bot), and two colors
         void scrollingText(const char *, int, const CRGB & = CRGB::White, const CRGB & = CRGB::Blue);
-        
+
         /* Parameters: message, row (0=top, 1=bot), length, and a color
          * Only displays up to ROW_LENGTH / 3 characters
          * The second versions expects an array of colors the same length as the characters
          */
-        void staticText(const char *, int, int, const CRGB & = CRGB::White);
+        void staticText(const char *, int, int, const CRGB &, const CRGB &);
         void staticText(const char *, int, int, const CRGB *);
 
 private:
@@ -75,7 +76,7 @@ private:
 
         void __arrayAccessFunction(int, int, const CRGB &);
         //scrolling text internal Functions
-        void __updateTextVariables(int);
+        void __updateTextVariables(uint8_t);
         void __bufferChar(uint8_t *, int);
 
         //scrolling text position variables

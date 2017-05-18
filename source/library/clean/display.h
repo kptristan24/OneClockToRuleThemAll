@@ -9,8 +9,6 @@
 
 #define CHECKBIT(ADDRESS,BIT) (ADDRESS & (1<<BIT))
 
-extern CRGB LEDstrip[13];
-
 //hardware information
 /* Chipset options (from fast LED)
         LPD8806,
@@ -28,11 +26,11 @@ extern CRGB LEDstrip[13];
 #define ALT_DIR     1 //are the strips wired in alternating directions
 #define DATA_PIN    4
 #define CLOCK_PIN   5
-#define TEXT_SPEED  10
+#define TEXT_SPEED  15
 
 class display{
 public:
-        enum TextRow {TOP, BOT};
+        enum TextRow {TOP, BOT, ALL};
         display();
 
         void setupWords();
@@ -78,14 +76,14 @@ private:
         //scrolling text internal Functions
         void __updateTextVariables(uint8_t);
         void __bufferChar(uint8_t *, int);
+        void __bufferWordPos(uint8_t *, uint8_t);
 
         //scrolling text position variables
         uint8_t text[2];
         uint16_t currentChar[2];
         uint16_t length[2];
         uint16_t offset[2];
-
-        uint8_t frameCounter;
+        uint16_t frameCounter[2];
 };
 
 #endif

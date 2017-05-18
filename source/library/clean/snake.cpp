@@ -1,16 +1,24 @@
 #include "snake.h"
 
 snake::snake(){
-        int i;
+        disp->clearScrollingText(display::ALL);
         xSize = disp->getHorizSize();
         ySize = disp->getVertSize();
 
-        grid = new int*[ySize];
-        for(i = 0; i < ySize; i++){
-                grid[i] = new int[xSize];
+        grid = new uint8_t*[ySize];
+        for(uint8_t i = 0; i < ySize; i++){
+                grid[i] = new uint8_t[xSize];
         }
 
-        newGame();
+        state = MENU;
+
+        gameMenu.setMenuName("Sssnake ");
+        gameMenu.addOption("Exit", &signal, option::SET, stateStack::EXIT);
+        gameMenu.addOption("New Game ", newGame);
+
+        pauseMenu.setMenuName("Paused ");
+        pauseMenu.addOption("Continue ", &state, option::SET, RUN);
+        pauseMenu.addOption("Quit", &state, option::SET, GOVER);
 }
 
 snake::~snake(){
@@ -21,40 +29,50 @@ snake::~snake(){
                 delete [] grid[i];
         }
         delete [] grid;
-
 }
 
 void snake::handleInput(){
-        const uint8_t input = buttons->getInput();
+        switch(state){
+        case MENU : gameMenu.update();
+                    break;
+        case RUN  : gameInput();
+                    break;
+        case PAUSE: pauseMenu.update();
+                    break;
+        case GOVER: gameOverInput();
+                    break;
+        }
+}
 
-        if(input == 0){
-                signal = 2;
+void snake::gameOverInput(){
+        const int input = buttons->getInput();
+        if(input > -1){
+                state = MENU;
+                disp->clearScrollingText(display::ALL);
         }
-        else if(input == 3){
-                if(isPaused){
-                        isPaused = false;
-                }
-                else{
-                        isPaused = true;
-                }
-        }
-        else if(input == 1 && !isPaused){
-                direction++;
+}
+
+void snake::gameInput(){
+        const int input = buttons->getInput();
+
+        switch(input){
+        case 0: direction++;
                 if(direction == 4)
                         direction = 0;
-        }
-        else if(input == 2 && !isPaused){
-                direction--;
+                break;
+        case 1: direction--;
                 if(direction == -1)
                         direction = 4;
+                break;
+        case 2: state = PAUSE;
+                disp->clearScrollingText(display::ALL);
+                break;
         }
 }
 
 void snake::runLogic(){
-        if(isPaused){
-                paused();
+        if(state != RUN)
                 return;
-        }
 
         //update position, check for out of bounds head, check for food
         moveSnake();
@@ -82,15 +100,12 @@ void snake::runLogic(){
 //will get very slow as board gets full, should fix this at some point
 void snake::moveFood(){
         uint8_t x, y;
-        x = random(xSize);
-        y = random(ySize);
 
-        while(grid[y][x]){
+        do{
                 x = random(xSize);
                 y = random(ySize);
-        }
+        }while(grid[y][x]);
 
-        food.set(x,y);
         grid[y][x] = 2;
 }
 
@@ -112,23 +127,41 @@ void snake::moveSnake(){
 }
 
 void snake::drawFrame(){
-
+        switch(state){
+        case MENU : gameMenu.draw();
+                    break;
+        case RUN  : gameInput();
+                    break;
+        case PAUSE: pauseMenu.draw();
+                    break;
+        case GOVER: gameOver();
+                    break;
+        }
 }
 
-void snake::paused(){
-        //print a paused message
-        /* TODO*/
-        /*
-        Depends on display library for text
-        */
+void snake::genLengthStr(){
+        lengStr[0] = '0';
+        lengStr[1] = '0';
+        lengStr[2] = '0';
+
+        if(length > 100)
+                lengStr[0] = '1';
+
+        length -= 100;
+        if(length > 9){
+                uint8_t temp = length - 100;
+                length -= temp;
+                lengStr[1] = (temp / 10) + 48;
+        }
+
+        if(length != 0)
+                lengStr[2] = length + 48;
 }
 
 void snake::gameOver(){
-        //print a victory/loss message
-        /* TODO*/
-        /*
-        Depends on display library for text
-        */
+        disp->scrollingText("Game Over ", display::TOP, CRGB::Red, CRGB::Blue);
+        disp->staticText(lengStr, display::BOT, 3,
+                         (const CRGB[]){CRGB::Blue, CRGB::Green, CRGB::Blue});
 }
 
 void snake::newGame(){
@@ -144,11 +177,8 @@ void snake::newGame(){
         head.set(1, 1);
         tail.set(1, 1);
 
-        food.set(10, 10);
-
         direction = 0;
         length = 1;
-        isPaused = false;
-        state = 1;
+        state = RUN;
         grow = 0;
 }

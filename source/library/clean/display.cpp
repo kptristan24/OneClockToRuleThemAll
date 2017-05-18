@@ -3,13 +3,13 @@
 display::display(){
         FastLED.addLeds<CHIPSET, DATA_PIN, CLOCK_PIN, BGR>(LEDstrip, NUM_LEDS);
 
-        clearScrollingText(2);
+        clearScrollingText(ALL);
 
         words = new uint8_t const *[NUM_WORDS + NUM_EXTRA];
         setupWords();
         setupExtraWords();
 
-        FastLED.setBrightness(255);
+        FastLED.setBrightness(10);
         FastLED.clear();
         FastLED.show();
 }
@@ -101,38 +101,38 @@ void display::updateFromArray(int **numArray, CRGB &color, bool refresh){
                 update();
 }
 
-void display::setPixel(int x, int y, const CRGB &color){
+void display::setPixel(int y, int x, const CRGB &color){
         if((x < ROW_LENGTH) && (y < NUM_LEDS/ROW_LENGTH))
                 __arrayAccessFunction(y, x, color);
 }
 
 void display::setPixel(int x, const CRGB &color){
-        if(x < NUM_LEDS)
-                LEDstrip[x] = CRGB::Red;
-
+        if(x < NUM_LEDS){
+                const int y = x / ROW_LENGTH;
+                __arrayAccessFunction(y, (x - y*ROW_LENGTH), color);
+        }
 }
 
 void display::clearScrollingText(int strip){
-        if(strip == 0 || strip == 2){ //clear top strip
+        if(strip == TOP || strip == ALL){ //clear top strip
                 text[0] = 0;
                 offset[0] = 0;
                 length[0] = 0;
                 currentChar[0] = 0;
+                frameCounter[0] = 0;
         }
 
-        if(strip == 1 || strip == 2){ //clear bot strip
+        if(strip == BOT || strip == ALL){ //clear bot strip
                 text[1] = 0;
                 offset[1] = 0;
                 length[1] = 0;
                 currentChar[1] = 0;
+                frameCounter[1] = 0;
         }
-
-        if(strip == 2)
-                frameCounter = 0;
 }
 
 void display::drawChar(char c, int horizOffset, int row, const CRGB &color){
-        int vertOffset = (NUM_LEDS/ROW_LENGTH)/2 * row;
+        int vertOffset = ((NUM_LEDS/ROW_LENGTH) * row)/2;
         uint8_t charData[3];
         __bufferChar(charData,(((int)c - 32) * 3) + 6);
         int charPosition = (((int)c - 32) * 3) + 6;
@@ -140,10 +140,10 @@ void display::drawChar(char c, int horizOffset, int row, const CRGB &color){
         for(int j = horizOffset; j < horizOffset + 3; j++){
                 if(j < 0 || j >= ROW_LENGTH)
                         continue;
-                for(int k = 0; k < 5; k++)
-                        //if(CHECKBIT(Wendy3x5[charPosition + (j - horizOffset)], k))
-                        if(CHECKBIT(charData[j], k))
-                                __arrayAccessFunction(vertOffset + k, j, color);
+                for(int k = 0; k < 5; k++){
+                        if(CHECKBIT(charData[j - horizOffset], k))
+                                setPixel(vertOffset + k, j, color);
+                }
         }
 }
 
@@ -169,29 +169,37 @@ void display::staticText(const char *m, int row, int length, const CRGB *colors)
 }
 
 void display::scrollingText(const char *m, int row, const CRGB &col1, const CRGB &col2){
-        Serial.print("Scrolling text called: \n");
-        if(!text[row])
+        if(!text[row]){
+                text[row] = 1;
+                currentChar[row] = 0;
+                frameCounter[row]= 0;
+                //Serial.print("ran scrolling text setup: ");
+                //Serial.print(row);
+                //Serial.print("\n");
                 length[row] = strlen(m);
+        }
 
         int tempCurrentChar = currentChar[row];
-        __updateTextVariables(row);
 
         for(int i = 0; i < 5; i++){
                 if(tempCurrentChar >= length[row])
                         tempCurrentChar = 0;
 
-                if(CHECKBIT(tempCurrentChar, 1)) //odd numbered character in m
+                if(tempCurrentChar % 2){ //odd numbered character in m
                         drawChar(m[tempCurrentChar], -offset[row] + (3 * i), row, col1);
+                        //Serial.println(m[tempCurrentChar]);
+                }
                 else //even numbered character in m
                         drawChar(m[tempCurrentChar], -offset[row] + (3 * i), row, col2);
-
                 tempCurrentChar++;
         }
+
+        __updateTextVariables(row);
 }
 
 void display::__updateTextVariables(uint8_t row){
-        if(frameCounter >= TEXT_SPEED){
-                frameCounter = 0;
+        if(frameCounter[row] >= TEXT_SPEED){
+                frameCounter[row] = 0;
                 offset[row]++;
                 if(offset[row] == 3){
                         offset[row] = 0;
@@ -201,13 +209,13 @@ void display::__updateTextVariables(uint8_t row){
                 }
         }
 
-        frameCounter++;
+        frameCounter[row]++;
 }
 
 void display::__bufferChar(uint8_t *buffer, int whichChar){
-        buffer[0] = pgm_read_byte_near(Wendy3x5[whichChar]);
-        buffer[1] = pgm_read_byte_near(Wendy3x5[whichChar + 1]);
-        buffer[2] = pgm_read_byte_near(Wendy3x5[whichChar + 2]);
+        buffer[0] = pgm_read_byte_near(&Wendy3x5[whichChar]);
+        buffer[1] = pgm_read_byte_near(&Wendy3x5[whichChar + 1]);
+        buffer[2] = pgm_read_byte_near(&Wendy3x5[whichChar + 2]);
 }
 
 void display::__arrayAccessFunction(int y, int x, const CRGB &color){
@@ -215,8 +223,10 @@ void display::__arrayAccessFunction(int y, int x, const CRGB &color){
         if(ALT_DIR){
                 int basePos;
                 basePos = y * ROW_LENGTH;
-                if(y & 1)
+                if(y & 1){
                         LEDstrip[basePos + (ROW_LENGTH - x - 1)] = color;
+                        //Serial.print(basePos + (ROW_LENGTH - x - 1));
+                }
                 else
                         LEDstrip[basePos + x] = color;
         }
@@ -230,70 +240,66 @@ void display::setWordBuiltin(int w, const CRGB &color){
                 return;
         }
 
-        int constCoord;
+        uint8_t buffer[5];
+        __bufferWordPos(buffer, w);
 
-        if(words[w][4]){
-                constCoord = words[w][0];
-                for(int y = words[w][1]; y < words[w][3]; y++){
-                        __arrayAccessFunction(y, constCoord, color);
-                }
-        }
-        else{
-                constCoord = words[w][1];
-                for(int x = words[w][0]; x < words[w][2]; x++){
-                        __arrayAccessFunction(constCoord, x, color);
-                }
-        }
+        if(buffer[4]){
+                for(uint8_t y = buffer[1]; y < buffer[3]; y++){
+                        __arrayAccessFunction(y, buffer[0], color);
+        else
+                for(uint8_t x = buffer[0]; x < buffer[2]; x++)
+                        __arrayAccessFunction(buffer[1], x, color);
+}
+
+void __bufferWordPos(uint8_t *buffer, uint8_t pos){
+        buffer[0] = pgm_read_byte_near(&WordLayout[pos]);
+        buffer[1] = pgm_read_byte_near(&WordLayout[pos + 1]);
+        buffer[2] = pgm_read_byte_near(&WordLayout[pos + 2]);
+        buffer[3] = pgm_read_byte_near(&WordLayout[pos + 3]);
+        buffer[4] = pgm_read_byte_near(&WordLayout[pos + 4]);
 }
 
 void display::setFromTime(int h, int m, const CRGB &color){
         int afternoonT = h;
         int timeRange = m / 5;
-
-        //set am or pm if they exist
-        if(h > 11 && extra[1])
-                setWordBuiltin(24, color);
-        else if(extra[0]){
+        //set am or pm
+        if(h > 11)
                 setWordBuiltin(23, color);
-                afternoonT = h - 12;
+                afternoonT = afternoonT - 12;
+        else{
+                setWordBuiltin(24, color);
         }
-
         //set hour word
-        setWordBuiltin(11+afternoonT, color);
-
+        setWordBuiltin(afternoonT, color);
         //set minute word
         if(timeRange)
-                setWordBuiltin(timeRange, color);
+                setWordBuiltin(timeRange + 12, color);
 
         //To-Do: set minute increments
-
         //To-Do: set filler words
 }
 
-CRGB display::getColorFromTime(const timeS &){
-
+CRGB display::getColorFromTime(const timeS &inputTime){
+        //still looking into algorithms
+        return CRGB::Red;
 }
 
 void display::setFromTime(const timeS &t, const CRGB &color){
         int afternoonT = t.hour;
         int timeRange = t.minute / 5;
-
-        //set am or pm if they exist
-        if(t.hour > 11 && extra[1])
-                setWordBuiltin(24, color);
-        else if(extra[0]){
+        //set am or pm
+        if(afternoonT > 11)
                 setWordBuiltin(23, color);
-                afternoonT = t.hour - 12;
+                afternoonT = afternoonT - 12;
+        else{
+                setWordBuiltin(24, color);
         }
-
         //set hour word
-        setWordBuiltin(11+afternoonT, color);
-
+        setWordBuiltin(afternoonT, color);
         //set minute word
         if(timeRange)
-                setWordBuiltin(timeRange, color);
+                setWordBuiltin(timeRange + 12, color);
 
         //To-Do: set minute increments
-
         //To-Do: set filler words
 }

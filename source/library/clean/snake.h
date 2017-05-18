@@ -5,6 +5,7 @@
 #include "display.h"
 #include "state.h"
 #include "buttons.h"
+#include "menu.h"
 
 extern display *disp;
 extern clockLib *clk;
@@ -17,11 +18,11 @@ struct point{
                 x = 0;
                 y = 0;
         }
-        point(const int &a, const int &b){
+        point(uint8_t a, uint8_t b){
                 x = a;
                 y = b;
         }
-        void set(const int &a, const int &b){
+        void set(uint8_t a, uint8_t b){
                 x = a;
                 y = b;
         }
@@ -32,12 +33,13 @@ struct point{
                 }
                 return false;
         }
-        int x;
-        int y;
+        uint8_t x;
+        uint8_t y;
 };
 
 class snake : public state{
 public:
+        enum GameState {MENU, RUN, PAUSE, GOVER}
         snake();
         ~snake();
 
@@ -48,23 +50,25 @@ public:
 
         void moveFood();
         void updateTail();
-        void paused();
         void gameOver();
         void newGame();
+        void gameInput();
+        void genLengthStr();
 private:
+        menu gameMenu;
+        menu pauseMenu;
         int direction;
         point head;
         point tail;
-        point food;
         int length;
 
-        int **grid;
+        uint8_t **grid;
         int xSize;
         int ySize;
         int input;
         int grow;
-        int state; //0 running, 1 paused, 2 score screen
-        bool isPaused;
+        uint8_t state; //0 mainMenu, 1 running, 2 paused, 3 game over
+        char lengStr[3];
 };
 
 #endif

@@ -22,19 +22,17 @@ public:
         void drawFrame();
 
 private:
-        void showMenu();
-        void addAlarm();
-        void deleteAlarm();
         void updateAlarmTime(uint8_t, uint8_t);
-        void changeToAdd();
+        void updateTimeString();
+
         void changeToDelete();
         void deleteGetNextAlarm();
         void deleteAlarmResponse();
-        void updateTimeString();
+
+        void changeToAdd();
         void addDrawTime();
         void addAlarmInput();
         void addUpdateColors();
-        void addUpdateTimeString();
 
         CRGB minCol, hourCol, amPmCol;
         menu mainMenu;
@@ -42,11 +40,9 @@ private:
         menu deleteAlarm;
         uint8_t currentlySelected;
         uint8_t currentState;
-        uint8_t hours;
-        uint8_t minutes;
         bool amPm;
         timeS alarmTime;
-        char timeStr[4];
+        char timeStr[6];
 };
 
 

@@ -76,6 +76,7 @@ void editAlarms::addInputHelper(uint8_t input){
                         else
                                 alarmTime.hour--;
                 }
+                updateTimeString();
                 break;
         case 2: if(!input){
                         alarmTime.minute++;
@@ -88,6 +89,7 @@ void editAlarms::addInputHelper(uint8_t input){
                         else
                                 alarmTime.minute--;
                 }
+                updateTimeString();
                 break;
         }
 }
@@ -126,7 +128,8 @@ void editAlarms::updateTimeString(){
                 timeStr[3] = (alarmTime.minute - temp * 10) + 48;
         }
 
-        timeStr[4] = '\n';
+        timeStr[4] = ' ';
+        timeStr[5] = '\n';
 }
 
 
@@ -160,10 +163,6 @@ void editAlarms::addUpdateColors(){
                 amPmCol = CRGB::Red;
                 break;
         }
-}
-
-void editAlarms::addUpdateTimeString(){
-
 }
 
 void editAlarms::addDrawTime(){

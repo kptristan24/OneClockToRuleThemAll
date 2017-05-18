@@ -3,12 +3,12 @@
 mainMenu::mainMenu(){
         transition = -1;
 
-        clockMenu.setMenuName("Main Menu: ");
-        clockMenu.addOption("Edit Alarms: ", &transition, option::SET, 0);
-        clockMenu.addOption("Grid Demo ", &transition, option::SET, 1);
-        clockMenu.addOption("Snake Game ", &transition, option::SET, 2);
-        clockMenu.addOption("Show Alarm ", &transition, option::SET, 3);
-        clockMenu.addOption("Exit", &signal, option::SET, stateStack::EXIT);
+        clockMenu.setupMenu("Main Menu: ", this);
+        clockMenu.addOption("Edit Alarms: ", &transition, SET, 0);
+        clockMenu.addOption("Grid Demo ", &transition, SET, 1);
+        clockMenu.addOption("Snake Game ", &transition, SET, 2);
+        clockMenu.addOption("Show Alarm ", &transition, SET, 3);
+        clockMenu.addOption("Exit", &signal, SET, stateStack::EXIT);
 }
 
 void mainMenu::handleInput(){
@@ -26,7 +26,7 @@ void mainMenu::runLogic(){
         case 2: signal = stateStack::REPLACE; //launch snake game
                 newState = new snake;
                 break;
-        case 3: signal = stateStack::REPLACE
+        case 3: signal = stateStack::REPLACE;
                 newState = new alarmState(clk->getCurrentTime());
                 break;
         }

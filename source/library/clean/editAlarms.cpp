@@ -1,18 +1,17 @@
+#include "editAlarms.h"
 
-
-enum Mode {MENU, NEW, DELETE};
-//setup the three menus
 editAlarms::editAlarms(){
         currentState = MENU;
 
-        mainMenu.setMenuName("Alarm Menu ");
-        mainMenu.addOption("Exit ", &signal, option::SET, stateStack::EXIT);
-        mainMenu.addOption("New Alarm ", changeToAdd);
-        mainMenu.addOption("Delete Alarm ", changeToDelete);
+        mainMenu.setupMenu("Alarm Menu ", this);
+        mainMenu.addOption("Exit ", &signal, SET, stateStack::EXIT);
+        mainMenu.addOption("New Alarm ", &changeToAdd);
+        mainMenu.addOption("Delete Alarm ", &changeToDelete);
 
-        deleteAlarm.addOption("Exit ", &currentState, option::SET, 0);
-        deleteAlarm.addOption("Next Alarm ", deleteGetNextAlarm);
-        deleteAlarm.addOption("Delete ", deleteAlarmResponse);
+        deleteAlarm.setupMenu("Delete ", this);
+        deleteAlarm.addOption("Exit ", &currentState, SET, 0);
+        deleteAlarm.addOption("Next Alarm ", &deleteGetNextAlarm);
+        deleteAlarm.addOption("Delete ", &deleteAlarmResponse);
 }
 
 void editAlarms::changeToAdd(){
@@ -31,7 +30,7 @@ void editAlarms::changeToDelete(){
                 updateTimeString();
         }
         else{ //no alarms currently set, return to menu
-                currentlyState = MENU;
+                currentState = MENU;
         }
 }
 
@@ -57,13 +56,13 @@ void editAlarms::addAlarmInput(){
         }
         else if(input == 1 || input == 0){
                 addInputHelper(input);
-                addUpdateTimeString();
+                updateTimeString();
         }
 }
 
 void editAlarms::addInputHelper(uint8_t input){
         switch(currentlySelected){
-        case 0: amPm = !amPm
+        case 0: amPm = !amPm;
                 break;
         case 1: if(!input){
                         alarmTime.hour++;
@@ -141,7 +140,7 @@ void editAlarms::drawFrame(){
         switch(currentState){
         case MENU  : mainMenu.draw();
                      break;
-        case NEW   : addAlarm.draw();
+        case NEW   : addDrawTime();
                      break;
         case DELETE: deleteAlarm.draw();
                      break;
@@ -158,7 +157,7 @@ void editAlarms::addUpdateColors(){
                 minCol  = CRGB::Red;
                 amPmCol = CRGB::Green;
                 break;
-        case 2: hourCol = CRGB::Green; //am/pm
+        case 2: hourCol = CRGB::Green; //ampm
                 minCol  = CRGB::Green;
                 amPmCol = CRGB::Red;
                 break;
@@ -166,7 +165,9 @@ void editAlarms::addUpdateColors(){
 }
 
 void editAlarms::addDrawTime(){
-        disp->staticText(timeStr, display::TOP, 4, (const CRGB[]){hourCol, hourCol, minCol, minCol});
+        CRGB temp[4] = {hourCol, hourCol, minCol, minCol};
+
+        disp->staticText(timeStr, display::TOP, 4, temp);
 
         if(amPm)
                 disp->staticText("PM ", display::BOT, 2, amPmCol, amPmCol);

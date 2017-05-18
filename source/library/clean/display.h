@@ -33,9 +33,6 @@ public:
         enum TextRow {TOP, BOT, ALL};
         display();
 
-        void setupWords();
-        void setupExtraWords();
-
         //accessors
         int getVertSize();
         int getHorizSize();
@@ -70,7 +67,6 @@ public:
 
 private:
         CRGB LEDstrip[NUM_LEDS];
-        uint8_t const **words;
 
         void __arrayAccessFunction(int, int, const CRGB &);
         //scrolling text internal Functions

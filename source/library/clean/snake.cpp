@@ -12,13 +12,13 @@ snake::snake(){
 
         state = MENU;
 
-        gameMenu.setMenuName("Sssnake ");
-        gameMenu.addOption("Exit", &signal, option::SET, stateStack::EXIT);
-        gameMenu.addOption("New Game ", newGame);
+        gameMenu.setupMenu("Sssnake ", this);
+        gameMenu.addOption("Exit", &signal, SET, stateStack::EXIT);
+        gameMenu.addOption("New Game ", &newGame);
 
-        pauseMenu.setMenuName("Paused ");
-        pauseMenu.addOption("Continue ", &state, option::SET, RUN);
-        pauseMenu.addOption("Quit", &state, option::SET, GOVER);
+        pauseMenu.setupMenu("Paused ", this);
+        pauseMenu.addOption("Continue ", &state, SET, RUN);
+        pauseMenu.addOption("Quit", &state, SET, GOVER);
 }
 
 snake::~snake(){
@@ -78,6 +78,7 @@ void snake::runLogic(){
         moveSnake();
 
         //check if food found
+        /*
         if(head == food){
                 moveFood();
                 length++;
@@ -85,7 +86,7 @@ void snake::runLogic(){
         else{ //shrink tail
                 updateTail();
         }
-
+        */
         //check if out of bounds
         if(head.x < 0 || head.x >= xSize){
                 state = 2;
@@ -159,9 +160,10 @@ void snake::genLengthStr(){
 }
 
 void snake::gameOver(){
+        CRGB temp[4] = {CRGB::Blue, CRGB::Green, CRGB::Blue};
+
         disp->scrollingText("Game Over ", display::TOP, CRGB::Red, CRGB::Blue);
-        disp->staticText(lengStr, display::BOT, 3,
-                         (const CRGB[]){CRGB::Blue, CRGB::Green, CRGB::Blue});
+        disp->staticText(lengStr, display::BOT, 3, temp);
 }
 
 void snake::newGame(){

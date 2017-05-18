@@ -39,7 +39,7 @@ struct point{
 
 class snake : public state{
 public:
-        enum GameState {MENU, RUN, PAUSE, GOVER}
+        enum GameState {MENU, RUN, PAUSE, GOVER};
         snake();
         ~snake();
 
@@ -54,9 +54,11 @@ public:
         void newGame();
         void gameInput();
         void genLengthStr();
+
+        void gameOverInput();
 private:
-        menu gameMenu;
-        menu pauseMenu;
+        menu <snake>gameMenu;
+        menu <snake>pauseMenu;
         int direction;
         point head;
         point tail;

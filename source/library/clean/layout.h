@@ -53,7 +53,7 @@ const uint8_t WordLayout[] PROGMEM= {
         0,0,0,0,0, //three
         0,0,0,0,0, //four
         //extra words
-}
+};
 
 /*
 const uint8_t fiveM[6] PROGMEM= {0,0,0,0,0,0};

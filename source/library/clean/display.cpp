@@ -4,56 +4,11 @@ display::display(){
         FastLED.addLeds<CHIPSET, DATA_PIN, CLOCK_PIN, BGR>(LEDstrip, NUM_LEDS);
 
         clearScrollingText(ALL);
-
-        words = new uint8_t const *[NUM_WORDS + NUM_EXTRA];
-        setupWords();
-        setupExtraWords();
-
         FastLED.setBrightness(10);
         FastLED.clear();
         FastLED.show();
 }
 
-void display::setupWords(){
-        words[0] = fiveM;
-        words[1] = tenM;
-        words[2] = fifteenM;
-        words[3] = twentyM;
-        words[4] = twentyfiveM;
-        words[5] = thirtyM;
-        words[6] = thirtyfiveM;
-        words[7] = fourtyM;
-        words[8] = fourtyfiveM;
-        words[9] = fiftyM;
-        words[10] = fiftyfiveM;
-        words[11] = one;
-        words[12] = two;
-        words[13] = three;
-        words[14] = four;
-        words[15] = five;
-        words[16] = six;
-        words[17] = seven;
-        words[18] = eight;
-        words[19] = nine;
-        words[20] = ten;
-        words[21] = eleven;
-        words[22] = twelve;
-}
-
-void display::setupExtraWords(){
-        if(extra[0])
-                words[23] = amE;
-        if(extra[1])
-                words[24] = pmE;
-        if(extra[2])
-                words[25] = minOne;
-        if(extra[3])
-                words[26] = minTwo;
-        if(extra[4])
-                words[27] = minThree;
-        if(extra[5])
-                words[28] = minFour;
-}
 
 int display::getVertSize(){
         return NUM_LEDS / ROW_LENGTH;
@@ -243,15 +198,15 @@ void display::setWordBuiltin(int w, const CRGB &color){
         uint8_t buffer[5];
         __bufferWordPos(buffer, w);
 
-        if(buffer[4]){
-                for(uint8_t y = buffer[1]; y < buffer[3]; y++){
+        if(buffer[4])
+                for(uint8_t y = buffer[1]; y < buffer[3]; y++)
                         __arrayAccessFunction(y, buffer[0], color);
         else
                 for(uint8_t x = buffer[0]; x < buffer[2]; x++)
                         __arrayAccessFunction(buffer[1], x, color);
 }
 
-void __bufferWordPos(uint8_t *buffer, uint8_t pos){
+void display::__bufferWordPos(uint8_t *buffer, uint8_t pos){
         buffer[0] = pgm_read_byte_near(&WordLayout[pos]);
         buffer[1] = pgm_read_byte_near(&WordLayout[pos + 1]);
         buffer[2] = pgm_read_byte_near(&WordLayout[pos + 2]);
@@ -263,12 +218,12 @@ void display::setFromTime(int h, int m, const CRGB &color){
         int afternoonT = h;
         int timeRange = m / 5;
         //set am or pm
-        if(h > 11)
+        if(h > 11){
                 setWordBuiltin(23, color);
                 afternoonT = afternoonT - 12;
-        else{
-                setWordBuiltin(24, color);
         }
+        else
+                setWordBuiltin(24, color);
         //set hour word
         setWordBuiltin(afternoonT, color);
         //set minute word
@@ -288,12 +243,12 @@ void display::setFromTime(const timeS &t, const CRGB &color){
         int afternoonT = t.hour;
         int timeRange = t.minute / 5;
         //set am or pm
-        if(afternoonT > 11)
+        if(afternoonT > 11){
                 setWordBuiltin(23, color);
                 afternoonT = afternoonT - 12;
-        else{
-                setWordBuiltin(24, color);
         }
+        else
+                setWordBuiltin(24, color);
         //set hour word
         setWordBuiltin(afternoonT, color);
         //set minute word

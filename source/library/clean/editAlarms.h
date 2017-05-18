@@ -6,6 +6,7 @@
 #include "state.h"
 #include "buttons.h"
 #include "menu.h"
+#include "timeS.h"
 
 extern display *disp;
 extern clockLib *clk;
@@ -33,11 +34,11 @@ private:
         void addDrawTime();
         void addAlarmInput();
         void addUpdateColors();
+        void addInputHelper(uint8_t input);
 
         CRGB minCol, hourCol, amPmCol;
-        menu mainMenu;
-        menu addAlarm;
-        menu deleteAlarm;
+        menu <editAlarms>mainMenu;
+        menu <editAlarms>deleteAlarm;
         uint8_t currentlySelected;
         uint8_t currentState;
         bool amPm;

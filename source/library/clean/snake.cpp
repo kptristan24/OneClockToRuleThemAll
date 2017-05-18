@@ -73,29 +73,13 @@ void snake::gameInput(){
 void snake::runLogic(){
         if(state != RUN)
                 return;
+        else if(frameCounter){
+                frameCounter--;
+                return;
+        }
 
-        //update position, check for out of bounds head, check for food
         moveSnake();
-
-        //check if food found
-        /*
-        if(head == food){
-                moveFood();
-                length++;
-        }
-        else{ //shrink tail
-                updateTail();
-        }
-        */
-        //check if out of bounds
-        if(head.x < 0 || head.x >= xSize){
-                state = 2;
-        }
-        else if(head.y < 0 || head.y >= ySize){
-                state = 2;
-        }
-
-        grid[head.y][head.x] = 1;
+        frameCounter = GAMESPEED;
 }
 
 //will get very slow as board gets full, should fix this at some point
@@ -111,19 +95,54 @@ void snake::moveFood(){
 }
 
 void snake::updateTail(){
+        for(int8_t y = tail.y - 1; y < tail.y + 2; y++){
+                if(y < 0 || y >= ySize)
+                        continue;
+                for(int8_t x = tail.x - 1; x < tail.x + 2; x++){
+                        if(x < 0 || x >= xSize)
+                                continue;
 
+                        if(grid[y][x] == 1 && x != tail.x && y != tail.y){
+                                tail.set(y, x);
+                                grid[tail.y][tail.x] = 0;
+                                return;
+                        }
+                }
+        }
 }
 
 void snake::moveSnake(){
+        uint8_t tempX = head.x;
+        uint8_t tempY = head.y;
+
         switch(direction){
-        case 0: head.x += 1;
+        case 0: tempX += 1;
                 break;
-        case 1: head.y -= 1;
+        case 1: tempY -= 1;
                 break;
-        case 2: head.x -= 1;
+        case 2: tempX -= 1;
                 break;
-        case 3: head.y += 1;
+        case 3: tempY += 1;
                 break;
+        }
+
+        if(tempX < 0 || tempX >= xSize)
+                state = GOVER;
+        else if(tempY < 0 || tempY >= ySize)
+                state = GOVER;
+        else if(grid[tempY][tempX] == 1)
+                state = GOVER;
+
+        if(grid[tempY][tempX] != 2){
+                updateTail();
+                grid[tempY][tempX] = 1;
+                head.set(tempY, tempX);
+        }
+        else{
+                length++;
+                grid[tempY][tempX] = 1;
+                head.set(tempY, tempX);
+                moveFood();
         }
 }
 
@@ -131,13 +150,31 @@ void snake::drawFrame(){
         switch(state){
         case MENU : gameMenu.draw();
                     break;
-        case RUN  : gameInput();
+        case RUN  : drawGame();
                     break;
         case PAUSE: pauseMenu.draw();
                     break;
         case GOVER: gameOver();
                     break;
         }
+}
+
+void snake::drawGame(){
+        if(frameCounter != GAMESPEED)
+                return;
+
+        disp->clear();
+        for(int8_t y = tail.y - 1; y < tail.y + 2; y++){
+                for(int8_t x = tail.x - 1; x < tail.x + 2; x++){
+                        if(grid[y][x] == 0)
+                                continue;
+                        else if(grid[y][x] == 1)
+                                disp->setPixel(y, x, CRGB::Red);
+                        else if(grid[y][x] == 2)
+                                disp->setPixel(y, x, CRGB::Green);
+                }
+        }
+        disp->update();
 }
 
 void snake::genLengthStr(){
@@ -176,11 +213,15 @@ void snake::newGame(){
                 }
         }
 
+        grid[ySize/2][xSize/2] = 2;
+
         head.set(1, 1);
         tail.set(1, 1);
 
         direction = 0;
         length = 1;
+
         state = RUN;
-        grow = 0;
+        frameCounter = GAMESPEED;
+        drawFrame();
 }

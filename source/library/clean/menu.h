@@ -31,8 +31,6 @@ public:
 private:
 
         struct option{
-                enum MODES {FUNC, SET, MOD, INC, DECR, EXT};
-
                 option(const char *m, func_ptr a){
                         action = a;
                         text = new char[strlen(m)];
@@ -155,27 +153,27 @@ template<class T> void menu<T>::update(){
 template<class T> void menu<T>::draw(){
         disp->scrollingText(title, 0, CRGB::Red, CRGB::Fuchsia);
         switch(options->mode){
-        case option::EXT: (relatedObject->*(options->display))();
-                          break;
-        default         : disp->scrollingText(options->text, 1, CRGB::Blue, CRGB::Aqua);
-                          break;
+        case EXT: (relatedObject->*(options->display))();
+                  break;
+        default : disp->scrollingText(options->text, 1, CRGB::Blue, CRGB::Aqua);
+                  break;
         }
 }
 
 template<class T> void menu<T>::__executeOption(){
         switch(options->mode){
-        case option::FUNC: (relatedObject->*(options->action))();
-                           break;
-        case option::EXT : (relatedObject->*(options->action))();
-                           break;
-        case option::SET : *(options->var) = options->change;
-                           break;
-        case option::MOD : *(options->var) += options->change;
-                           break;
-        case option::INC : *(options->var)++;
-                           break;
-        case option::DECR: *(options->var)--;
-                           break;
+        case FUNC: (relatedObject->*(options->action))();
+                   break;
+        case EXT : (relatedObject->*(options->action))();
+                   break;
+        case SET : *(options->var) = options->change;
+                   break;
+        case MOD : *(options->var) += options->change;
+                   break;
+        case INC : *(options->var)++;
+                   break;
+        case DECR: *(options->var)--;
+                   break;
         }
 }
 

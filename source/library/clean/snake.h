@@ -19,12 +19,12 @@ struct point{
                 y = 0;
         }
         point(uint8_t a, uint8_t b){
-                x = a;
-                y = b;
+                y = a;
+                x = b;
         }
         void set(uint8_t a, uint8_t b){
-                x = a;
-                y = b;
+                y = a;
+                x = b;
         }
 
         bool operator ==(const point &other) const{
@@ -54,21 +54,23 @@ public:
         void newGame();
         void gameInput();
         void genLengthStr();
+        void drawGame();
 
         void gameOverInput();
 private:
+        static const int GAMESPEED = 10;
+
         menu <snake>gameMenu;
         menu <snake>pauseMenu;
-        int direction;
+        int8_t direction;
         point head;
         point tail;
-        int length;
+        uint8_t length;
 
         uint8_t **grid;
-        int xSize;
-        int ySize;
-        int input;
-        int grow;
+        uint8_t xSize;
+        uint8_t ySize;
+        uint8_t frameCounter;
         uint8_t state; //0 mainMenu, 1 running, 2 paused, 3 game over
         char lengStr[3];
 };

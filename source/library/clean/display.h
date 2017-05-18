@@ -43,7 +43,7 @@ public:
         void updateFromArray(int **, CRGB &, bool); //array, color to use, trigger screen drawing
 
         //Basic drawing Functions
-        void setPixel(int, int, const CRGB &); //at (x,y)
+        void setPixel(int, int, const CRGB &); //at (y,x)
         void setPixel(int, const CRGB &);              //at linear position
         void setWordBuiltin(int, const CRGB & = CRGB::White);
         void setFromTime(int, int, const CRGB & = CRGB::White); //hour, minute (in 24 hour time)

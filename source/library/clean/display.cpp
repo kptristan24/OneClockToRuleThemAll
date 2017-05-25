@@ -4,7 +4,7 @@ display::display(){
         FastLED.addLeds<CHIPSET, DATA_PIN, CLOCK_PIN, BGR>(LEDstrip, NUM_LEDS);
 
         clearScrollingText(ALL);
-        FastLED.setBrightness(10);
+        FastLED.setBrightness(5);
         FastLED.clear();
         FastLED.show();
 }
@@ -19,6 +19,7 @@ int display::getHorizSize(){
 }
 
 void display::update(){
+        //debugUpdateDisplay();
         FastLED.show();
 }
 
@@ -27,18 +28,23 @@ void display::clear(){
 }
 
 void display::debugUpdateDisplay(){
-        int rows;
-        unsigned char rowContents;
+        uint8_t rows;
+        uint16_t rowContents;
         rows = NUM_LEDS / ROW_LENGTH;
 
-        Serial.print("Display state:");
+        Serial.print(F("Display state:\n"));
         for(int i = 0; i < rows; i++){
                 rowContents = 0;
                 for(int j = 0; j < ROW_LENGTH; j++){
                         if(LEDstrip[j + (i*ROW_LENGTH)])
-                                rowContents |= 1 << j;
+                                Serial.print("1 ");
+                                //rowContents |= 1 << j;
+                        else
+                                Serial.print("0 ");
+
+                                //rowContents |= 0 << j;
                 }
-                Serial.print(rowContents, BIN);
+                //Serial.print(rowContents, BIN);
                 Serial.print("\n");
         }
 }
@@ -103,17 +109,20 @@ void display::drawChar(char c, int horizOffset, int row, const CRGB &color){
 }
 
 //To-Do: figure out better color control, maybe per character
-void display::staticText(const char *m, int row, int length, const CRGB &col1, const CRGB &col2){
+void display::staticText(const char *m, uint8_t row, int length, const CRGB &col1, const CRGB &col2){
         int numChars = length;
         if(numChars > (ROW_LENGTH / 3))
                 numChars = ROW_LENGTH / 3;
 
         for(int i = 0; i < numChars; i++){
-                drawChar(m[i], i*3, row, col1);
+                if(i & 1)
+                        drawChar(m[i], i*3, row, col1);
+                else
+                        drawChar(m[i], i*3, row, col2);
         }
 }
 
-void display::staticText(const char *m, int row, int length, const CRGB *colors){
+void display::staticText(const char *m, uint8_t row, int length, const CRGB *colors){
         int numChars = length;
         if(numChars > (ROW_LENGTH / 3))
                 numChars = ROW_LENGTH / 3;
@@ -123,14 +132,31 @@ void display::staticText(const char *m, int row, int length, const CRGB *colors)
         }
 }
 
+void display::staticText(const char *m, uint8_t row, int length, const CRGB &col1,
+                const CRGB &col2, const CRGB &col3, const CRGB &col4){
+        int numChars = length;
+        if(numChars > (ROW_LENGTH / 3))
+                numChars = ROW_LENGTH / 3;
+
+        for(int i = 0; i < numChars; i++){
+                switch(i){
+                case 0: drawChar(m[i], 0, row, col1);
+                        break;
+                case 1: drawChar(m[i], 3, row, col2);
+                        break;
+                case 2: drawChar(m[i], 6, row, col3);
+                        break;
+                case 3: drawChar(m[i], 9, row, col4);
+                        break;
+                }
+        }
+}
+
 void display::scrollingText(const char *m, int row, const CRGB &col1, const CRGB &col2){
         if(!text[row]){
                 text[row] = 1;
                 currentChar[row] = 0;
                 frameCounter[row]= 0;
-                //Serial.print("ran scrolling text setup: ");
-                //Serial.print(row);
-                //Serial.print("\n");
                 length[row] = strlen(m);
         }
 
@@ -176,8 +202,7 @@ void display::__bufferChar(uint8_t *buffer, int whichChar){
 void display::__arrayAccessFunction(int y, int x, const CRGB &color){
         //currently no idiot checking for if x or y are in range
         if(ALT_DIR){
-                int basePos;
-                basePos = y * ROW_LENGTH;
+                int basePos = y * ROW_LENGTH;
                 if(y & 1){
                         LEDstrip[basePos + (ROW_LENGTH - x - 1)] = color;
                         //Serial.print(basePos + (ROW_LENGTH - x - 1));
@@ -196,13 +221,13 @@ void display::setWordBuiltin(int w, const CRGB &color){
         }
 
         uint8_t buffer[5];
-        __bufferWordPos(buffer, w);
+        __bufferWordPos(buffer, w*5);
 
         if(buffer[4])
-                for(uint8_t y = buffer[1]; y < buffer[3]; y++)
+                for(uint8_t y = buffer[1]; y <= buffer[3]; y++)
                         __arrayAccessFunction(y, buffer[0], color);
         else
-                for(uint8_t x = buffer[0]; x < buffer[2]; x++)
+                for(uint8_t x = buffer[0]; x <= buffer[2]; x++)
                         __arrayAccessFunction(buffer[1], x, color);
 }
 
@@ -214,24 +239,86 @@ void display::__bufferWordPos(uint8_t *buffer, uint8_t pos){
         buffer[4] = pgm_read_byte_near(&WordLayout[pos + 4]);
 }
 
-void display::setFromTime(int h, int m, const CRGB &color){
-        int afternoonT = h;
-        int timeRange = m / 5;
+void display::setFromTime(uint8_t h, uint8_t m, const CRGB &color){
+        uint8_t afternoonT = h; //1
+        uint8_t timeRange = m / 5; //3
+        //it is
+        setWordBuiltin(20, color);
+        setWordBuiltin(21, color);
         //set am or pm
         if(h > 11){
                 setWordBuiltin(23, color);
                 afternoonT = afternoonT - 12;
         }
         else
-                setWordBuiltin(24, color);
+                setWordBuiltin(22, color);
+
         //set hour word
-        setWordBuiltin(afternoonT, color);
+        if(timeRange > 6){
+                afternoonT++;
+                if(afternoonT > 12)
+                        afternoonT = afternoonT - 12;
+                setWordBuiltin(afternoonT, color);
+
+        }
+        else
+                setWordBuiltin(afternoonT, color);
+
         //set minute word
         if(timeRange)
-                setWordBuiltin(timeRange + 12, color);
+                setMinutePhrase(timeRange, color);
 
-        //To-Do: set minute increments
-        //To-Do: set filler words
+        //set minute increments
+        /*
+        switch(m - (timeRange * 5)){
+        case 4: __arrayAccessFunction(11,11,CRGB::White);
+        case 3: __arrayAccessFunction(11,0,CRGB::White);
+        case 2: __arrayAccessFunction(11,0,CRGB::White);
+        case 1: __arrayAccessFunction(0,0,CRGB::White);
+        }
+        */
+}
+
+void display::setMinutePhrase(uint8_t m, const CRGB &color){
+        if(m > 0 && m < 7)
+                setWordBuiltin(17, color); //past the hour
+        else
+                setWordBuiltin(18, color); //till
+
+        switch(m){
+        case 1: setWordBuiltin(12, color);
+                setWordBuiltin(19, color);
+                break;
+        case 2: setWordBuiltin(13, color);
+                setWordBuiltin(19, color);
+                break;
+        case 3: setWordBuiltin(14, color);
+                break;
+        case 4: setWordBuiltin(15, color);
+                setWordBuiltin(19, color);
+                break;
+        case 5: setWordBuiltin(15, color);
+                setWordBuiltin(12, color);
+                setWordBuiltin(19, color);
+                break;
+        case 6: setWordBuiltin(16, color);
+                break;
+        case 7: setWordBuiltin(15, color);
+                setWordBuiltin(12, color);
+                setWordBuiltin(19, color);
+                break;
+        case 8: setWordBuiltin(15, color);
+                setWordBuiltin(19, color);
+                break;
+        case 9: setWordBuiltin(14, color);
+                break;
+        case 10: setWordBuiltin(13, color);
+                 setWordBuiltin(19, color);
+                 break;
+        case 11: setWordBuiltin(12, color);
+                 setWordBuiltin(19, color);
+                 break;
+        }
 }
 
 CRGB display::getColorFromTime(const timeS &inputTime){

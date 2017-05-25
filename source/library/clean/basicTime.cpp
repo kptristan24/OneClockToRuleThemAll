@@ -1,11 +1,12 @@
 #include "basicTime.h"
 
 basicTime::basicTime(){
-        currentTime = clk->getCurrentTime();
+        Serial.print(F("Time\n"));
+        currentTime = clk.getCurrentTime();
 }
 
 void basicTime::handleInput(){
-        int input = buttons->getInput();
+        int input = buttons.getInput();
 
         if(input == 2){ //menu button pressed
                 signal = stateStack::NEW;
@@ -14,9 +15,11 @@ void basicTime::handleInput(){
 }
 
 void basicTime::runLogic(){
-        currentTime = clk->getCurrentTime();
+        currentTime = clk.getCurrentTime();
 }
 
 void basicTime::drawFrame(){
-        disp->setFromTime(currentTime, CRGB::White);
+        disp.clear();
+        disp.setFromTime(currentTime.hour, currentTime.minute, CRGB::Red);
+        disp.update();
 }

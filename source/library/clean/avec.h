@@ -68,8 +68,8 @@ public:
                 delete [] temp;
         }
 private:
-        int curSize;
-        int capacity;
+        uint8_t curSize;
+        uint8_t capacity;
         timeS *data;
 };
 

@@ -20,7 +20,7 @@ public:
         clockLib();
 
         void update();
-        timeS getCurrentTime();
+        const timeS getCurrentTime() const;
 
         //get time functions DEPRICATED!!! DO NOT USE. USE DIRECT RTC FUNCTIONS
         uint32_t curMinute();

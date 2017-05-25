@@ -9,27 +9,20 @@ public:
         enum Transition {NOTHING, EXIT, NEW, REPLACE};
         stateStack(){
                 size = 0;
-                stack = NULL;
-                base = NULL;
+                stack = nullptr;
         };
         ~stateStack(){
                 while(size){
                         pop();
                 }
         };
-        node** accessStack(){
-                return &stack;
-        };
-        node* getBase(){
-                return base;
+        node* accessStack(){
+                return stack;
         };
         void push(state *newS){
                 node *temp = new node(newS, stack);
                 stack = temp;
                 size++;
-                if(size == 1){
-                        base = stack;
-                }
         };
         void pop(){
                 node *temp = stack;
@@ -37,14 +30,12 @@ public:
                 delete temp;
                 size--;
                 if(!size){
-                        base = NULL;
-                        stack = NULL;
+                        stack = nullptr;
                 }
         };
 private:
         node *stack;
-        node *base;
-        int size;
+        uint8_t size;
 };
 
 #endif

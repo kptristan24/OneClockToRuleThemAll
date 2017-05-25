@@ -9,24 +9,24 @@
 #include "snake.h"
 #include "demoState.h"
 #include "editAlarms.h"
+#include "buttonTest.h"
 
-#define NUM_OPTIONS 5
-
-extern display *disp;
-extern clockLib *clk;
+extern display disp;
+extern clockLib clk;
+extern Buttons buttons;
 extern state *newState;
 extern uint8_t signal;
-extern Buttons *buttons;
 
 class mainMenu : public state{
 public:
         mainMenu();
+        ~mainMenu();
         void handleInput();
         void runLogic();
         void drawFrame();
 private:
         menu <mainMenu>clockMenu;
-        uint8_t transition;
+        int8_t transition;
 };
 
 #endif

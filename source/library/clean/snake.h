@@ -7,11 +7,11 @@
 #include "buttons.h"
 #include "menu.h"
 
-extern display *disp;
-extern clockLib *clk;
+extern display disp;
+extern clockLib clk;
+extern Buttons buttons;
 extern state *newState;
 extern uint8_t signal;
-extern Buttons *buttons;
 
 struct point{
         point(){
@@ -39,9 +39,8 @@ struct point{
 
 class snake : public state{
 public:
-        enum GameState {MENU, RUN, PAUSE, GOVER};
+        enum GameState {MENU, RUN, PAUSE, GOVER, START};
         snake();
-        ~snake();
 
         void handleInput();
         void runLogic();
@@ -55,10 +54,10 @@ public:
         void gameInput();
         void genLengthStr();
         void drawGame();
-
+        void changeToStart();
         void gameOverInput();
 private:
-        static const int GAMESPEED = 10;
+        static const uint8_t GAMESPEED = 10;
 
         menu <snake>gameMenu;
         menu <snake>pauseMenu;
@@ -67,7 +66,7 @@ private:
         point tail;
         uint8_t length;
 
-        uint8_t **grid;
+        uint8_t grid[NUM_LEDS / ROW_LENGTH][ROW_LENGTH];
         uint8_t xSize;
         uint8_t ySize;
         uint8_t frameCounter;

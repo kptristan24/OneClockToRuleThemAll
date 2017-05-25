@@ -4,24 +4,18 @@ demo::demo(){
         frameCounter = 0;
         curState = 1;
         curTest = 0;
-        FastLED.clear();
-        FastLED.show();
-        Serial.print("Constructor for demo run...\n");
 }
 
 void demo::handleInput(){
-
-        const int input  = -1; //= buttons->getInput();
+        const int8_t input = buttons.getInput();
 
         switch(input){
-        case 0: //first or second button exits the demo
-        case 1: signal = 2;
-                break;
-        case 2: curTest = 0;
+        case 0:
+        case 1: curTest = 0;
                 curState = 1;
                 frameCounter = 0;
                 break;
-        default: //no button input
+        case 2: signal = stateStack::EXIT;
                 break;
         }
 
@@ -32,8 +26,6 @@ void demo::runLogic(){
 }
 
 void demo::drawFrame(){
-        //testEachPosition();
-        //testText();
 
         switch(curState){
         case 1: testEachPosition();
@@ -52,13 +44,13 @@ void demo::drawFrame(){
 }
 
 void demo::testEachPosition(){
-        const int row = curTest / disp->getHorizSize();
+        const uint8_t row = curTest / disp.getHorizSize();
 
-        if(frameCounter > 2){
+        if(frameCounter > 100){
                 frameCounter = 0;
-                disp->clear();
-                disp->setPixel(curTest, CRGB::White);
-                disp->update();
+                disp.clear();
+                disp.setPixel(curTest, CRGB::White);
+                disp.update();
                 curTest++;
         }
         else{
@@ -73,15 +65,15 @@ void demo::testEachPosition(){
 }
 
 void demo::testRows(){
-        const int numRows = disp->getVertSize();
+        const uint8_t numRows = disp.getVertSize();
 
-        if(frameCounter > 1000){
+        if(frameCounter > 2000){
                 frameCounter = 0;
-                disp->clear();
-                const int numCols = disp->getHorizSize();
+                disp.clear();
+                const uint8_t numCols = disp.getHorizSize();
                 for(uint8_t i = 0; i < numCols; i++)
-                        disp->setPixel(curTest, i, CRGB::Red);
-                disp->update();
+                        disp.setPixel(curTest, i, CRGB::Red);
+                disp.update();
                 curTest++;
         }
         else{
@@ -95,15 +87,15 @@ void demo::testRows(){
 }
 
 void demo::testColumns(){
-        const int numCols = disp->getHorizSize();
+        const uint8_t numCols = disp.getHorizSize();
 
-        if(frameCounter > 1000){
+        if(frameCounter > 2000){
                 frameCounter = 0;
-                disp->clear();
-                const int numRows = disp->getVertSize();
+                disp.clear();
+                const uint8_t numRows = disp.getVertSize();
                 for(int i = 0; i < numRows; i++)
-                        disp->setPixel(i, curTest, CRGB::Red);
-                disp->update();
+                        disp.setPixel(i, curTest, CRGB::Red);
+                disp.update();
                 curTest++;
         }
         else{
@@ -117,9 +109,12 @@ void demo::testColumns(){
 }
 
 void demo::testText(){
-        disp->clear();
-        //delay(100);
-        disp->scrollingText("Hello ", 0, CRGB::Red, CRGB::Blue);
+        if(frameCounter > 700){
+                curState++;
+                curTest = 0;
+        }
+        disp.clear();
+        disp.scrollingText("Hello! ", 0, CRGB::Red, CRGB::Blue);
         disp->scrollingText("World ", 1, CRGB::Blue, CRGB::Green);
-        disp->update();
+        disp.update();
 }

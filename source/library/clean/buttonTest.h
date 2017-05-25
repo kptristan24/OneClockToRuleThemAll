@@ -1,12 +1,12 @@
-#ifndef BASICTIME_H
-#define BASICTIME_H
+#ifndef BUTTONTEST_H
+#define BUTTONTEST_H
 
 #include "timekeeping.h"
 #include "display.h"
 #include "state.h"
 #include "buttons.h"
 #include "timeS.h"
-#include "mainMenu.h"
+#include "menu.h"
 
 extern display disp;
 extern clockLib clk;
@@ -15,14 +15,16 @@ extern state *newState;
 extern uint8_t signal;
 
 
-class basicTime : public state{
+class buttonTest : public state{
 public:
-        basicTime();
+        buttonTest();
         void handleInput();
         void runLogic();
         void drawFrame();
 private:
-        timeS currentTime;
+        //menu <buttonTest>testMenu;
+        uint8_t counter;
+        uint8_t state;
 };
 
 #endif

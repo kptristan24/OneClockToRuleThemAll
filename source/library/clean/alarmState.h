@@ -6,21 +6,23 @@
 #include "state.h"
 #include "buttons.h"
 #include "timeS.h"
+#include "menu.h"
 
-extern display *disp;
-extern clockLib *clk;
+extern display disp;
+extern clockLib clk;
+extern Buttons buttons;
 extern state *newState;
 extern uint8_t signal;
-extern Buttons *buttons;
 
 class alarmState : public state{
 public:
+        alarmState();
         alarmState(const timeS &);
         void handleInput();
         void runLogic();
         void drawFrame();
 private:
-        char alarmTime[7];
+        char alarmTime[4];
 };
 
 #endif

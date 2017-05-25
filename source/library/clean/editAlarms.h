@@ -8,11 +8,11 @@
 #include "menu.h"
 #include "timeS.h"
 
-extern display *disp;
-extern clockLib *clk;
+extern display disp;
+extern clockLib clk;
+extern Buttons buttons;
 extern state *newState;
 extern uint8_t signal;
-extern Buttons *buttons;
 
 class editAlarms : public state{
 public:
@@ -43,7 +43,7 @@ private:
         uint8_t currentState;
         bool amPm;
         timeS alarmTime;
-        char timeStr[6];
+        char timeStr[4];
 };
 
 

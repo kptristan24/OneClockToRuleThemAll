@@ -1,34 +1,21 @@
 #include "snake.h"
 
 snake::snake(){
-        disp->clearScrollingText(display::ALL);
-        xSize = disp->getHorizSize();
-        ySize = disp->getVertSize();
-
-        grid = new uint8_t*[ySize];
-        for(uint8_t i = 0; i < ySize; i++){
-                grid[i] = new uint8_t[xSize];
-        }
-
+        Serial.print(F("Snake start\n"));
+        disp.clearScrollingText(display::ALL);
+        xSize = disp.getHorizSize();
+        ySize = disp.getVertSize();
         state = MENU;
 
-        gameMenu.setupMenu("Sssnake ", this);
-        gameMenu.addOption("Exit", &signal, SET, stateStack::EXIT);
-        gameMenu.addOption("New Game ", &newGame);
+        gameMenu.setupMenu(F("Snake "), this);
+        gameMenu.addOption(F("Exit"), &signal, SET, stateStack::EXIT);
+        gameMenu.addOption(F("New Game "), &state, SET, START);
 
-        pauseMenu.setupMenu("Paused ", this);
-        pauseMenu.addOption("Continue ", &state, SET, RUN);
-        pauseMenu.addOption("Quit", &state, SET, GOVER);
-}
+        pauseMenu.setupMenu(F("Paused "), this);
+        pauseMenu.addOption(F("Cont"), &state, SET, RUN);
+        pauseMenu.addOption(F("Quit"), &state, SET, GOVER);
 
-snake::~snake(){
-        if(!grid)
-                return;
-
-        for(int i = 0; i < ySize; i++){
-                delete [] grid[i];
-        }
-        delete [] grid;
+        Serial.print(F("fin\n"));
 }
 
 void snake::handleInput(){
@@ -41,19 +28,21 @@ void snake::handleInput(){
                     break;
         case GOVER: gameOverInput();
                     break;
+        case START: changeToStart();
+                    break;
         }
 }
 
 void snake::gameOverInput(){
-        const int input = buttons->getInput();
+        const int input = buttons.getInput();
         if(input > -1){
                 state = MENU;
-                disp->clearScrollingText(display::ALL);
+                disp.clearScrollingText(display::ALL);
         }
 }
 
 void snake::gameInput(){
-        const int input = buttons->getInput();
+        const int input = buttons.getInput();
 
         switch(input){
         case 0: direction++;
@@ -65,15 +54,21 @@ void snake::gameInput(){
                         direction = 4;
                 break;
         case 2: state = PAUSE;
-                disp->clearScrollingText(display::ALL);
+                disp.clearScrollingText(display::ALL);
                 break;
         }
+}
+
+void snake::changeToStart(){
+        newGame();
 }
 
 void snake::runLogic(){
         if(state != RUN)
                 return;
         else if(frameCounter){
+                Serial.print(F(" Frame : "));
+                Serial.print(frameCounter);
                 frameCounter--;
                 return;
         }
@@ -126,12 +121,18 @@ void snake::moveSnake(){
                 break;
         }
 
-        if(tempX < 0 || tempX >= xSize)
+        if(tempX < 0 || tempX >= xSize){
                 state = GOVER;
-        else if(tempY < 0 || tempY >= ySize)
+                disp.clear();
+        }
+        else if(tempY < 0 || tempY >= ySize){
                 state = GOVER;
-        else if(grid[tempY][tempX] == 1)
+                disp.clear();
+        }
+        else if(grid[tempY][tempX] == 1){
                 state = GOVER;
+                disp.clear();
+        }
 
         if(grid[tempY][tempX] != 2){
                 updateTail();
@@ -147,6 +148,12 @@ void snake::moveSnake(){
 }
 
 void snake::drawFrame(){
+        Serial.print(F(" frame: "));
+        Serial.print(state);
+        Serial.print(F("Pos (x,y): "));
+        Serial.print(head.x);
+        Serial.print(F(", "));
+        Serial.println(head.y);
         switch(state){
         case MENU : gameMenu.draw();
                     break;
@@ -157,24 +164,24 @@ void snake::drawFrame(){
         case GOVER: gameOver();
                     break;
         }
+        disp.update();
 }
 
 void snake::drawGame(){
         if(frameCounter != GAMESPEED)
                 return;
-
-        disp->clear();
-        for(int8_t y = tail.y - 1; y < tail.y + 2; y++){
-                for(int8_t x = tail.x - 1; x < tail.x + 2; x++){
+        disp.clear();
+        for(int8_t y = 0; y < ySize; y++){
+                for(int8_t x = 0; xSize; x++){
                         if(grid[y][x] == 0)
                                 continue;
                         else if(grid[y][x] == 1)
-                                disp->setPixel(y, x, CRGB::Red);
+                                disp.setPixel(y, x, CRGB::Red);
                         else if(grid[y][x] == 2)
-                                disp->setPixel(y, x, CRGB::Green);
+                                disp.setPixel(y, x, CRGB::Green);
                 }
         }
-        disp->update();
+        Serial.print(F("Fin Draw\n"));
 }
 
 void snake::genLengthStr(){
@@ -197,18 +204,20 @@ void snake::genLengthStr(){
 }
 
 void snake::gameOver(){
+        disp.clear();
         CRGB temp[4] = {CRGB::Blue, CRGB::Green, CRGB::Blue};
 
-        disp->scrollingText("Game Over ", display::TOP, CRGB::Red, CRGB::Blue);
-        disp->staticText(lengStr, display::BOT, 3, temp);
+        disp.scrollingText("Game Over ", display::TOP, CRGB::Red, CRGB::Blue);
+        disp.staticText(lengStr, display::BOT, 3, temp);
 }
 
 void snake::newGame(){
-        //create clean game state
-        int i, j;
+        Serial.print(F("New Game\n"));
+        disp.clear();
 
-        for(i = 0; i < ySize; i++){
-                for(j = 0; j < xSize; j++){
+        //create clean game state
+        for(uint8_t i = 0; i < ySize; i++){
+                for(uint8_t j = 0; j < xSize; j++){
                         grid[i][j] = 0;
                 }
         }
@@ -216,6 +225,7 @@ void snake::newGame(){
         grid[ySize/2][xSize/2] = 2;
 
         head.set(1, 1);
+        grid[1][1] = 1;
         tail.set(1, 1);
 
         direction = 0;
@@ -223,5 +233,5 @@ void snake::newGame(){
 
         state = RUN;
         frameCounter = GAMESPEED;
-        drawFrame();
+        Serial.print(F("fin\n"));
 }

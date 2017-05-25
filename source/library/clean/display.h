@@ -26,7 +26,7 @@
 #define ALT_DIR     1 //are the strips wired in alternating directions
 #define DATA_PIN    4
 #define CLOCK_PIN   5
-#define TEXT_SPEED  15
+#define TEXT_SPEED  25
 
 class display{
 public:
@@ -46,8 +46,9 @@ public:
         void setPixel(int, int, const CRGB &); //at (y,x)
         void setPixel(int, const CRGB &);              //at linear position
         void setWordBuiltin(int, const CRGB & = CRGB::White);
-        void setFromTime(int, int, const CRGB & = CRGB::White); //hour, minute (in 24 hour time)
+        void setFromTime(uint8_t, uint8_t, const CRGB & = CRGB::White); //hour, minute (in 24 hour time)
         void setFromTime(const timeS &, const CRGB & = CRGB::White);
+        void setMinutePhrase(uint8_t m, const CRGB &);
         CRGB getColorFromTime(const timeS &);
         //void drawLine();
 
@@ -62,11 +63,11 @@ public:
          * Only displays up to ROW_LENGTH / 3 characters
          * The second versions expects an array of colors the same length as the characters
          */
-        void staticText(const char *, int, int, const CRGB &, const CRGB &);
-        void staticText(const char *, int, int, const CRGB *);
-
+        void staticText(const char *, uint8_t, int, const CRGB &, const CRGB &);
+        void staticText(const char *, uint8_t, int, const CRGB *);
+        void staticText(const char *, uint8_t, int, const CRGB &, const CRGB &, const CRGB &, const CRGB &);
 private:
-        CRGB LEDstrip[NUM_LEDS];
+        CRGB LEDstrip[NUM_LEDS]; //large ram usage: NUM_LEDS * 3 bytes
 
         void __arrayAccessFunction(int, int, const CRGB &);
         //scrolling text internal Functions

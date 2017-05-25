@@ -5,8 +5,9 @@ clockLib::clockLib(){
         pinMode(INTERRUPT_PIN, INPUT_PULLUP);
 #endif
         rtc.begin(CS_PIN);
-        rtc.autoTime();
+        //rtc.autoTime();
         //rtc.setTime(0, 39, 13, 2, 31, 10, 16);
+        //rtc.setTime(0, 31, 0, 6, 19, 5, 2017);
         rtc.update();
         rtc.enableAlarmInterrupt();
 }
@@ -15,7 +16,7 @@ void clockLib::update(){
         rtc.update();
 }
 
-timeS clockLib::getCurrentTime(){
+const timeS clockLib::getCurrentTime() const{
         return timeS(rtc.second(), rtc.minute(), rtc.hour());
 }
 
@@ -49,24 +50,22 @@ uint32_t clockLib::curSecond(){
 
 
 bool clockLib::checkAlarms(){
-        if(!rtc.alarm1()){
-                return false;
-        }
+        for(int i = 0; i < alarms.size(); i++)
+                if(alarms[i] == getCurrentTime()){
+                        newState = new alarmState(getCurrentTime());
+                        signal = stateStack::NEW;
+                        __setNextAlarm();
+                        return true;
+                }
 
-        timeS currentTime(rtc.second(), curMinute(), curHour());
-        newState = new alarmState(currentTime);
-        signal = 1;
-
-        __setNextAlarm();
-
-        return true;
+        return false;
 }
 
 //To-Do: change to insert before correct element, which will remove the need for a full sort
 void clockLib::addAlarm(const timeS &newAlarm){
         for(int i = 0; i < alarms.size(); i++){
                 if(alarms[i] == newAlarm){
-                        Serial.print("tried to set alarm at time of existing alarm");
+                        Serial.print(F("duplicate alarm\n"));
                         return;
                 }
         }

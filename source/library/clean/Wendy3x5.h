@@ -42,8 +42,6 @@
  * as well as keep the old name for backward compability
  */
 
-#define WendyFont3x5 Wendy3x5
-
 const uint8_t Wendy3x5[] PROGMEM= {
     0x0, 0x0, // size of zero indicates fixed width font, actual length is width * height
     0x03, // width

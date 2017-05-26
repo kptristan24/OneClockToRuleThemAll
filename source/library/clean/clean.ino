@@ -7,9 +7,6 @@
 
 //example programs
 #include "state.h"
-#include "buttonTest.h"
-#include "snake.h"
-#include "mainMenu.h"
 #include "basicTime.h"
 
 //hardware interfaces
@@ -39,7 +36,6 @@ void loop() {
         //Run hardware interaction updates
         clk.update();
         buttons.update();
-
 
         //check for alarms and then run the current state
         if(!clk.checkAlarms()){ //can generate a state transistion if an alarm goes off

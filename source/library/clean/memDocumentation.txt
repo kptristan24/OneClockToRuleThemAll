@@ -1,0 +1,59 @@
+base cost: 194 (128 from serial buffer)
+
+display: 532 bytes
+fastLED 82 bytes
+432 - leds
+18 - variables
+
+buttons: 18 bytes
+6 * num buttons
+
+clock: 
+avec: 8 bytes
+2 vars
+3 * times
+
+statestack: 10 bytes
+1 var
+4 * num nodes
+
+snake: 241
+156 - vars
+14 - menu
+4 - point
+(174)
+51 - strings
+16?
+
+calculated cost:
+762
+
+
+LED test:
+194 - no fast led
+276 - 1 led
+705 - 144 leds
+
+(alarmState: 16 bytes)
+
+Clean test:
+775 all objects, no states
+841 all objects, alarm time
+818 all objects, static alarm time
+803 alarm change
+806 alarm 
+1047 static snake
+1003 static snake w/all strings moved
+
+
+*****New tests from git version*****
+Full baseline:  945 bytes (46%)
+Tweaks v1: 	906 bytes (44%)
+W/Serial buff16:810 bytes (39%)
+Tweaks v2: 	802 bytes (39%)
+All strings: 	766 bytes (37%)
+
+Basic time: 6 bytes
+
+
+

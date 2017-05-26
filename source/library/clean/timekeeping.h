@@ -2,7 +2,7 @@
 #define TIMEKEEPING_H
 
 #include <SparkFunDS3234RTC.h>
-#include <TimeLib.h>
+//#include <TimeLib.h>
 #include "stateStack.h"
 #include "alarmState.h"
 #include "timeS.h"
@@ -23,9 +23,9 @@ public:
         const timeS getCurrentTime() const;
 
         //get time functions DEPRICATED!!! DO NOT USE. USE DIRECT RTC FUNCTIONS
-        uint32_t curMinute();
-        uint32_t curHour();
-        uint32_t curSecond();
+        uint8_t curMinute() const;
+        uint8_t curHour() const;
+        uint8_t curSecond() const;
 
 
         //Alarm functions
@@ -33,17 +33,14 @@ public:
         void addAlarm(const timeS &); //attempts to add alarm, won't add at duplicate time
 
         //remove an alarm at a position or a specific time, returns true on success
-        bool removeAlarm(const int &);
+        bool removeAlarm(const uint8_t &);
         bool removeAlarm(const timeS &);
 
-        int numAlarms();
-        uint8_t getAlarmTime(uint8_t, timeS &);
+        uint8_t getAlarmTime(uint8_t, timeS &) const;
         //To-Do functions
 
 private:
         //Update the rtc hardware alarm to match the next upcoming alarm
-        void __setNextAlarm();
-
         aVec alarms;
 };
 

@@ -44,7 +44,7 @@ void alarmState::runLogic(){
 
 void alarmState::drawFrame(){
         disp.clear();
-        disp.scrollingText("ALARM! ", display::TOP, CRGB::Red, CRGB::Crimson);
+        disp.scrollingText(F("ALARM! "), display::TOP, CRGB::Red, CRGB::Crimson);
         disp.staticText(alarmTime, display::BOT, 4, CRGB::Blue, CRGB::Green, CRGB::Blue, CRGB::Green);
         disp.update();
 }

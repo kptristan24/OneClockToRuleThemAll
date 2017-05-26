@@ -28,8 +28,8 @@ void buttonTest::runLogic(){
 
 void buttonTest::drawFrame(){
         disp.clear();
-        disp.scrollingText("Hello ", display::TOP, CRGB::Green, CRGB::Blue);
-        disp.scrollingText("World ", display::BOT, CRGB::Blue, CRGB::Red);
+        disp.scrollingText(F("Hello "), display::TOP, CRGB::Green, CRGB::Blue);
+        disp.scrollingText(F("World "), display::BOT, CRGB::Blue, CRGB::Red);
 
         //disp->staticText("", display::TOP, 4, CRGB::Green, CRGB::Red);
         //disp->staticText("", display::BOT, 3, CRGB::Green, CRGB::Red);

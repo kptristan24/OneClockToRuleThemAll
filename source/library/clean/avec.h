@@ -3,8 +3,6 @@
 
 #include "timeS.h"
 
-//alarm vector
-
 class aVec{
 public:
         aVec(){
@@ -12,7 +10,7 @@ public:
                 capacity = 2;
                 curSize = 0;
         }
-        int size(){
+        uint8_t size(){
                 return curSize;
         }
         void push_back(const timeS &item){
@@ -23,7 +21,7 @@ public:
                         resize();
         }
         void insert_ordered(const timeS &item){
-                int position;
+                uint8_t position;
                 for(int i = 0; i < curSize; i++){
                         if(item < data[i])
                                 position = i;
@@ -35,7 +33,7 @@ public:
                         push_back(item);
                 }
                 else{
-                        for(int i = curSize; i > position; i++){
+                        for(uint8_t i = curSize; i > position; i++){
                                 data[i] = data[i - 1];
                         }
                         data[position] = item;
@@ -43,25 +41,25 @@ public:
                                 resize();
                 }
         }
-        const timeS & operator [](int i) const {return data[i];}
-        timeS & operator [](int i) {return data[i];}
-        void erase(const int &i){
+        const timeS & operator [](uint8_t i) const {return data[i];}
+        timeS & operator [](uint8_t i) {return data[i];}
+        void erase(const uint8_t &i){
                 if(i >= curSize)
                         return;
                 else if(i == (curSize - 1))
                         curSize--;
                 else{
-                        for(int pos = i; pos < curSize - 1; pos++)
+                        for(uint8_t pos = i; pos < curSize - 1; pos++)
                                 data[pos] = data[pos + 1];
 
                         curSize--;
                 }
         }
-        void resize(const int &size = 2){
+        void resize(const uint8_t &size = 2){
                 timeS *temp = data;
 
                 data = new timeS[capacity + size];
-                for(int i = 0; i < capacity; i++)
+                for(uint8_t i = 0; i < capacity; i++)
                         data[i] = temp[i];
 
                 capacity += size;

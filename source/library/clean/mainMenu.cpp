@@ -11,9 +11,9 @@ mainMenu::mainMenu(){
         clockMenu.addOption(F("Grid Demo "), &transition, SET, 1);
         clockMenu.addOption(F("Alarm "), &transition, SET, 3);
         clockMenu.addOption(F("Exit"), &signal, SET, stateStack::EXIT);
-
-        //Serial.print();
 }
+
+mainMenu::~mainMenu(){} //exists so that menu gets cleaned up
 
 void mainMenu::handleInput(){
         clockMenu.update();
@@ -24,9 +24,10 @@ void mainMenu::runLogic(){
                 Serial.print(F("runlogic: "));
                 Serial.println(transition);
         }
+
         switch(transition){
         case 0: signal = stateStack::REPLACE; //show an alarm for demo purposes
-                newState = new editAlarms();
+                newState = new editAlarms;
                 break;
         case 1: signal = stateStack::REPLACE; //launch led grid demo
                 newState = new demo;

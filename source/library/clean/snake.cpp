@@ -18,6 +18,8 @@ snake::snake(){
         Serial.print(F("fin\n"));
 }
 
+snake::~snake(){} //just here so that menu destructors get called
+
 void snake::handleInput(){
         switch(state){
         case MENU : gameMenu.update();
@@ -207,7 +209,7 @@ void snake::gameOver(){
         disp.clear();
         CRGB temp[4] = {CRGB::Blue, CRGB::Green, CRGB::Blue};
 
-        disp.scrollingText("Game Over ", display::TOP, CRGB::Red, CRGB::Blue);
+        disp.scrollingText(F("Game Over "), display::TOP, CRGB::Red, CRGB::Blue);
         disp.staticText(lengStr, display::BOT, 3, temp);
 }
 

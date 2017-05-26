@@ -29,7 +29,7 @@ public:
         void addOption(const __FlashStringHelper *, uint8_t *, uint8_t, uint8_t);
 
         void update();
-        void draw();
+        void draw() const;
 private:
 
         struct option{
@@ -175,7 +175,7 @@ template<class T> void menu<T>::update(){
         }
 }
 
-template<class T> void menu<T>::draw(){
+template<class T> void menu<T>::draw() const{
         disp.clear();
         if(staticMenu > 4)
                 disp.scrollingText(title, 0, CRGB::Aqua, CRGB::Blue);

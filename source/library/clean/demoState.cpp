@@ -114,7 +114,7 @@ void demo::testText(){
                 curTest = 0;
         }
         disp.clear();
-        disp.scrollingText("Hello! ", 0, CRGB::Red, CRGB::Blue);
-        disp->scrollingText("World ", 1, CRGB::Blue, CRGB::Green);
+        disp.scrollingText(F("Hello! "), display::TOP, CRGB::Red, CRGB::Blue);
+        disp.scrollingText(F("World "), display::BOT, CRGB::Blue, CRGB::Green);
         disp.update();
 }

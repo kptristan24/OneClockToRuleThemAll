@@ -41,6 +41,7 @@ class snake : public state{
 public:
         enum GameState {MENU, RUN, PAUSE, GOVER, START};
         snake();
+        ~snake();
 
         void handleInput();
         void runLogic();

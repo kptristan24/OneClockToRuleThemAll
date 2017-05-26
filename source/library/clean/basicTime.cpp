@@ -6,7 +6,7 @@ basicTime::basicTime(){
 }
 
 void basicTime::handleInput(){
-        int input = buttons.getInput();
+        const int8_t input = buttons.getInput();
 
         if(input == 2){ //menu button pressed
                 signal = stateStack::NEW;
@@ -15,7 +15,8 @@ void basicTime::handleInput(){
 }
 
 void basicTime::runLogic(){
-        currentTime = clk.getCurrentTime();
+        if(currentTime.minute != clk.curMinute())
+            currentTime = clk.getCurrentTime();
 }
 
 void basicTime::drawFrame(){

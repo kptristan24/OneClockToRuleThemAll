@@ -165,7 +165,7 @@ void editAlarms::addDrawTime(){
         disp.staticText(timeStr, display::TOP, 4, hourCol, hourCol, minCol, minCol);
 
         if(amPm)
-                disp.staticText("PM ", display::BOT, 2, amPmCol, amPmCol);
+                disp.staticText(F("PM "), display::BOT, 2, amPmCol, amPmCol);
         else
-                disp.staticText("AM ", display::BOT, 2, amPmCol, amPmCol);
+                disp.staticText(F("AM "), display::BOT, 2, amPmCol, amPmCol);
 }

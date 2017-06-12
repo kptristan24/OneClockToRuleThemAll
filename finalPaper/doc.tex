@@ -87,6 +87,30 @@ In addition, this process is reflected in retrospective which discusses challeng
 % 8. now you write!
 \section{Requirements Document}
 \subsection{Introduction}
+
+The One Clock to Rule Them All project grew out of a desire to make DIY word clocks easy to build, control, and customize.
+The client behind this vision was Dr. Hsu, an Oregon State research faculty working in biophysics. Outside of his research work, Dr. Hsu is a DIY electronics hobbyist.
+Within the wide range of popular electronics projects is the area of timekeeping, and within those projects lies the word clock.
+ 
+The idea of making a word clock isn’t a new idea.
+Word clocks have existed in several forms in the past including designs that have generic displays capable of showing any word, to matrix displays of composed of predefined letters which can only show specific words.
+Our client found the second layout of interest and was inspired to build one.
+And this is when a difficulty arose.
+ 
+There are several existing sets of code for powering word clocks already on the internet.
+The difficulty is that all the existing code is built for a specific set of hardware and the software isn’t very abstracted.
+For comparison, existing implementations are typically composed of several hundred lines of code.
+Our finished software library can run a word clock with only around a dozen lines of code more than an empty Arduino project file.
+ 
+It was this goal of making the software experience of building a wordclock less painful, more abstracted, and more user friendly that Dr. Hsu came up with this Capstone project.
+Once we were placed with this project, our development roles shook down to the following: Tasman Thenell was the primary code architect, Scott Metzsch became the lead materials engineer, and Tristan Hari was the primary external interactions manager.
+ 
+The other indispensable honorary member of our development team was Dr. Hsu himself.
+While it was never formally set up that he would be part of the team, there were many areas of the project outside of coding where his consulting was invaluable.
+While each of us brought strengths to the table around code development, Dr. Hsu was deeply knowledge about most of the other parts of our project.
+Our development was greatly accelerated by picking his brain about electronics, materials, and other physical parts of development several times each quarter. Without this assistance, it is doubtful that the project would have been finished in time or achieved the same level of quality.
+
+
 \subsubsection{Purpose}
 Historically, the clock face has had one of two display modes, analog or digital.
 These formats have provided a solid mix between function and fashion, but there are many
@@ -793,7 +817,7 @@ The KeyeStudio Arduino Uno R3 runs off a ATmega328 core which has a large amount
 
 Along with solving out two concerns with the MPBLABXpress the Arduino also brings plug and play functionality and easier ability to define and change the pins that are being used for our RTC and LED strips. The added benefits of being able to plug in components with wires instead of soldering, ability to easily change what pins are used for communication, and addressing our concerns of the old board make the KeyeStudio Arduino Uno R3 a great choice for our new board moving forward.
 
-\section{Weekly Updates}
+\section{Weekly Blog Posts}
 \subsection{Fall}
 \subsubsection{Week 3}
 \paragraph{Tristan}

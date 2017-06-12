@@ -1,3 +1,11 @@
+display disp;
+clockLib clk;
+stateStack stk;
+
+state *runningState;
+state *newState;
+uint8_t signal;
+
 void loop() {
         clk.update();
 

@@ -10,9 +10,9 @@
 #define INTERRUPT_PIN 2 // DeadOn RTC SQW/interrupt pin (optional)
 
 // Here's how to control the LEDs from any two pins:
-#define DATAPIN    7 //RED WIRE
-#define CLOCKPIN   8 //GREEN WIRE
-#define RTC        1
+#define DATAPIN    4 //RED WIRE
+#define CLOCKPIN   5 //GREEN WIRE
+#define RTC        0
 Adafruit_DotStar strip = Adafruit_DotStar(
   NUMPIXELS, DATAPIN, CLOCKPIN, DOTSTAR_BRG);
 // The last parameter is optional -- this is the color data order of the
@@ -41,7 +41,7 @@ void setup() {
   clock_prescale_set(clock_div_1); // Enable 16 MHz on Trinket
 #endif
   curr_pixel = 0;
-  mode = 5;
+  mode = 4;
   //brightness = 0;
   if(RTC){
     #ifdef INTERRUPT_PIN // If using the SQW pin as an interrupt

@@ -27,7 +27,7 @@
 				%Design Document
 				Final Progress Report
 				}
-			
+
 \newcommand{\NameSigPair}[1]{\par
 \makebox[2.75in][r]{#1} \hfil 	\makebox[3.25in]{\makebox[2.25in]{\hrulefill} \hfill		\makebox[.75in]{\hrulefill}}
 \par\vspace{-12pt} \textit{\tiny\noindent
@@ -256,13 +256,13 @@ how this product will be able to act like a clock.
   \item The system shall have four tactile buttons.
 \end{enumerate}
 
-\subsection{Changes to Requirements Document} 
-There were only two significant deviations from the original set of requirements that were generated in the fall. While these changes do mean that our final product doesn’t match the letter of the requirements document, both changes were made for good reasons and didn’t result in a reduction of functionality. In actuality, one of the changes was necessary to maintain other promised functionality in the requirements. 
- 
+\subsection{Changes to Requirements Document}
+There were only two significant deviations from the original set of requirements that were generated in the fall. While these changes do mean that our final product doesn’t match the letter of the requirements document, both changes were made for good reasons and didn’t result in a reduction of functionality. In actuality, one of the changes was necessary to maintain other promised functionality in the requirements.
+
 The first change is the reduction in the number of physical buttons for controlling the clock. Our original concept for the design language of how users would interact with the clock software called for four buttons. One of these buttons, the back button, was eliminated because it was converted to a software menu option. This both simplified the hardware and made the menu interface for interacting with buttons in code more unified. This change doesn’t impact our ability to meet any other requirements that were established.
- 
-The most important change from the original requirements is how power is supplied to the clock. Keeping power delivery over USB would have been simple and this is what was in the draft requirements. During later development while working with the LEDS, we discovered that the amount of power we could pull over USB without the need for specialized hardware wouldn’t be enough to power 144 LEDS at a reasonable brightness. 
- 
+
+The most important change from the original requirements is how power is supplied to the clock. Keeping power delivery over USB would have been simple and this is what was in the draft requirements. During later development while working with the LEDS, we discovered that the amount of power we could pull over USB without the need for specialized hardware wouldn’t be enough to power 144 LEDS at a reasonable brightness.
+
 A USB power supply was replaced with a traditional 5 volt barrel adaptor which powers all of the clock hardware. This also lets the user control the power draw of their project with ease. 144 LEDS at maximum brightness can draw up to 8.4 amps at 5 volts. Our version of the product shown off at Expo only supplied 4 amps so the clock was run at 45 percent brightness. The change to a barrel adaptor with a flexible range of power options was also necessary for meeting the 20 foot viewing requirement.
 
 
@@ -490,7 +490,7 @@ Requirement &
 Original Requirement &
 Final Product \\
 \hline
-Number of Buttons & 
+Number of Buttons &
 4 Buttons &
 3 Buttons \\
 \hline
@@ -504,15 +504,15 @@ Power from Barrel Adapter \\
 
 \subsection{Changes to Design Document}
 During the course of development, several key changes were made to our original design. Most of the changes were relatively minor and revolved around user interaction and the details of the interface. The only major change that happened during development was moving to a different microcontroller and software platform.
- 
+
 This last change was made very early on in development and directly enabled the success of the project. The initial plans called for using a very low end microcontroller board, the MPLabXPress board. The hardware cost and software environment promised by this piece of hardware seemed in line with the project goals: inexpensive and easy to use. While the board was cheap, the software side of things turned about to be anything but easy to use.
- 
+
 After several weeks of initial development and investigating getting the XPress board talking to the other components, it became clear that the documentation was very poor and that example code was lacking. This was a newer board that hadn’t been used much for this type of project so this wasn’t very surprising. After running into this headache, the choice was made to switch to the far more capable and proven Arduino ecosystem. With this change, all the hardware was communicating within two days of receiving the new board.
- 
+
 The other deviations from the original design that are worth discussing are the changes made to the controls for the clock. The original set of designs we came up with called for 4 buttons for ease of use: up, down, select, and back. During development it became clear that there wasn’t a need for a hardware back button for two reasons. Not all interfaces needed it and it could easily be replaced with a software menu option.
- 
-The second interface change came in eliminating using button press duration to indicate different things. Once our software menu code became robust enough, any need for specialized functions controlled through long button presses was eliminated. Maintaining a uniform control design language that relied on menus and options was determined to be more user friendly and had a lower learning curve. 
- 
+
+The second interface change came in eliminating using button press duration to indicate different things. Once our software menu code became robust enough, any need for specialized functions controlled through long button presses was eliminated. Maintaining a uniform control design language that relied on menus and options was determined to be more user friendly and had a lower learning curve.
+
 The combination of these interface changes makes using the default interface more simple and makes it easier to interact with buttons via code. The button software library handles button interaction and reduces the complexity down to a single line for asking if a button has been pressed. This wasn’t possible when there were multiple ways of pressing the same button as described in the original design.
 
 
@@ -791,7 +791,7 @@ When we ran into these issues and found little help on the internet we started t
 
 The KeyeStudio Arduino Uno R3 runs off a ATmega328 core which has a large amount of supported libraries that would help us to easily start working with our RTC and LED strips. The libraries we found for RTC and LED interaction were well written and had many examples and tutorials on how to get them setup and running. The concern about the IDE was also solved with the switch to an Arduino. We are now using the Arduino IDE which has many examples, wikis, and forums online that will help us trouble shoot issues and roadblocks that we run into when getting hardware to interact, code to compile, and flashing files onto the board.
 
-Along with solving out two concerns with the MPBLABXpress the Arduino also brings plug and play functionality and easier ability to define and change the pins that are being used for our RTC and LED strips. The added benefits of being able to plug in components with wires instead of soldering, ability to easily change what pins are used for communication, and addressing our concerns of the old board make the KeyeStudio Arduino Uno R3 a great choice for our new board moving forward.  
+Along with solving out two concerns with the MPBLABXpress the Arduino also brings plug and play functionality and easier ability to define and change the pins that are being used for our RTC and LED strips. The added benefits of being able to plug in components with wires instead of soldering, ability to easily change what pins are used for communication, and addressing our concerns of the old board make the KeyeStudio Arduino Uno R3 a great choice for our new board moving forward.
 
 \section{Weekly Updates}
 \subsection{Fall}
@@ -1248,8 +1248,8 @@ For this project we recommend choosing a monospaced font that has minimal oversh
 A monospaced font is which the letters take up the same amount of horizontal space.
 This helps with spacing of letters in the grid and uniformity of rows and columns.
 Overshoot is the amount a letter goes past the set height of the font.
-Letters with round tops or bottoms, such as O and S, will be taller than letters with flat tops such as E or I. 
-Having minimal overshoot also helps with grid uniformity and creates a more appealing grid where the letters are space as equally as possible. 
+Letters with round tops or bottoms, such as O and S, will be taller than letters with flat tops such as E or I.
+Having minimal overshoot also helps with grid uniformity and creates a more appealing grid where the letters are space as equally as possible.
 We had to think about these two issues because we wanted our final clock to be a square and centered in our clock face.
 For some examples of monospaced fonts look into the fonts Consolas, Courier, or Lucida Console.
 
@@ -1270,7 +1270,7 @@ If you want to use wood for your clock face we recommend choosing a piece of thi
 
 \subsubsection{Case Assembly}
 Another decision that you have to make in the case design is deciding how the front face and back plate of the clock will attach to the sides.
-We thought about having out clock face flush with the front of the case, but with the tools we had access too this would have been difficult. 
+We thought about having out clock face flush with the front of the case, but with the tools we had access too this would have been difficult.
 Instead we make a 1/4" groove, 1/4" from the front of the case to allow the face and back plate of the clock to slide in and out.
 This decision helped to make changes and testing easy since the back of the clock didn't have to come in and out allowing us to make changes and quickly see the results.
 It also allowed us to take off the front and show people how the internals of the clock worked.
@@ -1278,6 +1278,41 @@ It also allowed us to take off the front and show people how the internals of th
 \section{Personal Retrospectives}
 \subsection{Taz}
 \subsection{Tristan}
+There was certainly a lot for me to learn from this project, which is part of the reason I enjoyed it so much.
+I would say some of the biggest technical information I learned was about the combination of electronics and hardware.
+I had never done soldering, wire management, power flow, or anything of the like before, so beforehand there was quite the learning overhead.
+This also included learning how to get something like a microcontroller actually communicating to the other parts as well.
+By the end of the project, I gained so much knowledge about how these things work I feel like I gained a minor in Electrical Engineering.
+Some other non-technical information I learned was about how to do small project wood working.
+I had been in a shop class in high school, but that didn't really compare to designing and fabricating everything from scratch.
+Not to mention, this stuff was a bit more complex than what we were doing back then.
+I went to the OSU woodworking orientation, I read online about good practice and technique, and asked several professionals their opinion on what to do.
+We even shot the guys at Speath Lumber on 9th several question about what they thought regarding lumber choice and tools choice.
+It was really a fun aspect of the project, as it was a break from the technical side but still engaging and rewarding to learn.
+
+When it comes to project work, A lot of what I've learned is that it's all in the planning.
+Making sure to put a lot of effort into the overhead of planning and design of the project really has a huge impact on the overall success and workflow of the entire team.
+Luckily we did our best to do a lot of research, so when it came time to do the work we were all comfortable with the subject and able to work efficiently and independently for the most part.
+Regarding project management, I put a lot of effort into making sure that we were able to follow a good structure and everyone was aware of the project at all times.
+One of the things I studied in school was project management, so I was glad to be able to put some of those skills to use.
+In my opinion, good management comes down to making everyone work on something they can get done and feel good about, at all times.
+I think we pretty much achieved that as a team this year, which is why our end product turned out so good.
+Using excellent communication and reminders provided a great structure for managing the team work flow.
+As far as working in teams itself, I'm of the opinion that it's all about communication and support.
+If everyone is constantly communicating accomplishments, roadblocks, and ideas then the project just becomes better and better with time.
+Maintaining an attitude of working together instead of working in segments really helped everything be cohesive as well.
+We pretty much all managed to have our hands in every part of the project, and help each other with every part.
+Because of that, we had a well defined, well iterated product by the end I will always try to implement those same practices when I can.
+
+If I were to start over again, I think the biggest thing I would pay heed to is to get a prototype out sooner.
+If we had done that, and not been so rushed towards the end we really could have made something even greater than what we did.
+We really only had our first iteration shortly before expo, and there's certain problems that will only arise once you attempt to get the whole system running.
+While we were still able to address these and have an awesome expo demonstration, it could have been even better and I regret not having our product at its maximum potential.
+Basically chalk it up to, getting started sooner on a finished product, so that testing the thing can be done more effectively.
+Aside from that, I'm actually pretty satisfied with how we did things.
+It mostly went very well, considering how little we knew overall about this kind of project going in.
+We had a very communicative, knowledgeable, and friendly team and we did work together very well.
+
 \subsection{Scott}
 In terms of technical information I learned a lot about how the Arduino IDE works and tips and tricks for writing code in C.
 Some of the non-technical things I learned related to work planning, establishing requirements with a client, research techniques when troubleshooting, and some woodworking skills.

@@ -33,12 +33,10 @@ uint8_t clockLib::curSecond() const{
 }
 
 bool clockLib::checkAlarms(){
+        const timeS currentTime = getCurrentTime();
         for(uint8_t i = 0; i < alarms.size(); i++)
-                if(alarms[i] == getCurrentTime()){
-                        newState = new alarmState(getCurrentTime());
-                        signal = stateStack::NEW;
+                if(alarms[i] == currentTime)
                         return true;
-                }
 
         return false;
 }

@@ -38,10 +38,14 @@ void loop() {
         buttons.update();
 
         //check for alarms and then run the current state
-        if(!clk.checkAlarms()){ //can generate a state transistion if an alarm goes off
+        if(!clk.checkAlarms()){
                 runningState->handleInput();
                 runningState->runLogic();
                 runningState->drawFrame();
+        }
+        else{ //an alarm went off!
+                newState = new alarmState(getCurrentTime());
+                signal = stateStack::NEW;
         }
 
         //Statemachine manager

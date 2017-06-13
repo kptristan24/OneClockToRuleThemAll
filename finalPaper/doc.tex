@@ -1241,7 +1241,53 @@ If we continued working on our project we would spend a lot more time on physica
 \newpage
 
 \section{Project Documentation}
-\subsection{Hardware Setup}
+\subsection{Hardware and Electronics Setup}
+With the electronic and hardware components, you do have some choice with what you can use.
+However, we do recommend paying heed to the parts we choose as there is a certain minimum of performance that is required.
+When it comes the the microcontroller, the Keyestudio Uno we used had 2048 bytes of ram.
+Any AT mega 328 board or any same generation arduino board with more ram will work.
+While this was enough, we do not recommend using a microcontroller with any less ram available that.
+As a matter of fact, one with more will lead to you being able to add code more easily and freely without running into memory issues.
+When it comes to RTC, we fully recommend using the one compatible with the DS3234 model.
+This is due to the compatibility with the wiring diagrams I will list shortly.
+While others will work, finding one that matches the model will allow you to follow our instructions and have a more clear development.
+As far as LED choice goes, it is mostly open ended as the FastLED library we use in the software supports 12 different types of LED strips.
+These will mostly adhere to standard LED strips you'll be able to find in the store and on amazon, however to verify what is compatible we fully recommend double checking the FastLED documentation.
+The only other constraint to LED choice is that it must not be over exorbitant with power consumption.
+However the code library allows you to easily adjust power draw of the display, so this should be a non issue so long as the LED strip isnt thirsty.
+One last requirement in material that is actually more of a suggestion for ease of use, is to make sure and buy half decent solder.
+We recommend a standard Rosin-core solder, and using size .03 will make it easier to not over dab the solder when working in the tiny places.
+With all that in mind, below will be some references on how to wire things together, and getting the parts communicating.
+
+For connecting the RTC to the microcontroller, we recommend using the following sparkfun setup guide.
+It does an excellent job demonstrating which pins need to go where and why.
+
+\url{https://learn.sparkfun.com/tutorials/deadon-rtc-breakout-hookup-guide?_ga=1.57150947.894456573.1485210617}
+
+A lot of the information on the site may seem overwhelming and or redundant, and that's because it is.
+If you skip down to the Example Circuit section, that is where you will find the basic diagram showing you what you need to connect and where.
+In short if you are too lazy to read, you basically connect each of the following RTC lines to the following microcontroller slot.
+SS to 10, MOSI to 11, MISO to 12, CLK to 13, VCC to 5V, GND to GND.
+To test that everything is working correctly, complete to next section in the guide that shows how to use the demo in arduino IDE.
+
+For connecting the LED's to the microcontroller, we used the following setup.
+
+\url{http://www.eerkmans.nl/powering-lots-of-leds-from-arduino/}
+
+You will need to refer to the section for Powering more than 8 NeoPixels, as one would imagine you will likely be powering more than 8 LEDs.
+In short, what you have to keep in mind is that you will not be able to fully power your grid through the board alone, as it simply does not have the throughput to support that.
+An external, USB or otherwise will necessary in order to power all of the LEDs.
+
+And last but not least, we've included an additional guide about powering everything.
+There is plenty of instruction here even for the power illiterate as we were when starting the project.
+We really do recommend reading carefully and verifying how your power flow will be working before going live with anything.
+While the parts are cheap, it's not so fun to burning out parts mid development.
+
+\url{https://learn.adafruit.com/adafruit-neopixel-uberguide/power}
+
+Use standard solder practice for interconnecting all of the LED strips, and make sure to be certain that all LED strips are aligned such that if folded back out, would be one continuous strip direction.
+
+
 \subsection{Physical Case Design}
 When designing the case to hold this clock there are a couple important choices that will affect the outcome of your final product.
 

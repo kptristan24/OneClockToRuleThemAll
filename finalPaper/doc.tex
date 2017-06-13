@@ -1365,7 +1365,7 @@ Use standard solder practice for interconnecting all of the LED strips, and make
 
 
 \subsection{Physical Case Design}
-When designing the case to hold this clock there are a couple important choices that will affect the outcome of your final product. 
+When designing the case to hold this clock there are a couple important choices that will affect the outcome of your final product.
 If you choose materials and techniques similar to ours you will probably not run into issues constructing the case.
 But since this is a DIY project, there will be issues that you run into while working on this project and you have to troubleshoot.
 Similar to us take a look at other people's ideas for case manufacturing to inspiration and ideas on how to accomplish different parts of the case.
@@ -1405,14 +1405,14 @@ This decision helped to make changes and testing easy since the back of the cloc
 It also allowed us to take off the front and show people how the internals of the clock worked.
 
 \subsection{Software Setup}
-Software side of this project takes the form of multiple hardware abstraction libraries written around standard Arduino hardware. 
-The goal of these libraries is to make it possible to use different arrangements and brands of LED strips easy, and to make getting content displayed on the word clock friendly. 
+Software side of this project takes the form of multiple hardware abstraction libraries written around standard Arduino hardware.
+The goal of these libraries is to make it possible to use different arrangements and brands of LED strips easy, and to make getting content displayed on the word clock friendly.
 With these goals in mind, there are two primary methods for using our code.
  
 \subsubsection{Basic Code Usage}
 
-The first method is very simple and is only slightly harder than using any other prepackaged Arduino library. 
-Simply include the hardware library or libraries that you would like to use (they can all be used independently) and then start using them in your code. 
+The first method is very simple and is only slightly harder than using any other prepackaged Arduino library.
+Simply include the hardware library or libraries that you would like to use (they can all be used independently) and then start using them in your code.
 This method is straightforward and an example usage is shown below.
 
 \lstinputlisting[language=c, caption=Basic Code Setup, captionpos=b]{codeExamples/basicUsage.cpp}
@@ -1428,9 +1428,18 @@ What follows is a breakdown of what each line in the example is doing:
 In addition to this code, two other changes need to be made in order to get a word clock up and running.
 Within layout.h, follow the instructions for putting in the grid locations of all of the words and phrases contained in your display.
 The other change is telling the display library about how your display is physically arranged.
-Edit the define statements on lines 23 through 30 of display.h to describe the setup of your LEDs. 
+Edit the define statements on lines 23 through 30 of display.h to describe the setup of your LEDs.
 
 \subsubsection{Advanced Code Usage}
+The more powerful way of using our code is to take advantage of the provided state machine.
+The state machine, state stack, and example main loop provide the equivalent of a miniature operating system for the Arduino which is capable of ``launching'' programs, ``closing'' them, and showing alarms even while other programs are running.
+The following isn’t for the faint of heart and it is recommended that you have a passing knowledge of the following concepts before moving on: stacks, state machines, event based programming, and memory management.
+
+\lstinputlisting[language=c, caption=The Hello Word Clock Program, captionpos=b]{codeExamples/simpleState.cpp}
+
+\lstinputlisting[language=c, caption=Basic Code Setup, captionpos=b]{codeExamples/advancedUsage.cpp}
+
+
 
 \section{Technology Research}
 ADD WEBSITE STUFF

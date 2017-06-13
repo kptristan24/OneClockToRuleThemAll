@@ -78,15 +78,41 @@ In addition, this process is reflected in retrospective which discusses challeng
 \end{titlepage}
 \newpage
 \pagenumbering{arabic}
+\singlespacing
 \tableofcontents
 % 7. uncomment this (if applicable). Consider adding a page break.
 %\listoffigures
 %\listoftables
 \clearpage
+\onehalfspacing
 
 % 8. now you write!
 \section{Requirements Document}
 \subsection{Introduction}
+
+The One Clock to Rule Them All project grew out of a desire to make DIY word clocks easy to build, control, and customize.
+The client behind this vision was Dr. Hsu, an Oregon State research faculty working in biophysics. Outside of his research work, Dr. Hsu is a DIY electronics hobbyist.
+Within the wide range of popular electronics projects is the area of timekeeping, and within those projects lies the word clock.
+ 
+The idea of making a word clock isn’t a new idea.
+Word clocks have existed in several forms in the past including designs that have generic displays capable of showing any word, to matrix displays of composed of predefined letters which can only show specific words.
+Our client found the second layout of interest and was inspired to build one.
+And this is when a difficulty arose.
+ 
+There are several existing sets of code for powering word clocks already on the internet.
+The difficulty is that all the existing code is built for a specific set of hardware and the software isn’t very abstracted.
+For comparison, existing implementations are typically composed of several hundred lines of code.
+Our finished software library can run a word clock with only around a dozen lines of code more than an empty Arduino project file.
+ 
+It was this goal of making the software experience of building a wordclock less painful, more abstracted, and more user friendly that Dr. Hsu came up with this Capstone project.
+Once we were placed with this project, our development roles shook down to the following: Tasman Thenell was the primary code architect, Scott Metzsch became the lead materials engineer, and Tristan Hari was the primary external interactions manager.
+ 
+The other indispensable honorary member of our development team was Dr. Hsu himself.
+While it was never formally set up that he would be part of the team, there were many areas of the project outside of coding where his consulting was invaluable.
+While each of us brought strengths to the table around code development, Dr. Hsu was deeply knowledge about most of the other parts of our project.
+Our development was greatly accelerated by picking his brain about electronics, materials, and other physical parts of development several times each quarter. Without this assistance, it is doubtful that the project would have been finished in time or achieved the same level of quality.
+
+
 \subsubsection{Purpose}
 Historically, the clock face has had one of two display modes, analog or digital.
 These formats have provided a solid mix between function and fashion, but there are many
@@ -107,7 +133,7 @@ that may be assumed as a regular clock function that our clock will not do, is t
  components and thusly any alarm system will be mostly moot.
 
 \subsubsection{Definitions}
-\begin{enumerate}[a)]
+\begin{enumerate}
   \item Time - The abstract concept that our machine is keeping track of and displaying to the user
   \item Real Time Clock - A real time clock module is the hardware component that tracks the passage
   of time regardless of the state of the rest of the system.
@@ -502,7 +528,27 @@ Power from Barrel Adapter \\
 \end{tabular}
 \end{center}
 
-\subsection{Changes to Design Document}
+\section{Changes to Design Document}
+\subsection{Table of Changes to Design Document}
+\begin{center}
+\begin{tabular}{| p{0.3\linewidth} | p{0.3\linewidth} | p{0.3\linewidth} |}
+\hline
+Requirement &
+Original Requirement &
+Final Product \\
+\hline
+Number of Buttons &
+4 Buttons &
+3 Buttons \\
+\hline
+Power Supply &
+Power over USB &
+Power from Barrel Adapter \\
+\hline
+
+\end{tabular}
+\end{center}
+\subsection{Description of Changes}
 During the course of development, several key changes were made to our original design. Most of the changes were relatively minor and revolved around user interaction and the details of the interface. The only major change that happened during development was moving to a different microcontroller and software platform.
 
 This last change was made very early on in development and directly enabled the success of the project. The initial plans called for using a very low end microcontroller board, the MPLabXPress board. The hardware cost and software environment promised by this piece of hardware seemed in line with the project goals: inexpensive and easy to use. While the board was cheap, the software side of things turned about to be anything but easy to use.
@@ -641,7 +687,7 @@ This was a design decision to make the end product more legible but less apparen
 A second grid design was one we found on an Adafruit tutorial page \cite{smallgrid} that was centered around a micro layout.
 This one was only 8x8 layout, using the absolute minimum words and letters possible to communicate the time.
 This was a creative design, however it loses the ability to tell time in five minute intervals, which would inherently break one of our requirements, so we will not proceed with a letter grid like this one, and will require more space than 8x8.
-Another layout design was by Mike Gualtieri \cite(mikegrid), who listed out some instructions about how to do a layout with any words of your choosing, and how to organize them in a good hierarchical fashion.
+Another layout design was by Mike Gualtieri \cite{mikegrid}, who listed out some instructions about how to do a layout with any words of your choosing, and how to organize them in a good hierarchical fashion.
 This is likely to be the method we will use to proceed, as following Mike’s “layout” algorithm is not only open source and free to apply, but allows us the freedom of word choice and layout.
 The only constricting piece to this method is that it doesn’t strictly adhere by any means to letter by letter layout, or by ending in a square grid.
 To achieve that may require some additional work on the method.
@@ -793,7 +839,7 @@ The KeyeStudio Arduino Uno R3 runs off a ATmega328 core which has a large amount
 
 Along with solving out two concerns with the MPBLABXpress the Arduino also brings plug and play functionality and easier ability to define and change the pins that are being used for our RTC and LED strips. The added benefits of being able to plug in components with wires instead of soldering, ability to easily change what pins are used for communication, and addressing our concerns of the old board make the KeyeStudio Arduino Uno R3 a great choice for our new board moving forward.
 
-\section{Weekly Updates}
+\section{Weekly Blog Posts}
 \subsection{Fall}
 \subsubsection{Week 3}
 \paragraph{Tristan}
@@ -868,7 +914,7 @@ This week we will be coming up with a Gantt chart because of an oversight on our
 I'm looking forward to the final stage where we get to work more on the design of the housing and hidden features. The sky is the limit on the extra features we can add to our clock. It will be fun to experiment and create cool features for our clock. I plan on spending a lot of time tinkering and creating features for the clock.
 \subsubsection{Week 7}
 \paragraph{Tristan}
-This week was mainly an uneventful once again, we spent a lot more time than we should have on our technical document due to some confusion about the assignment requirements. The issue was that we thought the format had to 100% match the example document we were given, due to some of the wording of the assignment and what kevin said in class. That being said, after struggling for hours we finally got it done and brought it to Jon for review, where he promptly told us we didn't have to do any of that, and we were exasperated to say the least. That being said, as a group we've gained some more TeX knowledge that I'm sure will come in handy down the road. Other than that we haven't done much, we finished up our tech review portions and are piecing it together for monday, and looking forward to working with some of the coding in the next few weeks!
+This week was mainly an uneventful once again, we spent a lot more time than we should have on our technical document due to some confusion about the assignment requirements. The issue was that we thought the format had to 100\% match the example document we were given, due to some of the wording of the assignment and what kevin said in class. That being said, after struggling for hours we finally got it done and brought it to Jon for review, where he promptly told us we didn't have to do any of that, and we were exasperated to say the least. That being said, as a group we've gained some more TeX knowledge that I'm sure will come in handy down the road. Other than that we haven't done much, we finished up our tech review portions and are piecing it together for monday, and looking forward to working with some of the coding in the next few weeks!
 
 ~Tristan
 \paragraph{Taz}
@@ -989,7 +1035,7 @@ We need to look into using hardware interrupt driven alarms as a means of idling
 \paragraph{Scott}
 This week we figured out more about connecting out RTC and LEDs to the Arduino. We have the ability to read data from the RTC and use that information to display a BCD move of the date. Our current test strip is only 12 LEDs long so we cannot display the the full time time in BCD mode but we will use a larger string so that we can test that later. We finished code today that goes through and keeps track the minutes and seconds and outputs them in BCD.
 
-Also this week we were able to meet with Victor and go over our current progress, reasons we changed the board, and talked with him about what parts we need next. Currently I would say we are around 30% done with the project. We have 2 of the 3 components currently working together and still need to incorporate the buttons into the device. Also we still need to design the clock face itself and where all the words will be. Finally we need to start looking more into getting the materials that we need for making the case of the clock.
+Also this week we were able to meet with Victor and go over our current progress, reasons we changed the board, and talked with him about what parts we need next. Currently I would say we are around 30\% done with the project. We have 2 of the 3 components currently working together and still need to incorporate the buttons into the device. Also we still need to design the clock face itself and where all the words will be. Finally we need to start looking more into getting the materials that we need for making the case of the clock.
 \subsubsection{Week 6}
 \paragraph{Tristan}
 This week was an exciting one for me at least, we managed to through together a basic program that communicates with the hardware, and has the microcontroller reading times off the RTC and using that data to change LED's on a strip. While this is rather basic and we're approaching expo fast, this is basically the most solid proof of concept yet, as in essence, that is all that is required. Going forward, I really feel like case design is our next biggest hurdle. There's a lot to get done, and it is by far the most time gated piece of the project. I'm excited tosee what comes next!
@@ -1160,9 +1206,9 @@ The other large undertaking for the week was code debugging. Prior to this week 
 
 Problems: There were two main problems we encountered in the ramp up to getting our product ready to show off at Expo: light bleed and memory problems. The light bleed issue is simple: light bleed was making more complicated figures and scrolling text next to impossible to read on the screen. Most of Thursday was spent playing with last-minute physical tweaks to try to improve the light situation.
 
-On the code side of things, memory problems were the main issue encountered in testing. Simple states ran fine and could be switched between without any perceptible delay which is what we had hoped. Larger states were exhibiting behavior like freezing or crashing. I eventually traced this down to memory usage. The build of the code we used for Expo took 59% (1208 bytes / 2048 bytes) just to run all the hardware abstractions and the basic word clock mode. Loading up a menu state and launching something complicated like the Snake game would push us over the very small pool of memory.
+On the code side of things, memory problems were the main issue encountered in testing. Simple states ran fine and could be switched between without any perceptible delay which is what we had hoped. Larger states were exhibiting behavior like freezing or crashing. I eventually traced this down to memory usage. The build of the code we used for Expo took 59\% (1208 bytes / 2048 bytes) just to run all the hardware abstractions and the basic word clock mode. Loading up a menu state and launching something complicated like the Snake game would push us over the very small pool of memory.
 
-Plans: As part of the final code cleanup which we will do prior to turning over the project, I'd like to do some deep diving on the memory usage. I've managed to track down around 790 bytes of the 1200 used but having 20% percent of the memory unaccounted for on such a constrained system is unacceptable.
+Plans: As part of the final code cleanup which we will do prior to turning over the project, I'd like to do some deep diving on the memory usage. I've managed to track down around 790 bytes of the 1200 used but having 20\% percent of the memory unaccounted for on such a constrained system is unacceptable.
 
 The other thing to finish before the end of the year is documentation. Documentation on code and setup was left by the wayside in order to be ready for expo. We will be remedying this by the end of the term. Tristan and Scott will put together our methodology for building the clock case and getting the front face cut. I will work on a series of code examples which document the basic usage of our code.
 \paragraph{Scott}
@@ -1199,7 +1245,7 @@ Serial is useful for debugging but we can't afford to tie up that much memory. I
 
 The second change was with string constants. All strings constants are stored in ram for the entire duration of the program regardless if you are currently using an object with those constants or not. Once I realized this, I switched all strings in the program into program memory (Done via wrapping a string in the macro F("My string")). After doing this, I had to write function overloads to several core display functions to support pointers to program memory string pointers in addition to the char array pointers they were originally written for. This saved another 200 bytes of static ram usage.
 
-The static memory usage of the build at expo was 59% (around 1100 bytes) and the current build on the memDev branch only weighs in at 39% (less than 800 bytes).
+The static memory usage of the build at expo was 59\% (around 1100 bytes) and the current build on the memDev branch only weighs in at 39\% (less than 800 bytes).
 
 Problems: We don't really have any remaining problems with the project. Scott and Tristan might run into a few things trying to produce front panel printing directions/files that are generic enough as that was an issue throughout this term but I think they eventually got that fixed.
 
@@ -1289,7 +1335,10 @@ Use standard solder practice for interconnecting all of the LED strips, and make
 
 
 \subsection{Physical Case Design}
-When designing the case to hold this clock there are a couple important choices that will affect the outcome of your final product.
+When designing the case to hold this clock there are a couple important choices that will affect the outcome of your final product. 
+If you choose materials and techniques similar to ours you will probably not run into issues constructing the case.
+But since this is a DIY project, there will be issues that you run into while working on this project and you have to troubleshoot.
+Similar to us take a look at other people's ideas for case manufacturing to inspiration and ideas on how to accomplish different parts of the case.
 
 \subsubsection{Grid Letters}
 The first main consideration is font choice.
@@ -1328,6 +1377,31 @@ It also allowed us to take off the front and show people how the internals of th
 
 \section{Personal Retrospectives}
 \subsection{Taz}
+Technical skills I learned while doing this project were centered around programming for embedded and limited resource environments.
+I’ve never had to work with a system whose resources are as limited as the Arduino boards our project runs on.
+While such a limited systems comes a number of design challenges and constraints I’ve never had to work around.
+ 
+Most of the challenges I had to learn to overcome were related to memory management.
+For the majority of the programming I’ve done up until this point, memory consumption is an abstract idea which hasn’t ever been a limiting factor or design constraint.
+On our Atmega 328 development board which had 2048 bytes of memory and 32K bytes of program storage, both of these types of memory critical limitations to be worked around.
+ 
+One reason we couldn’t show off some of our most complicated clock functions at Expo was due to memory usage.
+The basic build of the project running our Expo demo took 59 percent of the board memory just to show the standard word clock mode.
+Loading up additional programs or clock states could easily push usage over 100 percent resulting in the board restarting or locking up.
+Since expo, newer builds of the library software have pushed the base memory usage down 22 percent.
+ 
+Almost all of the nontechnical skills I learned during Capstone have to do with project management. There isn’t really any other similar experience of this sort prior to Capstone of a similar scale while made leadership and organization more of a challenge than in past projects.
+While I don’t have a great list of things x, y, and z that I learned, my biggest takeaways from the project are: find friendly ways to hold project members accountable for work, and always overestimate necessary development time.
+ 
+For anybody familiar with larger technical projects that require coordination between multiple people, the two insights mentioned above should come as no surprise.
+There is a fine balance between productive nagging and direct confrontation when it comes to extracting work from colleagues.
+The second point, time estimation, is also crucial to fairly splitting up work between group members and was often a challenge in this project.
+ 
+At the risk of sounding cliche, the largest thing I would change in doing this project again would be to start sooner.
+Had project work really been starting over winter break, various points in development would have been much easier and Expo would have been less of a crunch.
+The single largest change this would have had on our project would have been finding out that we needed to switch boards a month and a half earlier.
+
+
 \subsection{Tristan}
 There was certainly a lot for me to learn from this project, which is part of the reason I enjoyed it so much.
 I would say some of the biggest technical information I learned was about the combination of electronics and hardware.
@@ -1383,5 +1457,9 @@ In terms of planning and time lines we should have had made it a goal to have a 
 This would be a more difficult deadline since we would be be chopping off 5 weeks we used for case development and pushing that into winter term.
 Compared to the issues of time management the other issues we ran into could have all been solved given more time at the end of the project.
 Our issues with light bleed, the light isolation grid, and some case manufacturing hurdles can be easily solved if we had a working prototype sooner and thus more time to troubleshoot.
+
+\newpage
+\bibliographystyle{ieeetr}
+\bibliography{doc}
 
 \end{document}

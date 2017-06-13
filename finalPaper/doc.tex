@@ -100,9 +100,9 @@
         }
         \begin{abstract}
         % 6. Fill in your abstract
-        	The purpose of this document is to discuss the progress of the One Clock to Rule Them All project and what our team has done during the fall term.
-Included is an explanation of each document written during the design period and a summary of the progress made during each week of the term.
-In addition, this process is reflected in retrospective which discusses challenges and difficulties as well as progress.
+        	The purpose of this document is to discuss the final state of the One Clock to Rule Them All project.
+Included is the original version of each  development document, the changes made to these documents, and weekly development summaries for the past nine months.
+In addition, this document includes project usage information and hindsight gained from development.
         \end{abstract}
     \end{singlespace}
 \end{titlepage}
@@ -116,33 +116,31 @@ In addition, this process is reflected in retrospective which discusses challeng
 \clearpage
 \onehalfspacing
 
-% 8. now you write!
-\section{Requirements Document}
-\subsection{Introduction}
+\section{Introduction}
 
 The One Clock to Rule Them All project grew out of a desire to make DIY word clocks easy to build, control, and customize.
 The client behind this vision was Dr. Hsu, an Oregon State research faculty working in biophysics. Outside of his research work, Dr. Hsu is a DIY electronics hobbyist.
 Within the wide range of popular electronics projects is the area of timekeeping, and within those projects lies the word clock.
- 
+
 The idea of making a word clock isn’t a new idea.
 Word clocks have existed in several forms in the past including designs that have generic displays capable of showing any word, to matrix displays of composed of predefined letters which can only show specific words.
 Our client found the second layout of interest and was inspired to build one.
 And this is when a difficulty arose.
- 
+
 There are several existing sets of code for powering word clocks already on the internet.
 The difficulty is that all the existing code is built for a specific set of hardware and the software isn’t very abstracted.
 For comparison, existing implementations are typically composed of several hundred lines of code.
 Our finished software library can run a word clock with only around a dozen lines of code more than an empty Arduino project file.
- 
+
 It was this goal of making the software experience of building a wordclock less painful, more abstracted, and more user friendly that Dr. Hsu came up with this Capstone project.
 Once we were placed with this project, our development roles shook down to the following: Tasman Thenell was the primary code architect, Scott Metzsch became the lead materials engineer, and Tristan Hari was the primary external interactions manager.
- 
+
 The other indispensable honorary member of our development team was Dr. Hsu himself.
 While it was never formally set up that he would be part of the team, there were many areas of the project outside of coding where his consulting was invaluable.
 While each of us brought strengths to the table around code development, Dr. Hsu was deeply knowledge about most of the other parts of our project.
 Our development was greatly accelerated by picking his brain about electronics, materials, and other physical parts of development several times each quarter. Without this assistance, it is doubtful that the project would have been finished in time or achieved the same level of quality.
 
-
+\section{Requirements Document}
 \subsubsection{Purpose}
 Historically, the clock face has had one of two display modes, analog or digital.
 These formats have provided a solid mix between function and fashion, but there are many
@@ -312,7 +310,29 @@ how this product will be able to act like a clock.
   \item The system shall have four tactile buttons.
 \end{enumerate}
 
-\subsection{Changes to Requirements Document}
+\section{Requirements Document Changes}
+
+\subsection{Table of Changes to Requirements Document}
+\begin{center}
+\begin{tabular}{| p{0.3\linewidth} | p{0.3\linewidth} | p{0.3\linewidth} |}
+\hline
+Requirement &
+Original Requirement &
+Final Product \\
+\hline
+Number of Buttons &
+4 Buttons &
+3 Buttons \\
+\hline
+Power Supply &
+Power over USB &
+Power from Barrel Adapter \\
+\hline
+
+\end{tabular}
+\end{center}
+
+\subsection{Explanation of Changes to Design Document}
 There were only two significant deviations from the original set of requirements that were generated in the fall. While these changes do mean that our final product doesn’t match the letter of the requirements document, both changes were made for good reasons and didn’t result in a reduction of functionality. In actuality, one of the changes was necessary to maintain other promised functionality in the requirements.
 
 The first change is the reduction in the number of physical buttons for controlling the clock. Our original concept for the design language of how users would interact with the clock software called for four buttons. One of these buttons, the back button, was eliminated because it was converted to a software menu option. This both simplified the hardware and made the menu interface for interacting with buttons in code more unified. This change doesn’t impact our ability to meet any other requirements that were established.
@@ -538,58 +558,34 @@ Having a product within the Arduino family of boards paves the way towards a num
 The process of adding hardware to the project for which there is already an Arduino library is usually as simple as including the library.
 This level of software and hardware support combined with spare pins on the board should leave developers ample room for projects.
 
-\subsection{Table of Changes to Design Document}
-\begin{center}
-\begin{tabular}{| p{0.3\linewidth} | p{0.3\linewidth} | p{0.3\linewidth} |}
-\hline
-Requirement &
-Original Requirement &
-Final Product \\
-\hline
-Number of Buttons &
-4 Buttons &
-3 Buttons \\
-\hline
-Power Supply &
-Power over USB &
-Power from Barrel Adapter \\
-\hline
-
-\end{tabular}
-\end{center}
-
 \section{Changes to Design Document}
-\subsection{Table of Changes to Design Document}
-\begin{center}
-\begin{tabular}{| p{0.3\linewidth} | p{0.3\linewidth} | p{0.3\linewidth} |}
-\hline
-Requirement &
-Original Requirement &
-Final Product \\
-\hline
-Number of Buttons &
-4 Buttons &
-3 Buttons \\
-\hline
-Power Supply &
-Power over USB &
-Power from Barrel Adapter \\
-\hline
 
-\end{tabular}
-\end{center}
-\subsection{Description of Changes}
-During the course of development, several key changes were made to our original design. Most of the changes were relatively minor and revolved around user interaction and the details of the interface. The only major change that happened during development was moving to a different microcontroller and software platform.
+During the course of development, several key changes were made to our original design.
+Most of the changes were relatively minor and revolved around user interaction and the details of the interface.
+The only major change that happened during development was moving to a different microcontroller and software platform.
 
-This last change was made very early on in development and directly enabled the success of the project. The initial plans called for using a very low end microcontroller board, the MPLabXPress board. The hardware cost and software environment promised by this piece of hardware seemed in line with the project goals: inexpensive and easy to use. While the board was cheap, the software side of things turned about to be anything but easy to use.
+This last change was made very early on in development and directly enabled the success of the project.
+The initial plans called for using a very low end microcontroller board, the MPLabXPress board.
+The hardware cost and software environment promised by this piece of hardware seemed in line with the project goals: inexpensive and easy to use.
+While the board was cheap, the software side of things turned about to be anything but easy to use.
 
-After several weeks of initial development and investigating getting the XPress board talking to the other components, it became clear that the documentation was very poor and that example code was lacking. This was a newer board that hadn’t been used much for this type of project so this wasn’t very surprising. After running into this headache, the choice was made to switch to the far more capable and proven Arduino ecosystem. With this change, all the hardware was communicating within two days of receiving the new board.
+After several weeks of initial development and investigating getting the XPress board talking to the other components, it became clear that the documentation was very poor and that example code was lacking.
+This was a newer board that hadn’t been used much for this type of project so this wasn’t very surprising.
+After running into this headache, the choice was made to switch to the far more capable and proven Arduino ecosystem.
+With this change, all the hardware was communicating within two days of receiving the new board.
 
-The other deviations from the original design that are worth discussing are the changes made to the controls for the clock. The original set of designs we came up with called for 4 buttons for ease of use: up, down, select, and back. During development it became clear that there wasn’t a need for a hardware back button for two reasons. Not all interfaces needed it and it could easily be replaced with a software menu option.
+The other deviations from the original design that are worth discussing are the changes made to the controls for the clock.
+The original set of designs we came up with called for 4 buttons for ease of use: up, down, select, and back.
+During development it became clear that there wasn’t a need for a hardware back button for two reasons.
+Not all interfaces needed it and it could easily be replaced with a software menu option.
 
-The second interface change came in eliminating using button press duration to indicate different things. Once our software menu code became robust enough, any need for specialized functions controlled through long button presses was eliminated. Maintaining a uniform control design language that relied on menus and options was determined to be more user friendly and had a lower learning curve.
+The second interface change came in eliminating using button press duration to indicate different things.
+Once our software menu code became robust enough, any need for specialized functions controlled through long button presses was eliminated.
+Maintaining a uniform control design language that relied on menus and options was determined to be more user friendly and had a lower learning curve.
 
-The combination of these interface changes makes using the default interface more simple and makes it easier to interact with buttons via code. The button software library handles button interaction and reduces the complexity down to a single line for asking if a button has been pressed. This wasn’t possible when there were multiple ways of pressing the same button as described in the original design.
+The combination of these interface changes makes using the default interface more simple and makes it easier to interact with buttons via code.
+The button software library handles button interaction and reduces the complexity down to a single line for asking if a button has been pressed.
+This wasn’t possible when there were multiple ways of pressing the same button as described in the original design.
 
 
 \section{Technology Review Document}
@@ -852,22 +848,30 @@ While this does fit very well in terms of the class structure, it falls inferior
 The clients presence is not required for the most part in Waterfall methodology, and we have decided to keep victor involved at essentially each iteration.
 This of course means, our development leans much more to the modified agile style.
 
-\subsection{Changes to Technology Review}
+\section{Changes to Technology Review}
 During the winter term we decided that we needed to change the microcontroller that we were using for our project.
 This change came about because of road blocks and board development issues we didn't foresee when originally reviewing the product.
 Here is our update to the Technology Review that we added during winter term.
-\subsubsection{Micro Controller Winter Update}
-This term we started working with our micro controller and ran into a few issues that made us rethink the choice of using this board. The main two issues that caused us to rethink our board choice was figuring out the IDE and library support for this board.
+\subsection{Micro Controller Winter Update}
+This term we started working with our micro controller and ran into a few issues that made us rethink the choice of using this board.
+The main two issues that caused us to rethink our board choice was figuring out the IDE and library support for this board.
 
-The IDE of this board on the surface is nice because it is web based and many examples that will help with learning how to use the board. But after further exploration we discovered many sections of code were auto generated and made is difficult for us to read and follow what was going on.
+The IDE of this board on the surface is nice because it is web based and many examples that will help with learning how to use the board.
+But after further exploration we discovered many sections of code were auto generated and made is difficult for us to read and follow what was going on.
 
-The other main issue was the library support for this board. We could not find library support for this type of board. To get around this issue we would have had to written our own libraries or set up the existing libraries for other board types and change many defined variables and globals to what work with our board and the pins assignments on our current board.
+The other main issue was the library support for this board. We could not find library support for this type of board.
+To get around this issue we would have had to written our own libraries or set up the existing libraries for other board types and change many defined variables and globals to what work with our board and the pins assignments on our current board.
 
-When we ran into these issues and found little help on the internet we started to research other board options that would help us get moving forward and writing code for our project. Arduinos were a readily available option that would be better suited for our project. We choose to use the Keyestudio's Arduino Uno R3 board because it addressed the issues with had with our old board and more.
+When we ran into these issues and found little help on the internet we started to research other board options that would help us get moving forward and writing code for our project.
+Arduinos were a readily available option that would be better suited for our project. We choose to use the Keyestudio's Arduino Uno R3 board because it addressed the issues with had with our old board and more.
 
-The KeyeStudio Arduino Uno R3 runs off a ATmega328 core which has a large amount of supported libraries that would help us to easily start working with our RTC and LED strips. The libraries we found for RTC and LED interaction were well written and had many examples and tutorials on how to get them setup and running. The concern about the IDE was also solved with the switch to an Arduino. We are now using the Arduino IDE which has many examples, wikis, and forums online that will help us trouble shoot issues and roadblocks that we run into when getting hardware to interact, code to compile, and flashing files onto the board.
+The KeyeStudio Arduino Uno R3 runs off a ATmega328 core which has a large amount of supported libraries that would help us to easily start working with our RTC and LED strips.
+The libraries we found for RTC and LED interaction were well written and had many examples and tutorials on how to get them setup and running.
+The concern about the IDE was also solved with the switch to an Arduino.
+We are now using the Arduino IDE which has many examples, wikis, and forums online that will help us trouble shoot issues and roadblocks that we run into when getting hardware to interact, code to compile, and flashing files onto the board.
 
-Along with solving out two concerns with the MPBLABXpress the Arduino also brings plug and play functionality and easier ability to define and change the pins that are being used for our RTC and LED strips. The added benefits of being able to plug in components with wires instead of soldering, ability to easily change what pins are used for communication, and addressing our concerns of the old board make the KeyeStudio Arduino Uno R3 a great choice for our new board moving forward.
+Along with solving out two concerns with the MPBLABXpress the Arduino also brings plug and play functionality and easier ability to define and change the pins that are being used for our RTC and LED strips.
+The added benefits of being able to plug in components with wires instead of soldering, ability to easily change what pins are used for communication, and addressing our concerns of the old board make the KeyeStudio Arduino Uno R3 a great choice for our new board moving forward.
 
 \section{Weekly Blog Posts}
 \subsection{Fall}
@@ -1408,7 +1412,7 @@ It also allowed us to take off the front and show people how the internals of th
 Software side of this project takes the form of multiple hardware abstraction libraries written around standard Arduino hardware.
 The goal of these libraries is to make it possible to use different arrangements and brands of LED strips easy, and to make getting content displayed on the word clock friendly.
 With these goals in mind, there are two primary methods for using our code.
- 
+
 \subsubsection{Basic Code Usage}
 
 The first method is very simple and is only slightly harder than using any other prepackaged Arduino library.
@@ -1456,23 +1460,23 @@ For off campus research we used the people at Spaeth Lumber for information on h
 Technical skills I learned while doing this project were centered around programming for embedded and limited resource environments.
 I’ve never had to work with a system whose resources are as limited as the Arduino boards our project runs on.
 While such a limited systems comes a number of design challenges and constraints I’ve never had to work around.
- 
+
 Most of the challenges I had to learn to overcome were related to memory management.
 For the majority of the programming I’ve done up until this point, memory consumption is an abstract idea which hasn’t ever been a limiting factor or design constraint.
 On our Atmega 328 development board which had 2048 bytes of memory and 32K bytes of program storage, both of these types of memory critical limitations to be worked around.
- 
+
 One reason we couldn’t show off some of our most complicated clock functions at Expo was due to memory usage.
 The basic build of the project running our Expo demo took 59 percent of the board memory just to show the standard word clock mode.
 Loading up additional programs or clock states could easily push usage over 100 percent resulting in the board restarting or locking up.
 Since expo, newer builds of the library software have pushed the base memory usage down 22 percent.
- 
+
 Almost all of the nontechnical skills I learned during Capstone have to do with project management. There isn’t really any other similar experience of this sort prior to Capstone of a similar scale while made leadership and organization more of a challenge than in past projects.
 While I don’t have a great list of things x, y, and z that I learned, my biggest takeaways from the project are: find friendly ways to hold project members accountable for work, and always overestimate necessary development time.
- 
+
 For anybody familiar with larger technical projects that require coordination between multiple people, the two insights mentioned above should come as no surprise.
 There is a fine balance between productive nagging and direct confrontation when it comes to extracting work from colleagues.
 The second point, time estimation, is also crucial to fairly splitting up work between group members and was often a challenge in this project.
- 
+
 At the risk of sounding cliche, the largest thing I would change in doing this project again would be to start sooner.
 Had project work really been starting over winter break, various points in development would have been much easier and Expo would have been less of a crunch.
 The single largest change this would have had on our project would have been finding out that we needed to switch boards a month and a half earlier.

@@ -1472,11 +1472,11 @@ Whenever a state transition occurs, certain cleanup of global signals and the di
 With these tools, and the other abstractions provided, a wide range of things are possible with little technical knowledge.
 The button API is the easiest way to setup a transition to another state.
 The supplied word clock code provides several examples of how buttons and transitions might be used.
-The example code contains a setup where launching a menu promps the user for what kind of new program they would like to run.
+The example code contains a setup where launching a menu prompts the user for what kind of new program they would like to run.
 
 \lstinputlisting[language=c, caption=SimpleState with Buttons, captionpos=b]{codeExamples/buttonUsage.cpp}
 
-In this example our simpleState has been modified to be able to change the brightness.
+In this example, our simpleState has been modified to be able to change the brightness.
 The button API returns the number of a pressed button starting with 0.
 So a call to buttons.getInput() which returns 1 would indicate that the second button has been pressed.
 This is just a simple example but more advanced examples are found in the full word clock code.

@@ -1439,11 +1439,39 @@ The more powerful way of using our code is to take advantage of the provided sta
 The state machine, state stack, and example main loop provide the equivalent of a miniature operating system for the Arduino which is capable of ``launching'' programs, ``closing'' them, and showing alarms even while other programs are running.
 The following isn’t for the faint of heart and it is recommended that you have a passing knowledge of the following concepts before moving on: stacks, state machines, event based programming, and memory management.
 
+The first concept necessary to understanding the process of writing a program for the word clock is what makes up a program.
+Each program takes the form of a C++ class which inherits from the state base class (found in state.h).
+Within this class there are three core functions which are called every cycle of the event loop: handleInput(), runLogic(), and drawFrame().
+It is the responsibility of the programmer to mold a program into a form that can do necessary processing within these functions.
+
 \lstinputlisting[language=c, caption=The Hello Word Clock Program, captionpos=b]{codeExamples/simpleState.cpp}
 
-\lstinputlisting[language=c, caption=Basic Code Setup, captionpos=b]{codeExamples/advancedUsage.cpp}
+This sample program converts the basic wordclock demo code seen in the simple section into a full program or ``state''.
+All three core functions must be defined but if their purpose isn't used, they may be left blank.
+Just like the raw version, each frame sees the time being updated and then the appropriate set of words be drawn to the screen.
 
+With an understanding of what makes up a program, it is time to turn to the ``operating system'' code.
+This code makes up the main project file with the only customization necessary being to input your starting state and included the header for it.
+The code below is the main event loop and contains the exposed components of the miniature operating system.
 
+\lstinputlisting[language=c, caption=Advanced Usage: Main Project File, captionpos=b]{codeExamples/advancedUsage.cpp}
+
+Below is a explanation of each of the components:
+\begin{itemize}
+	\item Lines 1 through 7 are the hardware abstractions and global flags
+	\item Lines 9 through 20 are run once setup functions
+	\item \textbf{Note:} 15 is where the starting program for the clock is selected
+	\item The rest of the lines form the system loop which runs continuously and provides operating system functionality (explored in depth below)
+\end{itemize}
+
+The core loop is made up of several parts: check on the hardware, run top program on the stack or trigger alarm, handle state transitions.
+With this loop running, programs can request to exit or they can request that a new program be started.
+Whenever a state transition occurs, certain cleanup of global signals and the display must be done.
+
+With these tools, and the other abstractions provided, a wide range of things are possible with little technical knowledge.
+The button API is the easiest way to setup a transition to another state.
+The supplied word clock code provides several examples of how buttons and transitions might be used.
+The example code contains a setup where launching a menu promps the user for what kind of new program they would like to run.
 
 \section{Technology Research}
 ADD WEBSITE STUFF

@@ -6,8 +6,21 @@ state *runningState;
 state *newState;
 uint8_t signal;
 
+void setup() {
+        //the following 2 lines are only necessary if serial or random are being used
+        Serial.begin(9600);
+        randomSeed(analogRead(0));
+
+        //setup initial state: the simpleState example
+        stk.push(new simpleState);
+        runningState = stk.accessStack()->curState;
+
+        newState = nullptr;
+        signal = stateStack::NOTHING;
+}
+
 void loop() {
-        clk.update();
+        clk.update(); //update the clock abstraction
 
         if(!clk.checkAlarms()){ //run top program unless alarm happened
                 runningState->handleInput();
@@ -19,7 +32,7 @@ void loop() {
                 signal = stateStack::NEW;
         }
 
-        switch(signal){ //Statemachine manager
+        switch(signal){ //Statemachine manager: changes running program
         case stateStack::NEW    : stk.push(newState);
                                   break;
         case stateStack::EXIT   : stk.pop();
@@ -29,7 +42,7 @@ void loop() {
                                   break;
         }
 
-        if(signal){ cleanup after state change
+        if(signal){ //cleanup necessary after a state change
                 runningState = stk.accessStack()->curState;
                 signal = stateStack::NOTHING;
                 newState = nullptr;

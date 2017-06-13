@@ -2,6 +2,9 @@
 \usepackage{graphicx}
 \usepackage{url}
 \usepackage{setspace}
+\usepackage{xcolor}
+\usepackage{textcomp}
+\usepackage{listings}
 
 \usepackage{geometry}
 \geometry{textheight=9.5in, textwidth=7in}
@@ -9,6 +12,33 @@
 \setcounter{secnumdepth}{4}
 \setlength{\parindent}{0em}
 \setlength{\parskip}{1em}
+
+\setcounter{secnumdepth}{4}
+\setlength{\parindent}{0em}
+\setlength{\parskip}{1em}
+
+\lstset{
+		language=C,
+		keywordstyle=\bfseries\ttfamily\color[rgb]{0,0,1},
+		identifierstyle=\ttfamily,
+		commentstyle=\color[rgb]{0.133,0.545,0.133},
+		stringstyle=\ttfamily\color[rgb]{0.627,0.126,0.941},
+		showstringspaces=false,
+		basicstyle=\small,
+		numberstyle=\footnotesize,
+		numbers=left,
+		stepnumber=1,
+		numbersep=10pt,
+		tabsize=8,
+		breaklines=true,
+		prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+		breakatwhitespace=false,
+		aboveskip={1.5\baselineskip},
+		columns=fixed,
+		upquote=true,
+		extendedchars=true
+}
+\renewcommand{\lstlistingname}{Code Example}
 
 % 1. Fill in these details
 \def \CapstoneTeamName{		One Clock to Rule Them all}
@@ -1374,6 +1404,34 @@ Instead we make a 1/4" groove, 1/4" from the front of the case to allow the face
 This decision helped to make changes and testing easy since the back of the clock didn't have to come in and out allowing us to make changes and quickly see the results.
 It also allowed us to take off the front and show people how the internals of the clock worked.
 \subsection{Software Setup}
+Software side of this project takes the form of multiple hardware abstraction libraries written around standard Arduino hardware. 
+The goal of these libraries is to make it possible to use different arrangements and brands of LED strips easy, and to make getting content displayed on the word clock friendly. 
+With these goals in mind, there are two primary methods for using our code.
+ 
+\subsubsection{Basic Code Usage}
+
+The first method is very simple and is only slightly harder than using any other prepackaged Arduino library. 
+Simply include the hardware library or libraries that you would like to use (they can all be used independently) and then start using them in your code. 
+This method is straightforward and an example usage is shown below.
+
+\lstinputlisting[language=c, caption=Basic Code Setup, captionpos=b]{codeExamples/basicUsage.cpp}
+
+What follows is a breakdown of what each line in the example is doing:
+\begin{itemize}
+	\item Lines 1 and 2 pull in our libraries
+	\item Lines 4 and 5 make library objects from which library functions will be called
+	\item Line 13 updates the current time stored in the clock library
+	\item Line 15 sets the display to show a word clock based on the current time from the clock
+\end{itemize}
+
+In addition to this code, two other changes need to be made in order to get a word clock up and running.
+Within layout.h, follow the instructions for putting in the grid locations of all of the words and phrases contained in your display.
+The other change is telling the display library about how your display is physically arranged.
+Edit the define statements on lines 23 through 30 of display.h to describe the setup of your LEDs. 
+
+\subsubsection{Advanced Code Usage}
+
+\section{Technology Research}
 
 \section{Personal Retrospectives}
 \subsection{Taz}

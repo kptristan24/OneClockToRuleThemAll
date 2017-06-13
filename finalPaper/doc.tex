@@ -1458,9 +1458,10 @@ The code below is the main event loop and contains the exposed components of the
 
 Below is a explanation of each of the components:
 \begin{itemize}
-	\item Lines 1 through 7 are the hardware abstractions and global flags
-	\item Lines 9 through 20 are run once setup functions
-	\item \textbf{Note:} 15 is where the starting program for the clock is selected
+	\item Lines 1 through 5 are the hardware libraries and our simpleState program
+	\item Lines 6 through 14 are the hardware abstractions and global flags
+	\item Lines 16 through 27 are run once setup functions
+	\item \textbf{Note:} 22 is where the starting program for the clock is selected
 	\item The rest of the lines form the system loop which runs continuously and provides operating system functionality (explored in depth below)
 \end{itemize}
 
@@ -1472,6 +1473,13 @@ With these tools, and the other abstractions provided, a wide range of things ar
 The button API is the easiest way to setup a transition to another state.
 The supplied word clock code provides several examples of how buttons and transitions might be used.
 The example code contains a setup where launching a menu promps the user for what kind of new program they would like to run.
+
+\lstinputlisting[language=c, caption=SimpleState with Buttons, captionpos=b]{codeExamples/buttonUsage.cpp}
+
+In this example our simpleState has been modified to be able to change the brightness.
+The button API returns the number of a pressed button starting with 0.
+So a call to buttons.getInput() which returns 1 would indicate that the second button has been pressed.
+This is just a simple example but more advanced examples are found in the full word clock code.
 
 \section{Technology Research}
 ADD WEBSITE STUFF

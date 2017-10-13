@@ -1,58 +1,78 @@
 #ifndef SNAKE_H
 #define SNAKE_H
 
-#include <Arduino.h>
+#include "timekeeping.h"
+#include "display.h"
 #include "state.h"
+#include "buttons.h"
+#include "menu.h"
+
+extern display disp;
+extern clockLib clk;
+extern Buttons buttons;
+extern state *newState;
+extern uint8_t signal;
 
 struct point{
         point(){
                 x = 0;
                 y = 0;
         }
-        point(int a, int b){
-                x = a;
-                y = b;
+        point(uint8_t a, uint8_t b){
+                y = a;
+                x = b;
         }
-        void set(int a, int b){
-                x = a;
-                y = b;
+        void set(uint8_t a, uint8_t b){
+                y = a;
+                x = b;
         }
 
-        bool checkEquals(const point &other){
+        bool operator ==(const point &other) const{
                 if(other.x == x && other.y == y){
                         return true;
                 }
                 return false;
         }
-        int x;
-        int y;
+        uint8_t x;
+        uint8_t y;
 };
 
 class snake : public state{
 public:
+        enum GameState {MENU, RUN, PAUSE, GOVER, START};
         snake();
         ~snake();
 
-        bool handleInput();
+        void handleInput();
         void runLogic();
-        point moveSnake(); //helper for runLogic movement processing
+        void moveSnake(); //helper for runLogic movement processing
         void drawFrame();
 
-        void paused();
+        void moveFood();
+        void updateTail();
         void gameOver();
         void newGame();
+        void gameInput();
+        void genLengthStr();
+        void drawGame();
+        void changeToStart();
+        void gameOverInput();
 private:
-        int direction;
+        static const uint8_t GAMESPEED = 10;
+
+        menu <snake>gameMenu;
+        menu <snake>pauseMenu;
+        int8_t direction;
         point head;
         point tail;
-        point food;
+        uint8_t length;
 
-        int **grid;
-        int xSize;
-        int ySize;
-        int input;
-        int grow;
-        int state; //0 running, 1 paused, 2 score screen
+        uint8_t grid[NUM_LEDS / ROW_LENGTH][ROW_LENGTH];
+        uint8_t xSize;
+        uint8_t ySize;
+        uint8_t frameCounter;
+        uint8_t state; //0 mainMenu, 1 running, 2 paused, 3 game over
+        char lengStr[3];
 };
 
 #endif
